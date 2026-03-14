@@ -2160,8 +2160,8 @@
 
       section,
       .px-section {
-        padding-left: 24px;
-        padding-right: 24px
+        padding-left: 24px !important;
+        padding-right: 24px !important
       }
 
       #nav {
@@ -2188,12 +2188,92 @@
       }
 
       .dash-body {
-        grid-template-columns: 1fr
+        grid-template-columns: 1fr !important
       }
 
       .dash-sidebar,
       .dash-metrics {
         display: none
+      }
+
+      /* Agent pipeline: 4-col → 2-col */
+      #cf-agents-grid {
+        grid-template-columns: repeat(2, 1fr) !important
+      }
+
+      /* Output formats: 3-col → 2-col */
+      #cf-outputs-grid {
+        grid-template-columns: repeat(2, 1fr) !important
+      }
+
+      /* Hero CTAs: stack vertically */
+      .hero-ctas {
+        flex-direction: column;
+        align-items: stretch
+      }
+
+      /* Hero badges: allow wrap */
+      .hero-badges {
+        flex-wrap: wrap
+      }
+
+      /* Contact links: wrap and center */
+      .contact-links {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px
+      }
+
+      /* Footer: stack */
+      footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 16px
+      }
+
+      /* Ghost watermark: scale down */
+      .ghost-mark {
+        font-size: clamp(4rem, 22vw, 8rem) !important
+      }
+
+      /* Writing channel cards: reduce padding */
+      .channel-card {
+        padding: 28px 22px !important
+      }
+    }
+
+    /* ── Small phones (≤480px) ── */
+    @media(max-width:480px) {
+
+      /* Agent pipeline: 2-col → 1-col */
+      #cf-agents-grid {
+        grid-template-columns: 1fr !important
+      }
+
+      /* Output formats: 2-col → 1-col */
+      #cf-outputs-grid {
+        grid-template-columns: 1fr !important
+      }
+
+      /* Stats numbers: reduce gap */
+      #cf-stats-numbers {
+        gap: 28px !important
+      }
+
+      /* Contact section: reduce vertical padding */
+      #contact > div {
+        padding-top: 80px !important;
+        padding-bottom: 80px !important
+      }
+
+      /* Disable custom cursor on touch devices */
+      body {
+        cursor: auto
+      }
+
+      /* Prevent Three.js canvas from affecting touch scroll */
+      #canvas-bg {
+        pointer-events: none
       }
     }
 
@@ -2582,7 +2662,7 @@
         </svg>
 
         <!-- Agents -->
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;z-index:1;">
+        <div id="cf-agents-grid" style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;position:relative;z-index:1;">
 
           <!-- Agent 1 -->
           <div id="cf-agent-0"
@@ -2700,7 +2780,7 @@
         <div
           style="text-align:center;font-family:var(--font-mono);font-size:.62rem;letter-spacing:.2em;color:rgba(237,241,255,.22);text-transform:uppercase;margin-bottom:24px;">
           Pipeline Outputs</div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
+        <div id="cf-outputs-grid" style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;">
           <!-- Long-form article -->
           <div
             style="background:rgba(77,217,208,.03);border:1px solid rgba(77,217,208,.1);border-radius:4px;padding:18px 22px;display:flex;align-items:center;gap:14px;">
@@ -2779,7 +2859,7 @@
       <!-- Stats + GitHub CTA row -->
       <div class="sr sd-4"
         style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:28px;border-top:1px solid rgba(255,255,255,.05);padding-top:44px;">
-        <div style="display:flex;gap:52px;flex-wrap:wrap;">
+        <div id="cf-stats-numbers" style="display:flex;gap:52px;flex-wrap:wrap;">
           <div style="text-align:center;">
             <div
               style="font-family:var(--font-display);font-size:2.4rem;font-weight:300;color:var(--cyan);line-height:1;">
