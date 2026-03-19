@@ -47,7 +47,7 @@
     }
 
     html {
-      font-size: 18px;
+      font-size: clamp(13px, 1.1vw + 8px, 18px);
       scroll-behavior: smooth;
     }
 
@@ -605,13 +605,15 @@
    HERO SECTION
 ============================================= */
     #hero {
-      height: 100vh;
+      min-height: 100vh;
+      min-height: 100dvh;
+      height: auto;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
       text-align: center;
-      padding: 0 24px;
+      padding: clamp(72px, 10vh, 120px) 24px clamp(48px, 6vh, 80px);
       position: relative;
       z-index: 2;
     }
@@ -667,7 +669,7 @@
 
     .hero-name {
       font-family: var(--font-display);
-      font-size: clamp(5.5rem, 14vw, 12rem);
+      font-size: clamp(3.8rem, 9.5vw, 10rem);
       font-weight: 300;
       line-height: .88;
       letter-spacing: -.02em;
@@ -707,8 +709,8 @@
     /* Horizontal rule pulse */
     .hero-divider {
       width: 1px;
-      height: 64px;
-      margin: 44px auto;
+      height: clamp(36px, 5vh, 60px);
+      margin: clamp(18px, 3.5vh, 40px) auto;
       background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, .4), transparent);
       animation: fadeUp .8s 1.8s both;
     }
@@ -727,11 +729,11 @@
 
     .hero-sub {
       font-family: var(--font-display);
-      font-size: clamp(1.15rem, 2.4vw, 1.8rem);
+      font-size: clamp(1rem, 2vw, 1.6rem);
       font-style: italic;
       color: rgba(237, 241, 255, .6);
-      line-height: 1.65;
-      max-width: 600px;
+      line-height: 1.55;
+      max-width: 620px;
       animation: fadeUp 1s 2s both;
     }
 
@@ -751,7 +753,7 @@
       gap: 10px;
       flex-wrap: wrap;
       justify-content: center;
-      margin-top: 32px;
+      margin-top: clamp(14px, 2.5vh, 28px);
       animation: fadeUp .9s 2.4s both;
     }
 
@@ -769,7 +771,7 @@
       display: flex;
       gap: 14px;
       justify-content: center;
-      margin-top: 44px;
+      margin-top: clamp(16px, 3vh, 36px);
       animation: fadeUp .8s 2.8s both;
     }
 
@@ -867,8 +869,8 @@
     /* Orbital diagram */
     .orbit-stage {
       position: relative;
-      width: 360px;
-      height: 360px;
+      width: min(360px, 90vw);
+      height: min(360px, 90vw);
       margin: 0 auto;
     }
 
@@ -882,22 +884,22 @@
     }
 
     .or-1 {
-      width: 180px;
-      height: 180px;
+      width: 50%;
+      height: 50%;
       border-color: rgba(201, 168, 76, .14);
       animation: spin 18s linear infinite;
     }
 
     .or-2 {
-      width: 268px;
-      height: 268px;
+      width: 74.4%;
+      height: 74.4%;
       border-color: rgba(77, 217, 208, .09);
       animation: spin 28s linear infinite reverse;
     }
 
     .or-3 {
-      width: 356px;
-      height: 356px;
+      width: 98.9%;
+      height: 98.9%;
       border-color: rgba(201, 168, 76, .06);
       animation: spin 40s linear infinite;
     }
@@ -917,8 +919,8 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      width: 76px;
-      height: 76px;
+      width: min(76px, 21%);
+      height: min(76px, 21%);
       border-radius: 50%;
       z-index: 4;
       background: radial-gradient(circle at 38% 32%, rgba(201, 168, 76, .42), rgba(201, 168, 76, .07) 70%);
@@ -1000,7 +1002,7 @@
 
     .bento-label {
       font-family: var(--font-mono);
-      font-size: .59rem;
+      font-size: .73rem;
       letter-spacing: .15em;
       color: var(--muted);
       text-transform: uppercase;
@@ -1052,6 +1054,7 @@
       position: sticky;
       top: 0;
       height: 100vh;
+      height: 100dvh;
       display: flex;
       align-items: center;
       overflow: hidden;
@@ -1076,18 +1079,7 @@
         linear-gradient(to right, rgba(2, 4, 10, .95) 0%, rgba(2, 4, 10, .2) 40%, rgba(2, 4, 10, .4) 60%, rgba(2, 4, 10, .95) 100%);
     }
 
-    .scrub-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      max-width: 1120px;
-      margin: 0 auto;
-      padding: 0 60px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
+
 
     /* Cards that animate in/out during scrub */
     .scrub-card {
@@ -1112,156 +1104,162 @@
       transform: translateY(-30px);
     }
 
-    /* Timeline connector */
-    .timeline-track {
-      position: relative;
-      padding-left: 36px;
-    }
-
-    .timeline-track::before {
-      content: '';
+    /* ── Cinematic Career Cards ── */
+    .cine-card {
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
-      width: 1px;
-      background: linear-gradient(to bottom, transparent, rgba(201, 168, 76, .25) 15%, rgba(201, 168, 76, .25) 85%, transparent);
-    }
-
-    .tl-entry {
-      position: relative;
-      margin-bottom: 52px;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: clamp(24px, 5vw, 80px);
       opacity: 0;
-      transform: translateX(-18px);
-      transition: opacity .9s var(--ease), transform .9s var(--ease);
+      transform: scale(.96) translateY(20px);
+      transition: opacity .7s ease, transform .8s ease;
+      pointer-events: none;
+      will-change: opacity, transform;
     }
-
-    .tl-entry.in {
+    .cine-card.active {
       opacity: 1;
-      transform: none;
+      transform: scale(1) translateY(0);
+      pointer-events: auto;
+    }
+    .cine-card.exiting {
+      opacity: 0;
+      transform: scale(1.02) translateY(-30px);
     }
 
-    .tl-dot {
-      position: absolute;
-      left: -42px;
-      top: 4px;
-      width: 14px;
-      height: 14px;
-      border-radius: 50%;
-      border: 2px solid rgba(201, 168, 76, .5);
-      background: var(--deep);
-      transition: background .5s, border-color .5s, box-shadow .5s;
-    }
-
-    .tl-entry.in .tl-dot {
-      background: var(--gold);
-      border-color: var(--gold);
-      box-shadow: 0 0 0 6px rgba(201, 168, 76, .1), 0 0 20px rgba(201, 168, 76, .25);
-    }
-
-    .tl-year {
+    /* Step / counter */
+    .cine-step {
       font-family: var(--font-mono);
-      font-size: .62rem;
-      letter-spacing: .22em;
+      font-size: clamp(.65rem, 1vw, .78rem);
+      letter-spacing: .35em;
+      text-transform: uppercase;
+      color: rgba(201,168,76,.45);
+      margin-bottom: clamp(18px, 3vh, 36px);
+    }
+
+    /* Year range */
+    .cine-year {
+      font-family: var(--font-mono);
+      font-size: clamp(.72rem, 1.1vw, .88rem);
+      letter-spacing: .28em;
       color: var(--gold);
-      opacity: .7;
-      margin-bottom: 8px;
+      opacity: .75;
+      margin-bottom: clamp(12px, 2vh, 24px);
     }
 
-    .tl-company {
+    /* Company name — the hero of each card */
+    .cine-company {
       font-family: var(--font-display);
-      font-size: 1.7rem;
-      font-weight: 400;
-      margin-bottom: 5px;
+      font-size: clamp(2.2rem, 5vw, 4.5rem);
+      font-weight: 300;
+      line-height: 1.05;
+      letter-spacing: -.01em;
+      color: var(--white);
+      margin-bottom: clamp(8px, 1.5vh, 18px);
+      text-shadow: 0 0 60px rgba(201,168,76,.12);
     }
 
-    .tl-role {
+    /* Role title */
+    .cine-role {
       font-family: var(--font-mono);
-      font-size: .68rem;
-      letter-spacing: .12em;
-      color: var(--muted);
-      margin-bottom: 14px;
+      font-size: clamp(.7rem, 1.05vw, .88rem);
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(77,217,208,.52);
+      margin-bottom: clamp(24px, 4vh, 48px);
+      max-width: 600px;
     }
 
-    .tl-bullets {
+    /* Divider line */
+    .cine-divider {
+      width: 48px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+      margin: 0 auto clamp(20px, 3vh, 40px);
+      opacity: .4;
+    }
+
+    /* Achievement bullets */
+    .cine-achievements {
       list-style: none;
+      max-width: 680px;
+      text-align: left;
     }
-
-    .tl-bullets li {
+    .cine-achievements li {
       font-family: var(--font-mono);
-      font-size: .7rem;
-      line-height: 1.7;
-      color: var(--muted);
-      padding-left: 18px;
+      font-size: clamp(.76rem, 1vw, .9rem);
+      line-height: 1.85;
+      color: rgba(201,180,120,.6);
+      padding-left: 22px;
       position: relative;
+      margin-bottom: 6px;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity .5s ease, transform .5s ease;
     }
-
-    .tl-bullets li::before {
+    .cine-card.active .cine-achievements li {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .cine-achievements li:nth-child(1) { transition-delay: .35s; }
+    .cine-achievements li:nth-child(2) { transition-delay: .5s; }
+    .cine-achievements li:nth-child(3) { transition-delay: .65s; }
+    .cine-achievements li:nth-child(4) { transition-delay: .8s; }
+    .cine-achievements li::before {
       content: '→';
       position: absolute;
       left: 0;
       color: var(--gold);
-      opacity: .55;
+      opacity: .65;
     }
 
-    /* Terminal */
-    .terminal {
-      border-radius: 4px;
-      overflow: hidden;
+    /* Progress bar at bottom of sticky */
+    .cine-progress {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: rgba(255,255,255,.04);
+      z-index: 10;
+    }
+    .cine-progress-fill {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, var(--gold), var(--cyan));
+      transition: width .3s ease;
+      box-shadow: 0 0 12px rgba(201,168,76,.3);
     }
 
-    .term-bar {
+    /* Dot indicators */
+    .cine-dots {
+      position: absolute;
+      bottom: clamp(18px, 3vh, 36px);
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 18px;
-      background: rgba(201, 168, 76, .04);
-      border-bottom: 1px solid rgba(201, 168, 76, .09);
+      gap: 14px;
+      z-index: 10;
     }
-
-    .term-btn {
-      width: 12px;
-      height: 12px;
+    .cine-dot {
+      width: 8px;
+      height: 8px;
       border-radius: 50%;
+      border: 1px solid rgba(201,168,76,.3);
+      background: transparent;
+      transition: background .4s, border-color .4s, box-shadow .4s;
     }
-
-    .term-title {
-      font-family: var(--font-mono);
-      font-size: .6rem;
-      letter-spacing: .12em;
-      color: var(--ghost);
-      margin-left: auto;
+    .cine-dot.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      box-shadow: 0 0 8px rgba(201,168,76,.4);
     }
-
-    .term-body {
-      padding: 22px 26px;
-      min-height: 360px;
-      font-family: var(--font-mono);
-      font-size: .74rem;
-      line-height: 2.1;
-      overflow-y: auto;
-    }
-
-    .term-body::-webkit-scrollbar {
-      width: 0;
-    }
-
-    .term-ln {
-      white-space: pre-wrap;
-      word-break: break-word;
-      animation: termSlide .3s var(--ease) both;
-    }
-
-    @keyframes termSlide {
-      from {
-        opacity: 0;
-        transform: translateX(-10px)
-      }
-
-      to {
-        opacity: 1;
-        transform: none
-      }
+    .cine-dot.past {
+      background: rgba(201,168,76,.3);
+      border-color: rgba(201,168,76,.4);
     }
 
     /* =============================================
@@ -1321,7 +1319,7 @@
 
     .proj-tag {
       font-family: var(--font-mono);
-      font-size: .59rem;
+      font-size: .72rem;
       letter-spacing: .2em;
       text-transform: uppercase;
       opacity: .7;
@@ -1337,7 +1335,7 @@
     }
 
     .proj-desc {
-      font-size: .86rem;
+      font-size: .96rem;
       color: var(--muted);
       line-height: 1.78;
       margin-bottom: 18px;
@@ -1422,7 +1420,7 @@
       backdrop-filter: blur(48px) saturate(160%);
       -webkit-backdrop-filter: blur(48px) saturate(160%);
       display: grid;
-      grid-template-columns: 240px 1fr 200px;
+      grid-template-columns: min(240px, 22%) 1fr min(200px, 18%);
       min-height: 440px;
     }
 
@@ -1651,7 +1649,7 @@
     }
 
     .phone-frame {
-      width: 280px;
+      width: min(280px, 80vw);
       margin: 0 auto;
       border-radius: 44px;
       overflow: hidden;
@@ -1868,7 +1866,7 @@
 
     .writing-layout {
       display: grid;
-      grid-template-columns: 280px 1fr;
+      grid-template-columns: min(280px, 26%) 1fr;
       gap: 80px;
     }
 
@@ -1901,12 +1899,12 @@
     .ch-name {
       font-family: var(--font-sans);
       font-weight: 700;
-      font-size: .84rem;
+      font-size: .96rem;
     }
 
     .ch-desc {
       font-family: var(--font-mono);
-      font-size: .6rem;
+      font-size: .76rem;
       color: var(--muted);
       margin-top: 3px;
       letter-spacing: .06em;
@@ -1944,7 +1942,7 @@
 
     .article-pill {
       font-family: var(--font-mono);
-      font-size: .56rem;
+      font-size: .68rem;
       letter-spacing: .14em;
       padding: 3px 10px;
       border-radius: 12px;
@@ -1965,14 +1963,14 @@
 
     .article-tag {
       font-family: var(--font-mono);
-      font-size: .56rem;
+      font-size: .68rem;
       color: var(--ghost);
       margin-left: auto;
     }
 
     .article-title {
       font-family: var(--font-display);
-      font-size: 1.12rem;
+      font-size: 1.26rem;
       font-weight: 400;
       line-height: 1.4;
       margin-bottom: 8px;
@@ -1980,7 +1978,7 @@
 
     .article-desc {
       font-family: var(--font-mono);
-      font-size: .64rem;
+      font-size: .80rem;
       color: var(--muted);
       line-height: 1.7;
       letter-spacing: .03em;
@@ -2166,17 +2164,70 @@
       }
     }
 
+    /* ── Tablet / zoomed-in desktop (≤1200px) ── */
+    @media(max-width:1200px) {
+      /* Reduce nav padding so links don't overflow on zoom */
+      #nav {
+        padding: 20px 36px
+      }
+      #nav.scrolled {
+        padding: 12px 36px
+      }
+
+      /* Give section-inner horizontal breathing room */
+      .section-inner,
+      .section-inner-wide {
+        padding-left: 24px;
+        padding-right: 24px
+      }
+
+      /* Reduce outer section side-padding from 60px → 36px */
+      section,
+      .px-section {
+        padding-left: 36px !important;
+        padding-right: 36px !important
+      }
+
+      /* Career section inner header div (has inline padding:100px 60px 60px) */
+      #exp > div:first-child {
+        padding-left: 36px !important;
+        padding-right: 36px !important
+      }
+
+
+
+      /* Diff layout: reduce gap */
+      .diff-layout {
+        gap: 48px
+      }
+
+      /* Bento: reduce inner padding */
+      .bento-cell {
+        padding: 18px
+      }
+
+      /* Orbit: slightly smaller */
+      .orbit-stage {
+        width: min(320px, 85vw) !important;
+        height: min(320px, 85vw) !important
+      }
+    }
+
     /* Responsive */
     @media(max-width:900px) {
 
+      /* All sections: minimal side padding */
       section,
       .px-section {
-        padding-left: 24px !important;
-        padding-right: 24px !important
+        padding-left: 20px !important;
+        padding-right: 20px !important
       }
 
       #nav {
-        padding: 16px 24px
+        padding: 16px 20px
+      }
+      #nav.scrolled {
+        padding: 10px 20px
       }
 
       .nav-links {
@@ -2185,7 +2236,6 @@
 
       .diff-layout,
       .phone-layout,
-      .scrub-content,
       .writing-layout {
         grid-template-columns: 1fr
       }
@@ -2262,12 +2312,28 @@
       .section-inner-wide {
         min-width: 0;
         max-width: 100%;
+        padding-left: 0;
+        padding-right: 0;
         overflow: hidden
       }
 
       .section-inner *,
       .section-inner-wide * {
         min-width: 0
+      }
+
+      /* Career section inner header div inline padding override */
+      #exp > div:first-child {
+        padding-left: 20px !important;
+        padding-right: 20px !important
+      }
+
+
+
+      /* Orbit stage: scale to viewport */
+      .orbit-stage {
+        width: min(280px, 80vw) !important;
+        height: min(280px, 80vw) !important
       }
 
       /* Channel card inner padding: 36px → 16px on mobile */
@@ -2328,7 +2394,13 @@
 
       /* Footer: fix 60px inline padding */
       footer {
-        padding: 28px 24px !important
+        padding: 28px 20px !important
+      }
+
+      /* Section inner padding on mobile */
+      .section-inner,
+      .section-inner-wide {
+        padding: 80px 0
       }
     }
 
@@ -2370,6 +2442,8 @@
       #canvas-bg {
         pointer-events: none
       }
+
+
     }
 
     /* =============================================
@@ -2408,7 +2482,7 @@
     #cf-pipeline-status {
       text-align: center;
       font-family: var(--font-mono);
-      font-size: .54rem;
+      font-size: .68rem;
       letter-spacing: .14em;
       color: rgba(237, 241, 255, .18);
       text-transform: uppercase;
@@ -2614,80 +2688,91 @@
           style=""></div>
         <div class="scrub-overlay"></div>
 
-        <!-- Content grid -->
-        <div class="scrub-content">
-          <!-- LEFT: Timeline (always visible, entries animate) -->
-          <div id="tl-col" style="overflow:hidden;max-height:calc(100vh - 220px);">
-            <div class="timeline-track" id="tl-track" style="padding-bottom:100px;">
-              <div class="tl-entry" id="tl0">
-                <div class="tl-dot"></div>
-                <div class="tl-year">Nov 2016 – Nov 2017</div>
-                <div class="tl-company">Citibank Europe PLC</div>
-                <div class="tl-role">Junior AML Analyst — Transaction Monitoring</div>
-                <ul class="tl-bullets">
-                  <li>Sanctions/AML escalations research; collaborated with Relationship Managers</li>
-                  <li>Mantas scenario tuning and local regulatory adaptation</li>
-                </ul>
-              </div>
-              <div class="tl-entry" id="tl1">
-                <div class="tl-dot"></div>
-                <div class="tl-year">Apr 2019 – Nov 2020</div>
-                <div class="tl-company">MoneyGram International</div>
-                <div class="tl-role">Compliance Analyst III / II — Transaction Monitoring</div>
-                <ul class="tl-bullets">
-                  <li>Deputy Team Lead (10 FTEs); introduced workflow refinements boosting productivity by 15%</li>
-                  <li>Authored & maintained process documentation, SOPs and training guides</li>
-                </ul>
-              </div>
-              <div class="tl-entry" id="tl2">
-                <div class="tl-dot"></div>
-                <div class="tl-year">Dec 2020 – Dec 2021</div>
-                <div class="tl-company">ING Tech Poland</div>
-                <div class="tl-role">Senior AML Investigator / Business Analyst — TM Optimisation</div>
-                <ul class="tl-bullets">
-                  <li>Automated daily MI packs and productivity scorecards using VBA & Python</li>
-                  <li>Complex alert investigations with 98% quality score</li>
-                  <li>Developed VBA macro auto-generating investigation reports (25 min savings per case)</li>
-                </ul>
-              </div>
-              <div class="tl-entry" id="tl3">
-                <div class="tl-dot"></div>
-                <div class="tl-year">Jan 2022 – Dec 2024</div>
-                <div class="tl-company">ING Tech Poland</div>
-                <div class="tl-role">Business Analyst / AML Expert — Project Team/Strategy, Design & Risk</div>
-                <ul class="tl-bullets">
-                  <li>Co-created enterprise-wide TM Optimisation framework (Quantexa & in-house ML models)</li>
-                  <li>Designed Power BI dashboards covering KRIs/KPIs for global MLROs</li>
-                  <li>Orchestrated threshold strategy reset across 20+ Jurisdictions</li>
-                  <li>Zero critical findings in internal audit of 2024</li>
-                </ul>
-              </div>
-              <div class="tl-entry" id="tl4">
-                <div class="tl-dot"></div>
-                <div class="tl-year">Jan 2025 – Present</div>
-                <div class="tl-company">ING Tech Poland</div>
-                <div class="tl-role">Senior Expert/Financial Crime Prevention — TM Backtesting & Design</div>
-                <ul class="tl-bullets">
-                  <li>Pioneered ING's first Global TM Effectiveness & Efficiency Assessment across 38 markets</li>
-                  <li>Designed Microsoft Copilot agents automating business analysis report generation</li>
-                  <li>Spearheading vertical integration of Agentic AI into existing TM processes</li>
-                  <li>Principal advisor to MLROs across multiple regions; lead 3-person Specialists team</li>
-                </ul>
-              </div>
-            </div>
+        <!-- Cinematic Career Cards -->
+        <div id="cine-stage" style="position:relative;z-index:2;width:100%;height:100%;">
+
+          <!-- Card 0 — Citibank -->
+          <div class="cine-card" data-cine="0">
+            <div class="cine-step">01 / 05</div>
+            <div class="cine-year">Nov 2016 – Nov 2017</div>
+            <div class="cine-company">Citibank Europe PLC</div>
+            <div class="cine-role">Junior AML Analyst — Transaction Monitoring</div>
+            <div class="cine-divider"></div>
+            <ul class="cine-achievements">
+              <li>Sanctions/AML escalations research; collaborated with Relationship Managers</li>
+              <li>Mantas scenario tuning and local regulatory adaptation</li>
+            </ul>
           </div>
 
-          <!-- RIGHT: Terminal -->
-          <div class="terminal glass-dark sr sd-2" id="exp-terminal">
-            <div class="term-bar">
-              <div class="term-btn" style="background:#FF5F57;"></div>
-              <div class="term-btn" style="background:#FEBC2E;"></div>
-              <div class="term-btn" style="background:#28C840;"></div>
-              <div class="term-title">kiran@agentic-lab ~ career.sh</div>
-            </div>
-            <div class="term-body" id="term-body">
-              <div style="color:var(--ghost);"><span class="tw-cursor">█</span></div>
-            </div>
+          <!-- Card 1 — MoneyGram -->
+          <div class="cine-card" data-cine="1">
+            <div class="cine-step">02 / 05</div>
+            <div class="cine-year">Apr 2019 – Nov 2020</div>
+            <div class="cine-company">MoneyGram International</div>
+            <div class="cine-role">Compliance Analyst III / II — Transaction Monitoring</div>
+            <div class="cine-divider"></div>
+            <ul class="cine-achievements">
+              <li>Deputy Team Lead (10 FTEs); introduced workflow refinements boosting productivity by 15%</li>
+              <li>Authored & maintained process documentation, SOPs and training guides</li>
+            </ul>
+          </div>
+
+          <!-- Card 2 — ING Investigator -->
+          <div class="cine-card" data-cine="2">
+            <div class="cine-step">03 / 05</div>
+            <div class="cine-year">Dec 2020 – Dec 2021</div>
+            <div class="cine-company">ING Tech Poland</div>
+            <div class="cine-role">Senior AML Investigator / Business Analyst — TM Optimisation</div>
+            <div class="cine-divider"></div>
+            <ul class="cine-achievements">
+              <li>Automated daily MI packs and productivity scorecards using VBA & Python</li>
+              <li>Complex alert investigations with 98% quality score</li>
+              <li>Developed VBA macro auto-generating investigation reports (25 min savings per case)</li>
+            </ul>
+          </div>
+
+          <!-- Card 3 — ING BA/Expert -->
+          <div class="cine-card" data-cine="3">
+            <div class="cine-step">04 / 05</div>
+            <div class="cine-year">Jan 2022 – Dec 2024</div>
+            <div class="cine-company">ING Tech Poland</div>
+            <div class="cine-role">Business Analyst / AML Expert — Project Team / Strategy, Design & Risk</div>
+            <div class="cine-divider"></div>
+            <ul class="cine-achievements">
+              <li>Co-created enterprise-wide TM Optimisation framework (Quantexa & in-house ML models)</li>
+              <li>Designed Power BI dashboards covering KRIs/KPIs for global MLROs</li>
+              <li>Orchestrated threshold strategy reset across 20+ Jurisdictions</li>
+              <li>Zero critical findings in internal audit of 2024</li>
+            </ul>
+          </div>
+
+          <!-- Card 4 — ING Senior Expert -->
+          <div class="cine-card" data-cine="4">
+            <div class="cine-step">05 / 05</div>
+            <div class="cine-year">Jan 2025 – Present</div>
+            <div class="cine-company">ING Tech Poland</div>
+            <div class="cine-role">Senior Expert / Financial Crime Prevention — TM Backtesting & Design</div>
+            <div class="cine-divider"></div>
+            <ul class="cine-achievements">
+              <li>Pioneered ING's first Global TM Effectiveness & Efficiency Assessment across 38 markets</li>
+              <li>Designed Microsoft Copilot agents automating business analysis report generation</li>
+              <li>Spearheading vertical integration of Agentic AI into existing TM processes</li>
+              <li>Principal advisor to MLROs across multiple regions; lead 3-person Specialists team</li>
+            </ul>
+          </div>
+
+          <!-- Dot indicators -->
+          <div class="cine-dots" id="cine-dots">
+            <div class="cine-dot" data-dot="0"></div>
+            <div class="cine-dot" data-dot="1"></div>
+            <div class="cine-dot" data-dot="2"></div>
+            <div class="cine-dot" data-dot="3"></div>
+            <div class="cine-dot" data-dot="4"></div>
+          </div>
+
+          <!-- Progress bar -->
+          <div class="cine-progress">
+            <div class="cine-progress-fill" id="cine-progress-fill"></div>
           </div>
         </div>
       </div>
@@ -2776,11 +2861,11 @@
               style="font-family:var(--font-mono);font-weight:500;font-size:.8rem;letter-spacing:.07em;color:var(--cyan);margin-bottom:10px;text-transform:uppercase;">
               Researcher</div>
             <div
-              style="font-family:var(--font-mono);font-size:.59rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
+              style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
               Web scraping · Trend detection · Source ranking · Topic clustering</div>
             <div class="cfa-log" id="cfa-log-0"></div>
             <div id="cfa-step-0"
-              style="margin-top:16px;font-family:var(--font-mono);font-size:.54rem;letter-spacing:.14em;color:rgba(77,217,208,.35);text-transform:uppercase;border-top:1px solid rgba(77,217,208,.08);padding-top:12px;transition:color .4s;">
+              style="margin-top:16px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;color:rgba(77,217,208,.35);text-transform:uppercase;border-top:1px solid rgba(77,217,208,.08);padding-top:12px;transition:color .4s;">
               01 / Input</div>
             <div class="cfa-prog-track">
               <div class="cfa-prog-fill" id="cfa-fill-0" style="background:rgba(77,217,208,1);"></div>
@@ -2802,11 +2887,11 @@
               style="font-family:var(--font-mono);font-weight:500;font-size:.8rem;letter-spacing:.07em;color:var(--gold);margin-bottom:10px;text-transform:uppercase;">
               Analyzer</div>
             <div
-              style="font-family:var(--font-mono);font-size:.59rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
+              style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
               Epistemological framing · Angle selection · Popperian critique · Argument scaffold</div>
             <div class="cfa-log" id="cfa-log-1"></div>
             <div id="cfa-step-1"
-              style="margin-top:16px;font-family:var(--font-mono);font-size:.54rem;letter-spacing:.14em;color:rgba(201,168,76,.35);text-transform:uppercase;border-top:1px solid rgba(201,168,76,.08);padding-top:12px;transition:color .4s;">
+              style="margin-top:16px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;color:rgba(201,168,76,.35);text-transform:uppercase;border-top:1px solid rgba(201,168,76,.08);padding-top:12px;transition:color .4s;">
               02 / Frame</div>
             <div class="cfa-prog-track">
               <div class="cfa-prog-fill" id="cfa-fill-1" style="background:rgba(201,168,76,1);"></div>
@@ -2829,11 +2914,11 @@
               style="font-family:var(--font-mono);font-weight:500;font-size:.8rem;letter-spacing:.07em;color:var(--green);margin-bottom:10px;text-transform:uppercase;">
               Writer</div>
             <div
-              style="font-family:var(--font-mono);font-size:.59rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
+              style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
               Naval-style compression · Multi-format drafts · Substack / LinkedIn / YouTube scripts</div>
             <div class="cfa-log" id="cfa-log-2"></div>
             <div id="cfa-step-2"
-              style="margin-top:16px;font-family:var(--font-mono);font-size:.54rem;letter-spacing:.14em;color:rgba(61,219,137,.35);text-transform:uppercase;border-top:1px solid rgba(61,219,137,.08);padding-top:12px;transition:color .4s;">
+              style="margin-top:16px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;color:rgba(61,219,137,.35);text-transform:uppercase;border-top:1px solid rgba(61,219,137,.08);padding-top:12px;transition:color .4s;">
               03 / Draft</div>
             <div class="cfa-prog-track">
               <div class="cfa-prog-fill" id="cfa-fill-2" style="background:rgba(61,219,137,1);"></div>
@@ -2856,11 +2941,11 @@
               style="font-family:var(--font-mono);font-weight:500;font-size:.8rem;letter-spacing:.07em;color:var(--red);margin-bottom:10px;text-transform:uppercase;">
               Editor</div>
             <div
-              style="font-family:var(--font-mono);font-size:.59rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
+              style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.05em;color:rgba(237,241,255,.42);line-height:1.75;">
               Tone calibration · Hard-to-vary pruning · Quality gate · Multi-channel output routing</div>
             <div class="cfa-log" id="cfa-log-3"></div>
             <div id="cfa-step-3"
-              style="margin-top:16px;font-family:var(--font-mono);font-size:.54rem;letter-spacing:.14em;color:rgba(255,94,91,.35);text-transform:uppercase;border-top:1px solid rgba(255,94,91,.08);padding-top:12px;transition:color .4s;">
+              style="margin-top:16px;font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;color:rgba(255,94,91,.35);text-transform:uppercase;border-top:1px solid rgba(255,94,91,.08);padding-top:12px;transition:color .4s;">
               04 / Publish</div>
             <div class="cfa-prog-track">
               <div class="cfa-prog-fill" id="cfa-fill-3" style="background:rgba(255,94,91,1);"></div>
@@ -2885,7 +2970,7 @@
               <div
                 style="font-family:var(--font-sans);font-size:.76rem;font-weight:700;color:var(--cyan);letter-spacing:.06em;margin-bottom:4px;">
                 Long-form Article</div>
-              <div style="font-family:var(--font-mono);font-size:.57rem;color:var(--muted);letter-spacing:.04em;">
+              <div style="font-family:var(--font-mono);font-size:.70rem;color:var(--muted);letter-spacing:.04em;">
                 article-template.md · Writer → Editor</div>
             </div>
           </div>
@@ -2897,7 +2982,7 @@
               <div
                 style="font-family:var(--font-sans);font-size:.76rem;font-weight:700;color:var(--gold);letter-spacing:.06em;margin-bottom:4px;">
                 Twitter/X Thread</div>
-              <div style="font-family:var(--font-mono);font-size:.57rem;color:var(--muted);letter-spacing:.04em;">
+              <div style="font-family:var(--font-mono);font-size:.70rem;color:var(--muted);letter-spacing:.04em;">
                 twitter-thread-template-v2.md · Thread Agent → Editor</div>
             </div>
           </div>
@@ -2909,7 +2994,7 @@
               <div
                 style="font-family:var(--font-sans);font-size:.76rem;font-weight:700;color:var(--green);letter-spacing:.06em;margin-bottom:4px;">
                 LinkedIn Post</div>
-              <div style="font-family:var(--font-mono);font-size:.57rem;color:var(--muted);letter-spacing:.04em;">
+              <div style="font-family:var(--font-mono);font-size:.70rem;color:var(--muted);letter-spacing:.04em;">
                 linkedin-post-template.md · Writer → Editor</div>
             </div>
           </div>
@@ -2921,7 +3006,7 @@
               <div
                 style="font-family:var(--font-sans);font-size:.76rem;font-weight:700;color:var(--red);letter-spacing:.06em;margin-bottom:4px;">
                 Newsletter Section</div>
-              <div style="font-family:var(--font-mono);font-size:.57rem;color:var(--muted);letter-spacing:.04em;">
+              <div style="font-family:var(--font-mono);font-size:.70rem;color:var(--muted);letter-spacing:.04em;">
                 newsletter-template.md · Writer → Editor</div>
             </div>
           </div>
@@ -2933,7 +3018,7 @@
               <div
                 style="font-family:var(--font-sans);font-size:.76rem;font-weight:700;color:var(--cyan);letter-spacing:.06em;margin-bottom:4px;">
                 YouTube Script</div>
-              <div style="font-family:var(--font-mono);font-size:.57rem;color:var(--muted);letter-spacing:.04em;">
+              <div style="font-family:var(--font-mono);font-size:.70rem;color:var(--muted);letter-spacing:.04em;">
                 youtube-script-template.md · Writer → Editor</div>
             </div>
           </div>
@@ -2945,7 +3030,7 @@
               <div
                 style="font-family:var(--font-sans);font-size:.76rem;font-weight:700;color:var(--gold);letter-spacing:.06em;margin-bottom:4px;">
                 Podcast Notes</div>
-              <div style="font-family:var(--font-mono);font-size:.57rem;color:var(--muted);letter-spacing:.04em;">
+              <div style="font-family:var(--font-mono);font-size:.70rem;color:var(--muted);letter-spacing:.04em;">
                 podcast-notes-template.md · Writer → Editor</div>
             </div>
           </div>
@@ -2961,7 +3046,7 @@
               style="font-family:var(--font-display);font-size:2.4rem;font-weight:300;color:var(--cyan);line-height:1;">
               4</div>
             <div
-              style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase;">
+              style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase;">
               AI Agents</div>
           </div>
           <div style="text-align:center;">
@@ -2969,7 +3054,7 @@
               style="font-family:var(--font-display);font-size:2.4rem;font-weight:300;color:var(--gold);line-height:1;">
               6</div>
             <div
-              style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase;">
+              style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase;">
               Output Formats</div>
           </div>
           <div style="text-align:center;">
@@ -2977,7 +3062,7 @@
               style="font-family:var(--font-display);font-size:2.4rem;font-weight:300;color:var(--green);line-height:1;">
               0</div>
             <div
-              style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase;">
+              style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;color:var(--muted);margin-top:4px;text-transform:uppercase;">
               Human Prompts</div>
           </div>
         </div>
@@ -3261,15 +3346,15 @@
             </p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Epistemology</span>
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Epistemology</span>
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Knowledge
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Knowledge
                 Creation</span>
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Systems
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Systems
                 Thinking</span>
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Deep
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.6);text-transform:uppercase;">Deep
                 Work</span>
             </div>
           </div>
@@ -3300,15 +3385,15 @@
             </p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">Agentic
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">Agentic
                 AI</span>
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">AML
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">AML
                 Tech</span>
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">Architecture</span>
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">Architecture</span>
               <span
-                style="font-family:var(--font-mono);font-size:.58rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">Walkthroughs</span>
+                style="font-family:var(--font-mono);font-size:.70rem;letter-spacing:.12em;padding:4px 12px;border:1px solid rgba(77,217,208,.2);color:rgba(77,217,208,.6);text-transform:uppercase;">Walkthroughs</span>
             </div>
           </div>
         </a>
@@ -3325,18 +3410,18 @@
             📄</div>
           <div style="flex:1;">
             <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
-              <span style="font-family:var(--font-mono);font-size:.56rem;letter-spacing:.14em;padding:3px 10px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold);text-transform:uppercase;">ScienceDirect · Elsevier</span>
-              <span style="font-family:var(--font-mono);font-size:.56rem;letter-spacing:.14em;padding:3px 10px;border:1px solid rgba(255,255,255,.08);color:var(--muted);text-transform:uppercase;">Engineering Science and Technology · 2022</span>
+              <span style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;padding:3px 10px;background:rgba(201,168,76,.15);border:1px solid rgba(201,168,76,.3);color:var(--gold);text-transform:uppercase;">ScienceDirect · Elsevier</span>
+              <span style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.14em;padding:3px 10px;border:1px solid rgba(255,255,255,.08);color:var(--muted);text-transform:uppercase;">Engineering Science and Technology · 2022</span>
             </div>
             <div style="font-family:var(--font-display);font-weight:400;font-size:1.35rem;color:var(--gold);line-height:1.4;margin-bottom:10px;text-shadow:0 0 12px rgba(201,168,76,.25);">
               Initial research on thermal decomposition of 98% concentrated hydrogen peroxide in thruster-like conditions</div>
             <p style="font-family:var(--font-display);font-style:italic;font-size:.95rem;color:rgba(237,241,255,.55);line-height:1.7;margin-bottom:14px;">
               An experimental investigation into the thermal decomposition characteristics of highly concentrated (98%) hydrogen peroxide under typical thruster operating conditions, providing foundational data for its use as a green monopropellant.</p>
             <div style="display:flex;flex-wrap:wrap;gap:8px;">
-              <span style="font-family:var(--font-mono);font-size:.56rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Rocket Propulsion</span>
-              <span style="font-family:var(--font-mono);font-size:.56rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Green Propellants</span>
-              <span style="font-family:var(--font-mono);font-size:.56rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Hydrogen Peroxide</span>
-              <span style="font-family:var(--font-mono);font-size:.56rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Thermal Decomposition</span>
+              <span style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Rocket Propulsion</span>
+              <span style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Green Propellants</span>
+              <span style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Hydrogen Peroxide</span>
+              <span style="font-family:var(--font-mono);font-size:.68rem;letter-spacing:.1em;padding:4px 12px;border:1px solid rgba(201,168,76,.2);color:rgba(201,168,76,.55);text-transform:uppercase;">Thermal Decomposition</span>
             </div>
             <div style="margin-top:14px;font-family:var(--font-mono);font-size:.62rem;color:var(--gold);letter-spacing:.08em;opacity:.7;display:flex;align-items:center;gap:8px;">
               Read on ScienceDirect <span style="font-size:.8rem;">↗</span>
@@ -3900,7 +3985,7 @@
       const dot = document.getElementById('cur-dot'), ring = document.getElementById('cur-ring');
       let mx = -200, my = -200, rx = -200, ry = -200;
       document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-      document.querySelectorAll('a,button,.proj-card,.article-card,.bento-cell,.channel-card,.dash-alert,.tl-entry').forEach(el => {
+      document.querySelectorAll('a,button,.proj-card,.article-card,.bento-cell,.channel-card,.dash-alert,.cine-card').forEach(el => {
         el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
         el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
       });
@@ -4016,7 +4101,6 @@
       const container = document.getElementById('orbit-nodes');
       if (!container) return;
       const stage = container.closest('.orbit-stage');
-      const CX = 180, CY = 180;
       const nodes = [
         { label: 'TM Monitor', color: '#C9A84C', r: 92, start: 0, spd: .0024 },
         { label: 'RAG Design', color: '#4DD9D0', r: 92, start: 120, spd: .0024 },
@@ -4034,89 +4118,71 @@
         let angle = n.start * (Math.PI / 180);
         (function tick() {
           requestAnimationFrame(tick); angle += n.spd;
-          const x = CX + Math.cos(angle) * n.r - 36, y = CY + Math.sin(angle) * n.r - 11;
+          /* Use live stage size so orbits scale with CSS min() sizing */
+          const sz = stage ? stage.offsetWidth : 360;
+          const scale = sz / 360;
+          const CX = sz / 2, CY = sz / 2;
+          const x = CX + Math.cos(angle) * n.r * scale - 36, y = CY + Math.sin(angle) * n.r * scale - 11;
           el.style.left = x + 'px'; el.style.top = y + 'px';
         })();
       });
     })();
 
     /* ═══════════════════════════════════
-       TIMELINE STAGGER
-    ═══════════════════════════════════ */
-    /* tl-entries use tl-col as IO root so clips don't prevent reveal */
-    const tlColRoot = document.getElementById('tl-col');
-    ['tl0', 'tl1', 'tl2', 'tl3', 'tl4'].forEach((id, i) => {
-      const el = document.getElementById(id); if (!el) return;
-      const obs = new IntersectionObserver(entries => {
-        if (entries[0].isIntersecting) { setTimeout(() => el.classList.add('in'), i * 220); obs.disconnect(); }
-      }, { threshold: .15, root: tlColRoot || null });
-      obs.observe(el);
-    });
-
-    /* ═══════════════════════════════════
-       TERMINAL
-    ═══════════════════════════════════ */
-    (() => {
-      const body = document.getElementById('term-body'); if (!body) return;
-      const lines = [
-        { t: 0, c: '#C9A84C', txt: '$ whoami' },
-        { t: 550, c: 'rgba(237,241,255,.36)', txt: '→ Kiran Mohan | AML Expert × Agentic AI Architect' },
-        { t: 1100, c: '#C9A84C', txt: '$ tree experience/ --depth=2' },
-        { t: 1500, c: '#4DD9D0', txt: 'experience/' },
-        { t: 1700, c: '#4DD9D0', txt: '├── Citibank_Nov2016-Nov2017/' },
-        { t: 1900, c: 'rgba(237,241,255,.26)', txt: '│   └── Junior_AML_Analyst (Mantas scenario tuning)' },
-        { t: 2200, c: '#4DD9D0', txt: '├── MoneyGram_Apr2019-Nov2020/' },
-        { t: 2400, c: 'rgba(237,241,255,.26)', txt: '│   └── Compliance_Analyst_III_II (Deputy TL, 10 FTEs)' },
-        { t: 2700, c: '#4DD9D0', txt: '└── ING_Tech_Poland_Dec2020-now/' },
-        { t: 2900, c: 'rgba(237,241,255,.26)', txt: '    ├── Senior_Investigator_BA (VBA/Python automation)' },
-        { t: 3050, c: 'rgba(237,241,255,.26)', txt: '    ├── BA_AML_Expert (TM Optimisation, Power BI)' },
-        { t: 3200, c: 'rgba(237,241,255,.26)', txt: '    └── Senior_FCP_TM_Backtesting (Copilot agents, 38 markets)' },
-        { t: 3700, c: '#C9A84C', txt: '$ cat certifications.json | jq' },
-        { t: 4100, c: '#C9A84C', txt: '{' },
-        { t: 4200, c: '#C9A84C', txt: '  "CTMA":       "ACAMS · Certified TM Analyst",' },
-        { t: 4350, c: '#C9A84C', txt: '  "Agentic_AI": "DeepLearning.ai · Certificate",' },
-        { t: 4500, c: '#C9A84C', txt: '  "MSc":        "Aerospace Eng · Warsaw TU"             ' },
-        { t: 4650, c: '#C9A84C', txt: '}' },
-        { t: 5100, c: '#C9A84C', txt: '$ echo $STATUS' },
-        { t: 5500, c: '#3DDB89', txt: '→ Open for Senior/Principal roles + advisory consulting' },
-        { t: 6000, c: '#C9A84C', txt: '█' },
-      ];
-      let fired = false;
-      const tobs = new IntersectionObserver(([e]) => {
-        if (e.isIntersecting && !fired) {
-          fired = true; body.innerHTML = '';
-          lines.forEach(l => setTimeout(() => {
-            const d = document.createElement('div');
-            d.className = 'term-ln'; d.style.color = l.c; d.textContent = l.txt;
-            body.appendChild(d); body.scrollTop = body.scrollHeight;
-          }, l.t));
-        }
-      }, { threshold: .3 });
-      const term = document.getElementById('exp-terminal');
-      if (term) tobs.observe(term);
-    })();
-
-    /* ═══════════════════════════════════
-       SCROLL-SCRUB (sticky parallax section)
+       CINEMATIC CAREER — SCROLL-SCRUB
     ═══════════════════════════════════ */
     (() => {
       const outer = document.getElementById('scrub-outer');
       const bg = document.getElementById('scrub-bg');
       if (!outer || !bg) return;
-      const tlTrack = document.getElementById('tl-track');
-      const tlCol = document.getElementById('tl-col');
+
+      const cards = document.querySelectorAll('.cine-card');
+      const dots = document.querySelectorAll('.cine-dot');
+      const progFill = document.getElementById('cine-progress-fill');
+      const TOTAL = cards.length; // 5
+
+      let activeIdx = -1;
+
+      function setCard(idx) {
+        if (idx === activeIdx) return;
+        activeIdx = idx;
+
+        cards.forEach((c, i) => {
+          c.classList.remove('active', 'exiting');
+          if (i === idx) {
+            c.classList.add('active');
+          } else if (i < idx) {
+            c.classList.add('exiting');
+          }
+        });
+
+        dots.forEach((d, i) => {
+          d.classList.remove('active', 'past');
+          if (i === idx) d.classList.add('active');
+          else if (i < idx) d.classList.add('past');
+        });
+      }
+
       function updateScrub() {
         const r = outer.getBoundingClientRect();
         if (r.top > innerHeight || r.bottom < 0) return;
         const prog = (innerHeight - r.top) / (innerHeight + r.height);
+
+        /* Background parallax */
         bg.style.transform = `translateY(${(prog - .3) * .38 * 260}px)`;
-        /* Sync timeline scroll with scrub progress */
-        if (tlTrack && tlCol) {
-          const overflow = Math.max(0, tlTrack.offsetHeight - tlCol.offsetHeight);
-          const shift = Math.max(0, Math.min(overflow, ((prog - .05) / 0.78) * overflow));
-          tlTrack.style.transform = `translateY(-${shift}px)`;
+
+        /* Progress bar */
+        if (progFill) {
+          progFill.style.width = (Math.max(0, Math.min(1, prog)) * 100) + '%';
         }
+
+        /* Map scroll progress to card index
+           Each card gets an equal slice of the scroll range */
+        const cardProg = Math.max(0, (prog - 0.03) / 0.85); // trim edges
+        const idx = Math.min(TOTAL - 1, Math.floor(cardProg * TOTAL));
+        setCard(idx >= 0 ? idx : 0);
       }
+
       window.addEventListener('scroll', updateScrub, { passive: true });
       updateScrub();
     })();
