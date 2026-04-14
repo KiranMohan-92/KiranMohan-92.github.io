@@ -549,6 +549,126 @@
         0 0 60px rgba(77, 217, 208, .04);
     }
 
+    /* AGENTIC PORTFOLIO DIVISIONS */
+    .ap-division {
+      font-family: var(--font-mono);
+      font-size: 1.1rem;
+      font-weight: 600;
+      letter-spacing: .3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin: 72px 0 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(201,168,76,.15);
+    }
+
+    .ap-division:first-of-type {
+      margin-top: 48px;
+    }
+
+    .ap-status {
+      font-family: var(--font-mono);
+      font-size: .82rem;
+      letter-spacing: .25em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin: 28px 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .ap-status::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(237,241,255,.06);
+    }
+
+    .ap-proj-header {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem,2.5vw,2rem);
+      font-weight: 300;
+      margin-bottom: 6px;
+    }
+
+    .ap-proj-sub {
+      font-family: var(--font-mono);
+      font-size: .62rem;
+      letter-spacing: .06em;
+      color: var(--muted);
+      margin-bottom: 28px;
+      line-height: 1.7;
+    }
+
+    .ai-proj-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .ai-proj-card {
+      position: relative;
+      background: rgba(10,14,26,.85);
+      border: 1px solid rgba(255,255,255,.05);
+      border-radius: 6px;
+      padding: 32px 26px;
+      transition: transform .35s cubic-bezier(.16,1,.3,1), box-shadow .35s;
+      cursor: default;
+    }
+
+    .ai-proj-card:hover { transform: translateY(-7px); box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+    .ai-proj-card.research { border-top: 2px dashed; }
+    .ai-proj-card:not(.research) { border-top: 2px solid; }
+
+    .ai-proj-icon {
+      width: 48px; height: 48px; margin-bottom: 16px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center; border: 1px solid;
+    }
+
+    .ai-proj-title {
+      font-family: var(--font-mono); font-weight: 500; font-size: .85rem;
+      letter-spacing: .07em; text-transform: uppercase; margin-bottom: 6px;
+    }
+
+    .ai-proj-collab {
+      font-family: var(--font-mono); font-size: .58rem; letter-spacing: .05em;
+      color: var(--muted); margin-bottom: 14px; font-style: italic;
+    }
+
+    .ai-proj-badge {
+      display: inline-block; font-family: var(--font-mono); font-size: .52rem;
+      letter-spacing: .12em; text-transform: uppercase; padding: 3px 10px;
+      border-radius: 2px; margin-bottom: 14px;
+    }
+
+    .ai-proj-desc {
+      font-family: var(--font-mono); font-size: .62rem; letter-spacing: .03em;
+      color: rgba(237,241,255,.5); line-height: 1.85; margin-bottom: 18px;
+    }
+
+    .ai-proj-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 18px; }
+
+    .ai-proj-tags span {
+      font-family: var(--font-mono); font-size: .52rem; letter-spacing: .08em;
+      text-transform: uppercase; padding: 4px 10px;
+      border: 1px solid rgba(237,241,255,.08); border-radius: 2px; color: rgba(237,241,255,.45);
+    }
+
+    .ai-proj-gh {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-mono); font-size: .6rem; letter-spacing: .08em;
+      text-transform: uppercase; text-decoration: none; transition: color .3s;
+    }
+
+    .ai-proj-gh:hover { opacity: .8; }
+
+    .ai-proj-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; }
+
+    @media (max-width: 900px) {
+      .ai-proj-grid, .ai-proj-grid-3 { grid-template-columns: 1fr; }
+    }
+
     .glass-dark {
       background: rgba(2, 4, 10, .75);
       backdrop-filter: blur(32px) saturate(140%);
@@ -2517,7 +2637,7 @@
     <ul class="nav-links">
       <li><a href="#diff">Edge</a></li>
       <li><a href="#exp">Career</a></li>
-      <li><a href="#content-factory">Agentic AI</a></li>
+      <li><a href="#agentic-portfolio">Agentic AI</a></li>
       <li><a href="#writing">Thought Leadership</a></li>
       <li><a href="#awards">Awards</a></li>
       <li><a href="#skills">Skills</a></li>
@@ -2568,7 +2688,7 @@
       </div>
 
       <div class="hero-ctas">
-        <button class="btn-gold" onclick="scroll2('content-factory')">Explore Work</button>
+        <button class="btn-gold" onclick="scroll2('agentic-portfolio')">Explore Work</button>
         <button class="btn-ghost" onclick="scroll2('writing')">Read Writing</button>
       </div>
     </div>
@@ -2781,35 +2901,56 @@
 
 
   <!-- ═══════════════════════════════════════════
-     CONTENT FACTORY — MULTI-AGENT PIPELINE
+     AGENTIC AI PORTFOLIO — Unified
 ═══════════════════════════════════════════ -->
-  <section id="content-factory" class="px-section" style="padding:0 60px;">
-    <div class="px-bg" id="cf-px"
-      style="">
-    </div>
+  <section id="agentic-portfolio" class="px-section" style="padding:0 60px;">
+    <div class="px-bg" id="ap-px" style=""></div>
     <div class="section-inner-wide">
 
-      <!-- Header -->
-      <div style="text-align:center;margin-bottom:72px;">
-        <div class="label sr" style="justify-content:center;">Agentic AI · Open Source</div>
+      <!-- Portfolio Header -->
+      <div style="text-align:center;margin-bottom:56px;">
+        <div class="label sr" style="justify-content:center;">Agentic AI · Portfolio</div>
         <div class="sr sd-1">
           <div class="ktype-line w-d0" style="display:block;text-align:center;"><span class="ktype-word">
-              <h2
-                style="font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,5rem);font-weight:300;line-height:1.0;">
-                Content</h2>
+              <h2 style="font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,5rem);font-weight:300;line-height:1.0;">Systems</h2>
             </span></div>
           <div class="ktype-line w-d3" style="display:block;text-align:center;"><span class="ktype-word">
-              <h2
-                style="font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,5rem);font-weight:300;font-style:italic;color:var(--cyan);line-height:1.0;">
-                Factory.</h2>
+              <h2 style="font-family:var(--font-display);font-size:clamp(2.8rem,5.5vw,5rem);font-weight:300;font-style:italic;color:var(--gold);line-height:1.0;">I Build.</h2>
             </span></div>
         </div>
-        <p class="sr sd-2"
-          style="font-family:var(--font-display);font-style:italic;font-size:clamp(1rem,1.8vw,1.28rem);color:var(--muted);max-width:640px;margin:22px auto 0;line-height:1.85;">
-          A fully autonomous multi-agent pipeline — from raw idea to published article, with no human prompting between
-          steps.
+        <p class="sr sd-2" style="font-family:var(--font-display);font-style:italic;font-size:clamp(1rem,1.8vw,1.28rem);color:var(--muted);max-width:640px;margin:22px auto 0;line-height:1.85;">
+          47 purpose-built domain agents across multi-agent swarms, intelligence platforms, and frontier research — engineered to production standards.
         </p>
       </div>
+
+      <!-- Ecosystem Stats -->
+      <div class="bento sr sd-2" style="margin-bottom:24px;">
+        <div class="bento-cell glass-cyan">
+          <div class="bento-num" style="color:var(--cyan);" data-target="47" data-suffix="">0</div>
+          <div class="bento-label">Domain agents built</div>
+        </div>
+        <div class="bento-cell glass-gold">
+          <div class="bento-num" style="color:var(--gold);" data-target="138" data-suffix="+">0</div>
+          <div class="bento-label">Total agent ecosystem</div>
+        </div>
+        <div class="bento-cell glass">
+          <div class="bento-num" style="color:var(--green);">1.91B</div>
+          <div class="bento-label">Tokens processed (3 weeks)</div>
+        </div>
+        <div class="bento-cell glass">
+          <div class="bento-num" style="color:var(--cyan);" data-target="6" data-suffix="+">0</div>
+          <div class="bento-label">LLM providers orchestrated</div>
+        </div>
+      </div>
+
+      <!-- ═══ SOLO PROJECTS ═══ -->
+      <div class="label sr" style="margin-top:48px;">Open Source · Solo Projects</div>
+      <div class="label sr">Completed</div>
+
+      <!-- Content Factory -->
+      <div id="content-factory">
+        <div class="ap-proj-header sr" style="color:var(--cyan);">Content Factory <span style="color:var(--gold);font-style:italic;">v2.3</span></div>
+        <p class="ap-proj-sub sr">A fully autonomous multi-agent pipeline — from raw idea to published article, with no human prompting between steps.</p>
 
       <!-- Animated pipeline flow -->
       <div class="sr sd-2" style="position:relative;margin-bottom:68px;">
@@ -3079,105 +3220,180 @@
         </a>
       </div>
 
-    </div>
-  </section>
+      </div><!-- /content-factory wrapper -->
 
-  <!-- ═══════════════════════════════════════════
-     KINETIC PHONE — AEGIS CONVERSATION
-═══════════════════════════════════════════ -->
-  <section id="phone-section" class="px-section" style="padding:0 60px;">
-    <div class="px-bg" id="phone-px"
-      style="">
-    </div>
-    <div class="section-inner">
-      <div class="phone-layout">
-        <!-- Text -->
-        <div>
-          <div class="label sr">Open Source · Collaborative Project</div>
-          <div class="sr sd-1" style="margin-bottom:18px;">
-            <div class="ktype-line w-d0"><span class="ktype-word">
-                <h2
-                  style="font-family:var(--font-display);font-size:clamp(2.4rem,4.5vw,4rem);font-weight:300;letter-spacing:-.01em;line-height:1.0;">
-                  AEGIS</h2>
-              </span></div>
-            <div class="ktype-line w-d3"><span class="ktype-word">
-                <h2
-                  style="font-family:var(--font-display);font-size:clamp(1.1rem,2vw,1.55rem);font-weight:300;font-style:italic;color:var(--gold);line-height:1.3;">
-                  Emergency · Multilingual AI Response</h2>
-              </span></div>
+      <!-- Solo Ongoing -->
+      <div class="label sr">Work in Progress</div>
+      <div class="ai-proj-grid-3 sr sd-1">
+
+        <!-- Orbital Inspect -->
+        <div class="ai-proj-card" style="border-top-color:rgba(201,168,76,.55);border-color:rgba(201,168,76,.15);">
+          <div class="ai-proj-icon" style="border-color:rgba(201,168,76,.28);background:rgba(201,168,76,.08);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(201,168,76,.9)" stroke-width="1.5">
+              <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </svg>
           </div>
-          <p class="sr sd-2" style="color:var(--muted);line-height:1.88;font-size:.96rem;margin-bottom:10px;">
-            Valencia, 2024. 215 people died despite a 12.5-hour warning — because emergency alerts failed to cross the
-            language barrier. AEGIS is an AI system built to eliminate that gap: real-time distress detection across 12+
-            languages, instant unit dispatch, and voice response in the caller's own tongue.
-          </p>
-          <p class="sr sd-2"
-            style="color:rgba(201,168,76,.55);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;margin-bottom:22px;">
-            Built in collaboration with Chetan Bavdhankar · Mistral AI Hackathon 2026
-          </p>
-          <div class="sr sd-3" style="display:flex;flex-direction:column;gap:10px;margin-bottom:26px;">
-            <div class="glass-gold"
-              style="padding:14px 18px;border-radius:3px;display:flex;align-items:center;gap:12px;">
-              <span style="font-size:1.1rem;">🌍</span>
-              <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;"><span
-                  style="color:var(--gold);">12+ languages</span> · Real-time detection</div>
-            </div>
-            <div class="glass-cyan"
-              style="padding:14px 18px;border-radius:3px;display:flex;align-items:center;gap:12px;">
-              <span style="font-size:1.1rem;">🤖</span>
-              <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;"><span
-                  style="color:var(--cyan);">3 Mistral agents</span> · Ingest → Analyze → Respond</div>
-            </div>
-            <div class="glass" style="padding:14px 18px;border-radius:3px;display:flex;align-items:center;gap:12px;">
-              <span style="font-size:1.1rem;">🎙</span>
-              <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;"><span
-                  style="color:var(--white);">ElevenLabs TTS</span> · Voice in caller's language</div>
-            </div>
+          <div class="ai-proj-title" style="color:var(--gold);">Orbital Inspect</div>
+          <div class="ai-proj-collab">5-agent satellite insurance intelligence</div>
+          <div class="ai-proj-desc">Multi-model adversarial validation — Codex GPT 5.4 as auditor, Gemini 3.1 Pro as validator. SSE streaming, durable jobs, human-in-the-loop decisions with admin-gated overrides.</div>
+          <div class="ai-proj-tags">
+            <span>5 Agents</span><span>Multi-Model</span><span>JWT/RBAC</span><span>SSE</span><span>OpenTelemetry</span>
           </div>
-          <!-- GitHub CTA -->
-          <div class="sr sd-4">
-            <a href="https://github.com/chetanbavdhankar/Aegis" target="_blank" rel="noopener"
-              style="display:inline-flex;align-items:center;gap:11px;padding:13px 24px;border:1px solid rgba(201,168,76,.35);background:rgba(201,168,76,.06);color:var(--gold);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all .3s;"
-              onmouseover="this.style.background='rgba(201,168,76,.14)';this.style.borderColor='rgba(201,168,76,.7)';"
-              onmouseout="this.style.background='rgba(201,168,76,.06)';this.style.borderColor='rgba(201,168,76,.35)';">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="opacity:.8;">
-                <path
-                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-              </svg>
-              View on GitHub · chetanbavdhankar/Aegis
-              <span style="opacity:.5;">↗</span>
-            </a>
-          </div>
+          <a href="https://github.com/KiranMohan-92/orbital-inspect" target="_blank" class="ai-proj-gh" style="color:var(--gold);">View on GitHub <span style="opacity:.5;">↗</span></a>
         </div>
 
-        <!-- Phone mockup -->
-        <div class="sr sd-2" id="phone-wrap">
-          <div class="phone-frame">
-            <div class="phone-notch"></div>
-            <div class="phone-header">
-              <div class="phone-avatar">🆘</div>
-              <div>
-                <div class="phone-contact-name">AEGIS Emergency</div>
-                <div class="phone-status">● Online · Multilingual</div>
+        <!-- Agent Economy Fraud -->
+        <div class="ai-proj-card research" style="border-top-color:rgba(255,94,91,.5);border-color:rgba(255,94,91,.12);">
+          <div class="ai-proj-badge" style="color:var(--red);border:1px solid rgba(255,94,91,.25);background:rgba(255,94,91,.06);">Ongoing Research · GPD Framework</div>
+          <div class="ai-proj-icon" style="border-color:rgba(255,94,91,.28);background:rgba(255,94,91,.08);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(255,94,91,.9)" stroke-width="1.5">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div class="ai-proj-title" style="color:var(--red);">Agent Economy Fraud</div>
+          <div class="ai-proj-collab">Agent-to-agent transaction network analysis</div>
+          <div class="ai-proj-desc">Fraud patterns in agent economic networks, validated against 81,000 real blockchain transactions via Dune Analytics. Statistical mechanics frameworks for emergent fraud typologies.</div>
+          <div class="ai-proj-tags">
+            <span>81K Transactions</span><span>Dune Analytics</span><span>NetworkX</span><span>Statistical Mechanics</span>
+          </div>
+          <a href="https://github.com/KiranMohan-92/agent-economy-fraud" target="_blank" class="ai-proj-gh" style="color:var(--red);">View on GitHub <span style="opacity:.5;">↗</span></a>
+        </div>
+
+        <!-- Agent Statistical Mechanics -->
+        <div class="ai-proj-card research" style="border-top-color:rgba(61,219,137,.5);border-color:rgba(61,219,137,.12);">
+          <div class="ai-proj-badge" style="color:var(--green);border:1px solid rgba(61,219,137,.25);background:rgba(61,219,137,.06);">Ongoing Research · GPD Framework</div>
+          <div class="ai-proj-icon" style="border-color:rgba(61,219,137,.28);background:rgba(61,219,137,.08);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(61,219,137,.9)" stroke-width="1.5">
+              <path d="M2 20h20M6 20V10M10 20V4M14 20V8M18 20V2"/>
+            </svg>
+          </div>
+          <div class="ai-proj-title" style="color:var(--green);">Agent Statistical Mechanics</div>
+          <div class="ai-proj-collab">Theoretical framework for multi-agent dynamics</div>
+          <div class="ai-proj-desc">Applying statistical mechanics — partition functions, phase transitions, scaling laws — to understand emergent behaviour in multi-agent AI systems.</div>
+          <div class="ai-proj-tags">
+            <span>Scaling Laws</span><span>Phase Transitions</span><span>Agent Dynamics</span><span>arXiv Target</span>
+          </div>
+          <a href="https://github.com/KiranMohan-92/agent-statistical-mechanics" target="_blank" class="ai-proj-gh" style="color:var(--green);">View on GitHub <span style="opacity:.5;">↗</span></a>
+        </div>
+
+      </div><!-- /ai-proj-grid-3 -->
+
+      <!-- ═══ COLLABORATION PROJECTS ═══ -->
+      <div class="label sr" style="margin-top:72px;">Open Source · Collaborative Projects</div>
+      <div class="label sr">Completed</div>
+
+      <!-- AEGIS -->
+      <div style="margin-bottom:56px;">
+        <div class="phone-layout">
+          <!-- Text -->
+          <div>
+            <div class="sr sd-1" style="margin-bottom:18px;">
+              <div class="ktype-line w-d0"><span class="ktype-word">
+                  <h2
+                    style="font-family:var(--font-display);font-size:clamp(2.4rem,4.5vw,4rem);font-weight:300;letter-spacing:-.01em;line-height:1.0;">
+                    AEGIS</h2>
+                </span></div>
+              <div class="ktype-line w-d3"><span class="ktype-word">
+                  <h2
+                    style="font-family:var(--font-display);font-size:clamp(1.1rem,2vw,1.55rem);font-weight:300;font-style:italic;color:var(--gold);line-height:1.3;">
+                    Emergency · Multilingual AI Response</h2>
+                </span></div>
+            </div>
+            <p class="sr sd-2" style="color:var(--muted);line-height:1.88;font-size:.96rem;margin-bottom:10px;">
+              Valencia, 2024. 215 people died despite a 12.5-hour warning — because emergency alerts failed to cross the
+              language barrier. AEGIS is an AI system built to eliminate that gap: real-time distress detection across 12+
+              languages, instant unit dispatch, and voice response in the caller's own tongue.
+            </p>
+            <p class="sr sd-2"
+              style="color:rgba(201,168,76,.55);font-family:var(--font-mono);font-size:.72rem;letter-spacing:.08em;margin-bottom:22px;">
+              Built in collaboration with Chetan Bavdhankar · Mistral AI Hackathon 2026
+            </p>
+            <div class="sr sd-3" style="display:flex;flex-direction:column;gap:10px;margin-bottom:26px;">
+              <div class="glass-gold"
+                style="padding:14px 18px;border-radius:3px;display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.1rem;">🌍</span>
+                <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;"><span
+                    style="color:var(--gold);">12+ languages</span> · Real-time detection</div>
+              </div>
+              <div class="glass-cyan"
+                style="padding:14px 18px;border-radius:3px;display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.1rem;">🤖</span>
+                <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;"><span
+                    style="color:var(--cyan);">3 Mistral agents</span> · Ingest → Analyze → Respond</div>
+              </div>
+              <div class="glass" style="padding:14px 18px;border-radius:3px;display:flex;align-items:center;gap:12px;">
+                <span style="font-size:1.1rem;">🎙</span>
+                <div style="font-family:var(--font-mono);font-size:.68rem;color:var(--muted);letter-spacing:.06em;"><span
+                    style="color:var(--white);">ElevenLabs TTS</span> · Voice in caller's language</div>
               </div>
             </div>
-            <div class="phone-messages" id="phone-msgs">
-              <!-- Messages injected by JS -->
+            <!-- GitHub CTA -->
+            <div class="sr sd-4">
+              <a href="https://github.com/chetanbavdhankar/Aegis" target="_blank" rel="noopener"
+                style="display:inline-flex;align-items:center;gap:11px;padding:13px 24px;border:1px solid rgba(201,168,76,.35);background:rgba(201,168,76,.06);color:var(--gold);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all .3s;"
+                onmouseover="this.style.background='rgba(201,168,76,.14)';this.style.borderColor='rgba(201,168,76,.7)';"
+                onmouseout="this.style.background='rgba(201,168,76,.06)';this.style.borderColor='rgba(201,168,76,.35)';">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="opacity:.8;">
+                  <path
+                    d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                </svg>
+                View on GitHub · chetanbavdhankar/Aegis
+                <span style="opacity:.5;">↗</span>
+              </a>
             </div>
-            <div id="typing-ind" class="typing-indicator">
-              <div class="typing-dot"></div>
-              <div class="typing-dot"></div>
-              <div class="typing-dot"></div>
-            </div>
-            <div class="phone-outcome" id="phone-outcome">
-              <div class="outcome-title">✓ SAFELY EVACUATED</div>
-              <div class="outcome-stat">47 seconds</div>
-              <div class="outcome-sub">Response time · Unit 7 dispatched · Rescue confirmed</div>
+          </div>
+
+          <!-- Phone mockup -->
+          <div class="sr sd-2" id="phone-wrap">
+            <div class="phone-frame">
+              <div class="phone-notch"></div>
+              <div class="phone-header">
+                <div class="phone-avatar">🆘</div>
+                <div>
+                  <div class="phone-contact-name">AEGIS Emergency</div>
+                  <div class="phone-status">● Online · Multilingual</div>
+                </div>
+              </div>
+              <div class="phone-messages" id="phone-msgs">
+                <!-- Messages injected by JS -->
+              </div>
+              <div id="typing-ind" class="typing-indicator">
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+                <div class="typing-dot"></div>
+              </div>
+              <div class="phone-outcome" id="phone-outcome">
+                <div class="outcome-title">✓ SAFELY EVACUATED</div>
+                <div class="outcome-stat">47 seconds</div>
+                <div class="outcome-sub">Response time · Unit 7 dispatched · Rescue confirmed</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <!-- Collaboration Ongoing -->
+      <div class="label sr">Work in Progress</div>
+      <div class="ai-proj-grid sr sd-1" style="max-width:50%;">
+        <!-- DeepInspect V2 -->
+        <div class="ai-proj-card" style="border-top-color:rgba(77,217,208,.6);border-color:rgba(77,217,208,.15);">
+          <div class="ai-proj-badge" style="color:var(--cyan);border:1px solid rgba(77,217,208,.25);background:rgba(77,217,208,.06);">In Active Development</div>
+          <div class="ai-proj-icon" style="border-color:rgba(77,217,208,.28);background:rgba(77,217,208,.08);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="rgba(77,217,208,.9)" stroke-width="1.5">
+              <path d="M3 21h18M9 21V10M15 21V10M3 10l9-7 9 7M12 3v7"/>
+            </svg>
+          </div>
+          <div class="ai-proj-title" style="color:var(--cyan);">DeepInspect V2</div>
+          <div class="ai-proj-collab">8-agent bridge infrastructure intelligence</div>
+          <div class="ai-proj-desc">Full-stack platform: FastAPI + React + PostgreSQL. 8 parallel risk agents, swarm synthesis, 11-criteria scoring, 9 EU rating systems. CQRS, circuit breakers, 203+ tests, Playwright E2E.</div>
+          <div class="ai-proj-tags">
+            <span>8 Agents</span><span>FastAPI</span><span>React</span><span>PostgreSQL</span><span>203+ Tests</span><span>Docker CI/CD</span>
+          </div>
+          <a href="https://github.com/KiranMohan-92/hackathon-deepinspect" target="_blank" class="ai-proj-gh" style="color:var(--cyan);">View on GitHub <span style="opacity:.5;">↗</span></a>
+        </div>
+      </div>
+
+    </div><!-- /section-inner-wide -->
   </section>
 
   <!-- ═══════════════════════════════════════════
@@ -3191,7 +3407,7 @@
       <div class="phone-layout">
         <!-- Text -->
         <div>
-          <div class="label sr">Work in Progress · Open Source</div>
+          <div class="label sr">Creative Experiment · Work in Progress</div>
           <div class="sr sd-1" style="margin-bottom:18px;">
             <div class="ktype-line w-d0"><span class="ktype-word">
                 <h2
@@ -3230,19 +3446,7 @@
                   style="color:var(--white);">Python & FFmpeg</span> · Local Orchestration</div>
             </div>
           </div>
-          <!-- GitHub CTA -->
           <div class="sr sd-4">
-            <a href="https://github.com/KiranMohan-92" target="_blank" rel="noopener"
-              style="display:inline-flex;align-items:center;gap:11px;padding:13px 24px;border:1px solid rgba(201,168,76,.35);background:rgba(201,168,76,.06);color:var(--gold);font-family:var(--font-mono);font-size:.7rem;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border-radius:2px;transition:all .3s;"
-              onmouseover="this.style.background='rgba(201,168,76,.14)';this.style.borderColor='rgba(201,168,76,.7)';"
-              onmouseout="this.style.background='rgba(201,168,76,.06)';this.style.borderColor='rgba(201,168,76,.35)';">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style="opacity:.8;">
-                <path
-                  d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
-              </svg>
-              View on GitHub
-              <span style="opacity:.5;">↗</span>
-            </a>
           </div>
         </div>
 
@@ -3985,7 +4189,7 @@
       const dot = document.getElementById('cur-dot'), ring = document.getElementById('cur-ring');
       let mx = -200, my = -200, rx = -200, ry = -200;
       document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
-      document.querySelectorAll('a,button,.proj-card,.article-card,.bento-cell,.channel-card,.dash-alert,.cine-card').forEach(el => {
+      document.querySelectorAll('a,button,.proj-card,.article-card,.bento-cell,.channel-card,.dash-alert,.cine-card,.ai-proj-card').forEach(el => {
         el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
         el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
       });
@@ -4017,7 +4221,7 @@
     const pxMap = [
       ['hero', 'hero-px', .5], ['diff', 'diff-px', .3], ['exp', 'scrub-bg', .25],
       ['projects', 'proj-px', .35],
-      ['phone-section', 'phone-px', .32], ['content-factory', 'cf-px', .28], ['writing', 'writing-px', .25], ['contact', 'contact-px', .3]
+      ['agentic-portfolio', 'ap-px', .3], ['writing', 'writing-px', .25], ['contact', 'contact-px', .3]
     ];
     function updateParallax() {
       pxMap.forEach(([sid, bid, spd]) => {
