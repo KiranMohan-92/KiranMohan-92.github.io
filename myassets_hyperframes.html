@@ -1,0 +1,1876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>myassets · HyperFrames Immersive Deck</title>
+  <meta
+    name="description"
+    content="Immersive HyperFrames-style HTML deck that stages the source slide images from the myassets folder inside the same interactive 3D presentation shell."
+  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;500;600;700&family=Chakra+Petch:wght@300;400;500;600;700&family=Orbitron:wght@500;600;700;800;900&display=swap"
+    rel="stylesheet"
+  >
+  <style>
+    :root {
+      --bg: #03050A;
+      --panel: rgba(7, 18, 27, 0.82);
+      --panel-strong: rgba(7, 18, 27, 0.94);
+      --fg: #EAFBF4;
+      --muted: #9FB8B2;
+      --phosphor: #65FFB2;
+      --verify: #74D7FF;
+      --violet: #B68CFF;
+      --amber: #FFB86B;
+      --crimson: #FF5C7A;
+      --accent-rgb: 101 255 178;
+      --accent2-rgb: 116 215 255;
+      --glow-x: 50%;
+      --glow-y: 42%;
+      --tilt-x: 0;
+      --tilt-y: 0;
+      --display: 'Orbitron', system-ui, sans-serif;
+      --body: 'Chakra Petch', system-ui, sans-serif;
+      --mono: 'Azeret Mono', ui-monospace, monospace;
+      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-inout: cubic-bezier(0.76, 0, 0.24, 1);
+      --card-ratio: 1376 / 768;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      color: var(--fg);
+      overflow: hidden;
+      font-family: var(--body);
+      -webkit-font-smoothing: antialiased;
+      text-rendering: geometricPrecision;
+    }
+
+    body {
+      background:
+        radial-gradient(circle at 18% 12%, rgba(116, 215, 255, 0.07), transparent 24%),
+        radial-gradient(circle at 82% 18%, rgba(182, 140, 255, 0.10), transparent 28%),
+        radial-gradient(circle at 50% 76%, rgba(101, 255, 178, 0.08), transparent 34%),
+        #03050A;
+    }
+
+    [data-composition-id="agentic-engineering-pptx"] {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      perspective: 2400px;
+      isolation: isolate;
+    }
+
+    #depth-layer,
+    #matrix-layer,
+    #shockwave-layer,
+    #cursor-glow,
+    .scanlines,
+    .vignette,
+    .letterbox,
+    #blackout,
+    #loading-veil {
+      position: fixed;
+      inset: 0;
+    }
+
+    #depth-layer,
+    #matrix-layer {
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    #depth-layer {
+      z-index: 1;
+      opacity: 0.95;
+    }
+
+    #matrix-layer {
+      z-index: 2;
+      mix-blend-mode: screen;
+      opacity: 0.28;
+    }
+
+    #cursor-glow {
+      z-index: 4;
+      pointer-events: none;
+      left: auto;
+      top: auto;
+      width: min(58vw, 820px);
+      height: min(58vw, 820px);
+      transform: translate(-50%, -50%);
+      background:
+        radial-gradient(
+          circle at var(--glow-x) var(--glow-y),
+          rgba(255, 255, 255, 0.10),
+          rgba(116, 215, 255, 0.12) 18%,
+          rgba(182, 140, 255, 0.09) 36%,
+          rgba(101, 255, 178, 0.06) 52%,
+          transparent 74%
+        );
+      filter: blur(34px);
+      opacity: 0.82;
+    }
+
+    #shockwave-layer {
+      z-index: 36;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .shockwave {
+      position: absolute;
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      transform: translate(-50%, -50%) scale(0.15);
+      border: 1px solid rgb(var(--accent2-rgb) / 0.86);
+      box-shadow:
+        0 0 20px rgb(var(--accent2-rgb) / 0.7),
+        0 0 44px rgb(var(--accent-rgb) / 0.28),
+        inset 0 0 18px rgb(var(--accent-rgb) / 0.22);
+      animation: shockwave 900ms var(--ease-out) forwards;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes shockwave {
+      0% {
+        opacity: 0.95;
+        transform: translate(-50%, -50%) scale(0.15);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(22);
+      }
+    }
+
+    .scanlines {
+      z-index: 30;
+      pointer-events: none;
+      opacity: 0.12;
+      background: repeating-linear-gradient(
+        to bottom,
+        transparent 0,
+        transparent 2px,
+        rgba(101, 255, 178, 0.07) 2px,
+        rgba(101, 255, 178, 0.07) 3px
+      );
+    }
+
+    .vignette {
+      z-index: 31;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at center, transparent 36%, rgba(0, 0, 0, 0.76) 100%),
+        linear-gradient(180deg, rgba(0, 0, 0, 0.16), transparent 18%, transparent 82%, rgba(0, 0, 0, 0.28));
+    }
+
+    .letterbox {
+      display: none;
+    }
+
+    #blackout {
+      z-index: 90;
+      pointer-events: none;
+      background: #000;
+      opacity: 0;
+      transition: opacity 260ms linear;
+    }
+
+    #blackout.on {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    #loading-veil {
+      z-index: 95;
+      display: grid;
+      place-items: center;
+      background:
+        radial-gradient(circle at 50% 50%, rgba(7, 18, 27, 0.92), rgba(0, 0, 0, 0.98));
+      transition: opacity 500ms var(--ease-out), visibility 500ms linear;
+    }
+
+    #loading-veil.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .loading-card {
+      width: min(520px, 78vw);
+      padding: 28px 30px;
+      border: 1px solid rgb(var(--accent-rgb) / 0.24);
+      background: linear-gradient(180deg, rgba(7, 18, 27, 0.92), rgba(4, 10, 16, 0.82));
+      box-shadow:
+        0 0 60px rgb(var(--accent-rgb) / 0.14),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(14px);
+      text-align: center;
+    }
+
+    .loading-card .eyebrow,
+    .hud-eyebrow,
+    .meta-k {
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+    }
+
+    .loading-card .eyebrow {
+      color: rgb(var(--accent-rgb));
+      margin-bottom: 14px;
+    }
+
+    .loading-card .title {
+      font-family: var(--display);
+      font-size: clamp(34px, 5vw, 68px);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      margin-bottom: 14px;
+    }
+
+    .loading-card .body {
+      font-size: clamp(18px, 2.1vw, 24px);
+      line-height: 1.32;
+      color: rgba(234, 251, 244, 0.78);
+    }
+
+    .presentation-shell {
+      position: relative;
+      z-index: 20;
+      width: 100%;
+      height: 100%;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 92px;
+      gap: 22px;
+      padding: 34px 28px 32px;
+      pointer-events: none;
+    }
+
+    .thumb-rail,
+    .mode-rail,
+    .viewer-shell,
+    .chrome-block,
+    .bottom-bar,
+    .overview-panel {
+      pointer-events: auto;
+    }
+
+    .thumb-rail {
+      display: none;
+      position: relative;
+      z-index: 24;
+      flex-direction: column;
+      gap: 10px;
+      align-self: center;
+      max-height: calc(100vh - 144px);
+      overflow-y: auto;
+      padding-right: 6px;
+      scrollbar-width: thin;
+      scrollbar-color: rgb(var(--accent-rgb) / 0.35) transparent;
+    }
+
+    .thumb-rail::-webkit-scrollbar,
+    .overview-grid::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    .thumb-rail::-webkit-scrollbar-thumb,
+    .overview-grid::-webkit-scrollbar-thumb {
+      background: rgb(var(--accent-rgb) / 0.28);
+      border-radius: 999px;
+    }
+
+    .thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(7, 18, 27, 0.88), rgba(4, 10, 16, 0.8));
+      overflow: hidden;
+      cursor: pointer;
+      transition:
+        transform 360ms var(--ease-out),
+        border-color 360ms var(--ease-out),
+        opacity 360ms var(--ease-out),
+        box-shadow 360ms var(--ease-out);
+      opacity: 0.5;
+      transform: translateX(0) scale(0.96);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+    }
+
+    .thumb:hover,
+    .thumb:focus-visible {
+      outline: none;
+      opacity: 0.88;
+      transform: translateX(4px) scale(1);
+      border-color: rgb(var(--accent2-rgb) / 0.42);
+    }
+
+    .thumb.is-active {
+      opacity: 1;
+      transform: translateX(10px) scale(1);
+      border-color: rgb(var(--accent-rgb) / 0.7);
+      box-shadow:
+        0 0 26px rgb(var(--accent-rgb) / 0.22),
+        0 0 0 1px rgb(var(--accent-rgb) / 0.34);
+    }
+
+    .thumb img,
+    .overview-tile img,
+    .slide-card img,
+    .reflection-card img {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .thumb img,
+    .overview-tile img {
+      filter: brightness(0.94) saturate(1.05) contrast(1.03);
+    }
+
+    .thumb .index,
+    .overview-tile .index {
+      position: absolute;
+      left: 8px;
+      top: 8px;
+      padding: 4px 6px;
+      background: rgba(0, 0, 0, 0.66);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgb(var(--accent-rgb));
+      backdrop-filter: blur(8px);
+    }
+
+    .thumb .bar {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      transform-origin: left center;
+      transform: scaleX(0);
+      background: rgb(var(--accent-rgb));
+      box-shadow: 0 0 10px rgb(var(--accent-rgb) / 0.6);
+      transition: transform 360ms var(--ease-out);
+    }
+
+    .thumb.is-active .bar {
+      transform: scaleX(1);
+    }
+
+    .viewer-shell {
+      position: relative;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      min-width: 0;
+      width: min(100%, 2160px);
+      margin: 0 auto;
+    }
+
+    .chrome-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 18px;
+      margin-bottom: 16px;
+    }
+
+    .chrome-block {
+      position: relative;
+      padding: 16px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(180deg, rgba(7, 18, 27, 0.76), rgba(4, 10, 16, 0.56));
+      backdrop-filter: blur(14px);
+      box-shadow: 0 0 36px rgba(0, 0, 0, 0.22);
+    }
+
+    .chrome-block::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      right: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, rgb(var(--accent-rgb)), transparent);
+      opacity: 0.55;
+    }
+
+    .chrome-row .chrome-block:first-child {
+      min-width: 320px;
+      max-width: 520px;
+    }
+
+    .hud-eyebrow {
+      color: rgb(var(--accent-rgb));
+      margin-bottom: 10px;
+    }
+
+    .hud-title {
+      font-family: var(--display);
+      font-size: clamp(28px, 3vw, 48px);
+      line-height: 0.96;
+      letter-spacing: -0.04em;
+      margin-bottom: 8px;
+    }
+
+    .hud-sub {
+      font-size: clamp(16px, 1.2vw, 19px);
+      line-height: 1.35;
+      color: rgba(234, 251, 244, 0.74);
+    }
+
+    .meta-stack {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 8px;
+      min-width: 200px;
+      text-align: right;
+    }
+
+    .meta-k {
+      color: rgba(159, 184, 178, 0.7);
+    }
+
+    .meta-v {
+      font-family: var(--display);
+      font-size: clamp(28px, 4vw, 62px);
+      line-height: 0.92;
+      letter-spacing: -0.05em;
+      color: rgb(var(--accent-rgb));
+      text-shadow: 0 0 18px rgb(var(--accent-rgb) / 0.35);
+    }
+
+    .meta-v .slash {
+      color: rgba(234, 251, 244, 0.26);
+    }
+
+    .viewer-zone {
+      position: relative;
+      display: grid;
+      place-items: center;
+      min-height: 0;
+    }
+
+    .viewer-zone::before {
+      content: '';
+      position: absolute;
+      inset: 9% 6%;
+      border: 1px solid rgb(var(--accent2-rgb) / 0.08);
+      border-radius: 30px;
+      box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+        0 0 60px rgb(var(--accent-rgb) / 0.05);
+      background:
+        radial-gradient(circle at 50% 45%, rgb(var(--accent-rgb) / 0.07), transparent 38%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.01), transparent 24%, transparent 72%, rgba(255, 255, 255, 0.01));
+      backdrop-filter: blur(12px);
+    }
+
+    .viewer-zone::after {
+      content: '';
+      position: absolute;
+      left: 12%;
+      right: 12%;
+      bottom: 10%;
+      height: 16%;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgb(var(--accent-rgb) / 0.10), transparent 70%);
+      filter: blur(42px);
+      opacity: 0.9;
+    }
+
+    .deck-cluster {
+      position: relative;
+      width: min(74vw, 1660px);
+      aspect-ratio: var(--card-ratio);
+      transform-style: preserve-3d;
+      transform:
+        translateY(-12px)
+        rotateX(calc(var(--tilt-y) * 0.28deg))
+        rotateY(calc(var(--tilt-x) * 0.22deg));
+      transition: transform 300ms linear;
+    }
+
+    .slide-card {
+      position: absolute;
+      inset: 0;
+      transform-style: preserve-3d;
+      opacity: 0;
+      pointer-events: none;
+      transition:
+        transform 900ms var(--ease-out),
+        opacity 720ms var(--ease-out),
+        filter 720ms var(--ease-out);
+      transform:
+        translate3d(var(--tx, 0px), var(--ty, 0px), var(--tz, -1200px))
+        rotateY(var(--ry, 0deg))
+        rotateX(var(--rx, 0deg))
+        scale(var(--scale, 0.55));
+      filter: blur(var(--blur, 0px));
+      z-index: var(--z, 0);
+      will-change: transform, opacity;
+    }
+
+    .slide-card.is-visible {
+      opacity: var(--opacity, 1);
+    }
+
+    .slide-stack {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 22px;
+      border-radius: 34px;
+      background:
+        linear-gradient(180deg, rgba(7, 18, 27, 0.92), rgba(4, 10, 16, 0.74)),
+        rgba(0, 0, 0, 0.34);
+      border: 1px solid rgb(var(--accent-rgb) / 0.2);
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.03),
+        0 48px 120px rgba(0, 0, 0, 0.42),
+        0 0 60px rgb(var(--accent-rgb) / 0.12);
+      backdrop-filter: blur(18px);
+      transform-style: preserve-3d;
+      overflow: hidden;
+    }
+
+    .slide-card.is-active .slide-stack {
+      box-shadow:
+        0 0 0 1px rgb(var(--accent-rgb) / 0.12),
+        0 52px 140px rgba(0, 0, 0, 0.5),
+        0 0 88px rgb(var(--accent-rgb) / 0.18);
+    }
+
+    .slide-stack::before,
+    .slide-stack::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .slide-stack::before {
+      inset: 14px;
+      border-radius: 24px;
+      border: 1px solid rgb(var(--accent2-rgb) / 0.14);
+      box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.025);
+    }
+
+    .slide-stack::after {
+      background:
+        radial-gradient(circle at var(--glow-x) var(--glow-y), rgb(var(--accent2-rgb) / 0.18), transparent 28%),
+        linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent 20%, transparent 70%, rgba(255, 255, 255, 0.04));
+      mix-blend-mode: screen;
+      opacity: 0.72;
+    }
+
+    .slide-frame {
+      position: absolute;
+      inset: 22px;
+      border-radius: 22px;
+      overflow: hidden;
+      background: #02050a;
+      transform: translateZ(0);
+    }
+
+    .slide-frame .inner-grid,
+    .slide-frame .gloss {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .slide-frame .inner-grid {
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 12%, transparent 88%, rgba(255, 255, 255, 0.04)),
+        repeating-linear-gradient(
+          to right,
+          transparent 0,
+          transparent 88px,
+          rgb(var(--accent2-rgb) / 0.05) 88px,
+          rgb(var(--accent2-rgb) / 0.05) 89px
+        ),
+        repeating-linear-gradient(
+          to bottom,
+          transparent 0,
+          transparent 66px,
+          rgb(var(--accent-rgb) / 0.04) 66px,
+          rgb(var(--accent-rgb) / 0.04) 67px
+        );
+      mix-blend-mode: screen;
+      opacity: 0.24;
+    }
+
+    .slide-frame .gloss {
+      background:
+        radial-gradient(circle at var(--glow-x) var(--glow-y), rgba(255, 255, 255, 0.16), transparent 26%),
+        linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 16%, transparent 82%, rgba(0, 0, 0, 0.12));
+      mix-blend-mode: screen;
+      opacity: 0.7;
+    }
+
+    .slide-card img {
+      filter: contrast(1.04) saturate(1.05) brightness(1.02);
+      transform: scale(1.001);
+    }
+
+    .card-caption {
+      position: absolute;
+      left: 24px;
+      right: 24px;
+      bottom: -48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(234, 251, 244, 0.58);
+      pointer-events: none;
+      transition: opacity 360ms var(--ease-out), transform 360ms var(--ease-out);
+      transform: translateY(6px);
+      opacity: 0;
+    }
+
+    .slide-card.is-active .card-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .caption-right {
+      color: rgba(159, 184, 178, 0.72);
+    }
+
+    .reflection-wrap {
+      position: absolute;
+      left: 50%;
+      bottom: max(6vh, 54px);
+      width: min(48vw, 1120px);
+      aspect-ratio: var(--card-ratio);
+      transform: translateX(-50%) perspective(1200px) rotateX(78deg) translateY(34px);
+      opacity: 0.38;
+      filter: blur(5px);
+      pointer-events: none;
+      z-index: 18;
+    }
+
+    .reflection-card {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
+      border-radius: 24px;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.58), transparent 78%);
+      -webkit-mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.58), transparent 78%);
+    }
+
+    .reflection-card img {
+      transform: scaleY(-1);
+      opacity: 0.78;
+      filter: brightness(0.72) saturate(0.86);
+    }
+
+    .bottom-bar {
+      position: relative;
+      z-index: 24;
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 16px;
+      align-items: center;
+      margin-top: 14px;
+    }
+
+    .bar-chip {
+      padding: 12px 14px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      background: linear-gradient(180deg, rgba(7, 18, 27, 0.74), rgba(4, 10, 16, 0.54));
+      backdrop-filter: blur(12px);
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: rgba(234, 251, 244, 0.62);
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .bar-chip.center {
+      justify-content: center;
+      color: rgb(var(--accent-rgb));
+    }
+
+    .live-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgb(var(--accent-rgb));
+      box-shadow: 0 0 12px rgb(var(--accent-rgb) / 0.7);
+      flex: 0 0 auto;
+    }
+
+    .mode-rail {
+      position: relative;
+      z-index: 24;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      align-items: stretch;
+    }
+
+    .mode-btn {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(180deg, rgba(7, 18, 27, 0.78), rgba(4, 10, 16, 0.58));
+      color: rgba(234, 251, 244, 0.7);
+      padding: 12px 10px;
+      writing-mode: vertical-rl;
+      text-orientation: mixed;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition:
+        transform 260ms var(--ease-out),
+        border-color 260ms var(--ease-out),
+        color 260ms var(--ease-out),
+        box-shadow 260ms var(--ease-out);
+    }
+
+    .mode-btn:hover,
+    .mode-btn:focus-visible,
+    .mode-btn.is-on {
+      outline: none;
+      transform: translateX(-4px);
+      border-color: rgb(var(--accent-rgb) / 0.44);
+      color: rgb(var(--accent-rgb));
+      box-shadow: 0 0 24px rgb(var(--accent-rgb) / 0.12);
+    }
+
+    .overview {
+      position: fixed;
+      inset: 0;
+      z-index: 80;
+      display: grid;
+      place-items: center;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 300ms var(--ease-out);
+      background: rgba(0, 0, 0, 0.42);
+      backdrop-filter: blur(16px);
+    }
+
+    .overview.open {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .overview-panel {
+      width: min(1520px, 88vw);
+      max-height: 84vh;
+      padding: 24px;
+      border: 1px solid rgb(var(--accent-rgb) / 0.22);
+      background: linear-gradient(180deg, rgba(7, 18, 27, 0.92), rgba(4, 10, 16, 0.88));
+      box-shadow:
+        0 0 0 1px rgba(255, 255, 255, 0.04),
+        0 40px 120px rgba(0, 0, 0, 0.5),
+        0 0 88px rgb(var(--accent-rgb) / 0.12);
+      backdrop-filter: blur(18px);
+      overflow: hidden;
+    }
+
+    .overview-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .overview-head .title {
+      font-family: var(--display);
+      font-size: clamp(28px, 3vw, 42px);
+      line-height: 0.94;
+      letter-spacing: -0.04em;
+    }
+
+    .overview-head .body {
+      max-width: 680px;
+      color: rgba(234, 251, 244, 0.72);
+      font-size: 17px;
+      line-height: 1.35;
+    }
+
+    .overview-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      gap: 16px;
+      max-height: calc(84vh - 132px);
+      overflow: auto;
+      padding-right: 6px;
+    }
+
+    .overview-tile {
+      position: relative;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: #02050a;
+      cursor: pointer;
+      transition:
+        transform 320ms var(--ease-out),
+        border-color 320ms var(--ease-out),
+        box-shadow 320ms var(--ease-out);
+    }
+
+    .overview-tile:hover,
+    .overview-tile:focus-visible {
+      outline: none;
+      transform: translateY(-4px);
+      border-color: rgb(var(--accent-rgb) / 0.42);
+      box-shadow: 0 0 32px rgb(var(--accent-rgb) / 0.14);
+    }
+
+    .overview-tile.is-active {
+      border-color: rgb(var(--accent-rgb) / 0.68);
+      box-shadow:
+        0 0 36px rgb(var(--accent-rgb) / 0.18),
+        0 0 0 1px rgb(var(--accent-rgb) / 0.28);
+    }
+
+    .overview-tile .tag {
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: rgba(234, 251, 244, 0.82);
+      padding: 8px 10px;
+      background: rgba(0, 0, 0, 0.58);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .overview-tile .tag span:last-child {
+      color: rgb(var(--accent-rgb));
+    }
+
+    .focus-mode .presentation-shell {
+      grid-template-columns: minmax(0, 1fr) 72px;
+      gap: 14px;
+    }
+
+    .focus-mode .thumb-rail {
+      opacity: 0;
+      pointer-events: none;
+      transform: translateX(-26px);
+    }
+
+    .focus-mode .deck-cluster {
+      width: min(82vw, 1820px);
+    }
+
+    .overview-open .mode-btn[data-action="overview"],
+    .focus-mode .mode-btn[data-action="focus"],
+    .blackout-mode .mode-btn[data-action="blackout"] {
+      border-color: rgb(var(--accent-rgb) / 0.44);
+      color: rgb(var(--accent-rgb));
+      box-shadow: 0 0 24px rgb(var(--accent-rgb) / 0.14);
+    }
+
+    @media (max-width: 1380px) {
+      .presentation-shell {
+        grid-template-columns: 110px 1fr 80px;
+      }
+
+      .deck-cluster {
+        width: min(78vw, 1520px);
+      }
+
+      .overview-grid {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .presentation-shell {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto 1fr auto auto;
+        gap: 14px;
+        padding: 20px 18px 20px;
+      }
+
+      .thumb-rail {
+        display: none;
+      }
+
+      .thumb {
+        width: 132px;
+        flex: 0 0 auto;
+      }
+
+      .mode-rail {
+        order: 4;
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+
+      .mode-btn {
+        writing-mode: horizontal-tb;
+      }
+
+      .chrome-row {
+        flex-direction: column;
+      }
+
+      .meta-stack {
+        align-items: flex-start;
+        text-align: left;
+      }
+
+      .deck-cluster {
+        width: min(92vw, 1200px);
+      }
+
+      .reflection-wrap {
+        width: min(62vw, 820px);
+      }
+
+      .bottom-bar {
+        grid-template-columns: 1fr;
+      }
+
+      .bar-chip.center {
+        justify-content: flex-start;
+      }
+
+      .overview-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 780px) {
+      .overview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .chrome-row .chrome-block:first-child {
+        min-width: 0;
+      }
+
+      .meta-v {
+        font-size: clamp(22px, 8vw, 42px);
+      }
+
+      .thumb {
+        width: 118px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .thumb,
+      .slide-card,
+      .mode-btn,
+      .overview,
+      #blackout,
+      #loading-veil {
+        transition-duration: 120ms !important;
+      }
+
+      #cursor-glow,
+      .scanlines {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div
+    data-composition-id="agentic-engineering-pptx"
+    data-start="0"
+    data-duration="180"
+    data-width="3840"
+    data-height="2160"
+  >
+    <canvas id="depth-layer"></canvas>
+    <canvas id="matrix-layer"></canvas>
+    <div id="cursor-glow"></div>
+    <div id="shockwave-layer"></div>
+    <div class="scanlines"></div>
+    <div class="vignette"></div>
+    <div class="letterbox top"></div>
+    <div class="letterbox bottom"></div>
+    <div id="blackout"></div>
+
+    <div id="loading-veil">
+      <div class="loading-card">
+        <div class="eyebrow">HyperFrames composition</div>
+        <div class="title">myassets</div>
+        <div class="body">Loading the source slide panels from the myassets folder into the same 3D interactive HTML shell.</div>
+      </div>
+    </div>
+
+    <div class="presentation-shell">
+      <aside class="thumb-rail" id="thumb-rail" aria-label="Slide thumbnails"></aside>
+
+      <main class="viewer-shell">
+        <div class="chrome-row">
+          <section class="chrome-block">
+            <div class="hud-eyebrow">Source-preserved deck</div>
+            <div class="hud-title">Agentic Engineering</div>
+          </section>
+
+          <section class="chrome-block meta-stack">
+            <div class="meta-k">Source deck</div>
+            <div class="meta-v"><span id="current-slide">01</span> <span class="slash">/ 15</span></div>
+            <div class="meta-k" id="integrity-note">1376×768 source slide rasters · myassets folder</div>
+          </section>
+        </div>
+
+        <section class="viewer-zone" id="viewer-zone">
+          <div class="deck-cluster" id="deck-cluster" aria-live="polite"></div>
+          <div class="reflection-wrap" aria-hidden="true">
+            <div class="reflection-card">
+              <img id="reflection-image" src="" alt="">
+            </div>
+          </div>
+        </section>
+
+        <footer class="bottom-bar">
+          <div class="bar-chip">
+            <span class="live-dot"></span>
+            <span>interactive local deck</span>
+          </div>
+          <div class="bar-chip center" id="slide-status" style="display:none"></div>
+          <div class="bar-chip" style="justify-content:flex-end;">
+            <span>← → navigate · click edges · O overview · F focus · B blackout</span>
+          </div>
+        </footer>
+      </main>
+
+      <aside class="mode-rail" aria-label="Presentation modes">
+        <button class="mode-btn" data-action="overview" type="button">overview</button>
+        <button class="mode-btn" data-action="focus" type="button">focus</button>
+        <button class="mode-btn" data-action="blackout" type="button">blackout</button>
+      </aside>
+    </div>
+
+    <section class="overview" id="overview" aria-hidden="true">
+      <div class="overview-panel">
+        <div class="overview-head">
+          <div>
+            <div class="hud-eyebrow">Slide map</div>
+            <div class="title">myassets overview</div>
+          </div>
+          <div class="body">
+            All 15 source slides are preserved as folder images. Choose any slide to jump the live deck.
+          </div>
+        </div>
+        <div class="overview-grid" id="overview-grid"></div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    const composition = document.querySelector('[data-composition-id="agentic-engineering-pptx"]');
+    const deckCluster = document.getElementById('deck-cluster');
+    const thumbRail = document.getElementById('thumb-rail');
+    const overview = document.getElementById('overview');
+    const overviewGrid = document.getElementById('overview-grid');
+    const viewerZone = document.getElementById('viewer-zone');
+    const reflectionImage = document.getElementById('reflection-image');
+    const shockwaveLayer = document.getElementById('shockwave-layer');
+    const currentSlideEl = document.getElementById('current-slide');
+    const slideStatusEl = document.getElementById('slide-status');
+    const blackout = document.getElementById('blackout');
+    const loadingVeil = document.getElementById('loading-veil');
+    const modeButtons = [...document.querySelectorAll('.mode-btn')];
+    const SOURCE_DECK_NAME = 'myassets';
+    const SOURCE_DECK_REFERENCE = 'myassets folder';
+
+    function resolveTargets(targets) {
+      if (!targets) return [];
+      if (typeof targets === 'string') return [...document.querySelectorAll(targets)];
+      if (targets instanceof Element) return [targets];
+      if (NodeList.prototype.isPrototypeOf(targets) || Array.isArray(targets)) return [...targets];
+      return [];
+    }
+
+    function createFallbackGsap() {
+      function applyVars(targets, vars) {
+        resolveTargets(targets).forEach((element) => {
+          Object.entries(vars).forEach(([key, value]) => {
+            if (['duration', 'ease', 'stagger', 'delay', 'paused'].includes(key)) return;
+            if (key === 'autoAlpha') {
+              element.style.opacity = String(value);
+              element.style.visibility = Number(value) === 0 ? 'hidden' : 'visible';
+              return;
+            }
+            if (key === 'opacity' || key === 'filter') {
+              element.style[key] = String(value);
+            }
+          });
+        });
+      }
+
+      function runLater(targets, vars) {
+        const delay = Number(vars.delay || 0) * 1000;
+        setTimeout(() => applyVars(targets, vars), delay);
+      }
+
+      return {
+        to(targets, vars) {
+          runLater(targets, vars);
+          return { kill() {} };
+        },
+        from() {
+          return { kill() {} };
+        },
+        fromTo(targets, _fromVars, toVars) {
+          runLater(targets, toVars);
+          return { kill() {} };
+        },
+        delayedCall(delay, callback) {
+          setTimeout(callback, delay * 1000);
+        },
+        timeline(config = {}) {
+          const steps = [];
+          const api = {
+            to(targets, vars) {
+              steps.push(() => applyVars(targets, vars));
+              return api;
+            },
+            from() {
+              return api;
+            },
+            fromTo(targets, _fromVars, toVars) {
+              steps.push(() => applyVars(targets, toVars));
+              return api;
+            },
+            call(callback) {
+              steps.push(callback);
+              return api;
+            },
+            play() {
+              steps.forEach((step) => step());
+              return api;
+            }
+          };
+          if (!config.paused) api.play();
+          return api;
+        }
+      };
+    }
+
+    const gsap = window.gsap || createFallbackGsap();
+
+    function mulberry32(seed) {
+      let value = seed >>> 0;
+      return function next() {
+        value += 0x6D2B79F5;
+        let t = value;
+        t = Math.imul(t ^ (t >>> 15), t | 1);
+        t ^= t + Math.imul(t ^ (t >>> 7), t | 61);
+        return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+      };
+    }
+
+    const rng = mulberry32(20260423);
+    const palette = [
+      { accent: [101, 255, 178], secondary: [116, 215, 255] },
+      { accent: [116, 215, 255], secondary: [182, 140, 255] },
+      { accent: [182, 140, 255], secondary: [101, 255, 178] },
+      { accent: [255, 184, 107], secondary: [116, 215, 255] },
+      { accent: [101, 255, 178], secondary: [255, 184, 107] }
+    ];
+
+    const SLIDE_FILES = [
+      'myasstes/slide-01.png',
+      'myasstes/slide-02.png',
+      'myasstes/slide-03.png',
+      'myasstes/slide-04.png',
+      'myasstes/slide-05.png',
+      'myasstes/slide-06.png',
+      'myasstes/slide-07.png',
+      'myasstes/slide-08.png',
+      'myasstes/slide-09.png',
+      'myasstes/slide-10.png',
+      'myasstes/Slide-11.png',
+      'myasstes/slide-12.png',
+      'myasstes/slide-13.png',
+      'myasstes/slide-14.png',
+      'myasstes/slide-15.png'
+    ];
+
+    const SLIDES = SLIDE_FILES.map((src, index) => {
+      const colors = palette[index % palette.length];
+      return {
+        index,
+        number: String(index + 1).padStart(2, '0'),
+        label: `${SOURCE_DECK_NAME} slide ${String(index + 1).padStart(2, '0')}`,
+        src,
+        accent: colors.accent,
+        secondary: colors.secondary
+      };
+    });
+
+    const state = {
+      index: 0,
+      focus: false,
+      overview: false,
+      blackout: false,
+      transitionLock: false,
+      pointerX: 0,
+      pointerY: 0,
+      smoothX: 0,
+      smoothY: 0,
+      accent: [...SLIDES[0].accent],
+      targetAccent: [...SLIDES[0].accent],
+      secondary: [...SLIDES[0].secondary],
+      targetSecondary: [...SLIDES[0].secondary]
+    };
+
+    const dom = {
+      cards: [],
+      thumbs: [],
+      overviewTiles: []
+    };
+    const DECK_SLOT_RELATIVES = [-2, -1, 0, 1, 2];
+
+    function rgbList(list) {
+      return list.map((value) => Math.round(value)).join(' ');
+    }
+
+    function rgbComma(list) {
+      return list.map((value) => Math.round(value)).join(',');
+    }
+
+    function lerp(current, target, factor) {
+      return current + (target - current) * factor;
+    }
+
+    function applyAccentVars() {
+      composition.style.setProperty('--accent-rgb', rgbList(state.accent));
+      composition.style.setProperty('--accent2-rgb', rgbList(state.secondary));
+    }
+
+    function setAccentTarget(slide) {
+      state.targetAccent = [...slide.accent];
+      state.targetSecondary = [...slide.secondary];
+    }
+
+    function preloadSlides() {
+      return Promise.all(
+        SLIDES.map((slide) => new Promise((resolve) => {
+          const img = new Image();
+          img.onload = resolve;
+          img.onerror = resolve;
+          img.src = slide.src;
+        }))
+      );
+    }
+
+    function hideLoadingVeil() {
+      loadingVeil.classList.add('hidden');
+      loadingVeil.style.opacity = '0';
+      loadingVeil.style.visibility = 'hidden';
+      loadingVeil.style.pointerEvents = 'none';
+    }
+
+    function buildCard(relative) {
+      const figure = document.createElement('figure');
+      figure.className = 'slide-card';
+      figure.dataset.slotRelative = String(relative);
+      figure.setAttribute('aria-hidden', 'true');
+      figure.innerHTML = `
+        <div class="slide-stack">
+          <div class="slide-frame">
+            <img class="slide-image" src="" alt="" draggable="false">
+            <div class="inner-grid"></div>
+            <div class="gloss"></div>
+          </div>
+        </div>
+        <figcaption class="card-caption">
+          <span class="caption-left"></span>
+          <span class="caption-right"></span>
+        </figcaption>
+      `;
+      deckCluster.appendChild(figure);
+      dom.cards.push(figure);
+    }
+
+    function updateCardForSlide(card, slide) {
+      const image = card.querySelector('.slide-image');
+      const captionLeft = card.querySelector('.caption-left');
+      const captionRight = card.querySelector('.caption-right');
+      card.dataset.index = String(slide.index);
+      image.src = slide.src;
+      image.alt = `${slide.label} extracted from the ${SOURCE_DECK_REFERENCE}`;
+      captionLeft.textContent = slide.label;
+      captionRight.textContent = `source preserved · slide ${slide.number}`;
+    }
+
+    function buildThumb(slide) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'thumb';
+      button.dataset.index = String(slide.index);
+      button.setAttribute('aria-label', `Go to ${slide.label}`);
+      button.innerHTML = `
+        <img src="${slide.src}" alt="" draggable="false">
+        <span class="index">${slide.number}</span>
+        <span class="bar"></span>
+      `;
+      button.addEventListener('click', () => setSlide(slide.index));
+      thumbRail.appendChild(button);
+      dom.thumbs.push(button);
+    }
+
+    function buildOverviewTile(slide) {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'overview-tile';
+      button.dataset.index = String(slide.index);
+      button.setAttribute('aria-label', `Open ${slide.label}`);
+      button.innerHTML = `
+        <img src="${slide.src}" alt="" draggable="false">
+        <span class="index">${slide.number}</span>
+        <span class="tag"><span>${slide.label}</span><span>PNG</span></span>
+      `;
+      button.addEventListener('click', () => {
+        toggleOverview(false);
+        setSlide(slide.index);
+      });
+      overviewGrid.appendChild(button);
+      dom.overviewTiles.push(button);
+    }
+
+    function buildUI() {
+      DECK_SLOT_RELATIVES.forEach((relative) => {
+        buildCard(relative);
+      });
+      SLIDES.forEach((slide) => {
+        buildThumb(slide);
+        buildOverviewTile(slide);
+      });
+    }
+
+    function poseForRelative(relative) {
+      const spreadA = Math.min(window.innerWidth * 0.24, 430);
+      const spreadB = Math.min(window.innerWidth * 0.38, 670);
+      const focusScale = state.focus ? 1.08 : 1;
+
+      if (relative === -2) {
+        return { tx: -spreadB, ty: 42, tz: -960, ry: 62, rx: 2.4, scale: 0.56, opacity: 0.18, blur: 1.8, z: 16 };
+      }
+      if (relative === -1) {
+        return { tx: -spreadA, ty: 20, tz: -420, ry: 44, rx: 1.2, scale: 0.82, opacity: 0.58, blur: 0.6, z: 28 };
+      }
+      if (relative === 0) {
+        return { tx: 0, ty: 0, tz: 0, ry: 0, rx: 0, scale: focusScale, opacity: 1, blur: 0, z: 40 };
+      }
+      if (relative === 1) {
+        return { tx: spreadA, ty: 20, tz: -420, ry: -44, rx: -1.2, scale: 0.82, opacity: 0.58, blur: 0.6, z: 28 };
+      }
+      if (relative === 2) {
+        return { tx: spreadB, ty: 42, tz: -960, ry: -62, rx: -2.4, scale: 0.56, opacity: 0.18, blur: 1.8, z: 16 };
+      }
+      return { tx: relative < 0 ? -spreadB * 1.18 : spreadB * 1.18, ty: 64, tz: -1380, ry: relative < 0 ? 72 : -72, rx: 0, scale: 0.45, opacity: 0, blur: 3.5, z: 1 };
+    }
+
+    function updateHash() {
+      const hash = `slide-${SLIDES[state.index].number}`;
+      try {
+        if (location.hash !== `#${hash}`) history.replaceState(null, '', `#${hash}`);
+      } catch (_error) {
+        if (location.hash !== `#${hash}`) location.hash = hash;
+      }
+    }
+
+    function syncLabels() {
+      const slide = SLIDES[state.index];
+      currentSlideEl.textContent = slide.number;
+      slideStatusEl.textContent = '';
+      reflectionImage.src = slide.src;
+      reflectionImage.alt = '';
+      document.title = `${slide.label} · ${SOURCE_DECK_NAME} · HyperFrames`;
+      updateHash();
+    }
+
+    function syncThumbs() {
+      dom.thumbs.forEach((thumb, index) => {
+        thumb.classList.toggle('is-active', index === state.index);
+      });
+      dom.overviewTiles.forEach((tile, index) => {
+        tile.classList.toggle('is-active', index === state.index);
+      });
+
+      const activeThumb = dom.thumbs[state.index];
+      if (activeThumb) activeThumb.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' });
+    }
+
+    function layoutCards(immediate = false) {
+      dom.cards.forEach((card, slotIndex) => {
+        const relative = DECK_SLOT_RELATIVES[slotIndex];
+        const slideIndex = state.index + relative;
+        const isInRange = slideIndex >= 0 && slideIndex < SLIDES.length;
+        const pose = poseForRelative(isInRange ? relative : (relative < 0 ? -3 : 3));
+
+        if (isInRange) {
+          updateCardForSlide(card, SLIDES[slideIndex]);
+        }
+
+        card.style.setProperty('--tx', `${pose.tx}px`);
+        card.style.setProperty('--ty', `${pose.ty}px`);
+        card.style.setProperty('--tz', `${pose.tz}px`);
+        card.style.setProperty('--ry', `${pose.ry}deg`);
+        card.style.setProperty('--rx', `${pose.rx}deg`);
+        card.style.setProperty('--scale', pose.scale);
+        card.style.setProperty('--opacity', pose.opacity);
+        card.style.setProperty('--blur', `${pose.blur}px`);
+        card.style.setProperty('--z', pose.z);
+        card.classList.toggle('is-visible', isInRange);
+        card.classList.toggle('is-active', isInRange && relative === 0);
+        card.setAttribute('aria-hidden', isInRange && relative === 0 ? 'false' : 'true');
+
+        if (immediate) {
+          card.style.transition = 'none';
+          requestAnimationFrame(() => {
+            card.style.transition = '';
+          });
+        }
+      });
+    }
+
+    function setModeButtons() {
+      composition.classList.toggle('focus-mode', state.focus);
+      composition.classList.toggle('overview-open', state.overview);
+      composition.classList.toggle('blackout-mode', state.blackout);
+      modeButtons.forEach((button) => {
+        const action = button.dataset.action;
+        const isOn =
+          (action === 'focus' && state.focus) ||
+          (action === 'overview' && state.overview) ||
+          (action === 'blackout' && state.blackout);
+        button.classList.toggle('is-on', isOn);
+      });
+    }
+
+    function toggleOverview(force) {
+      state.overview = typeof force === 'boolean' ? force : !state.overview;
+      overview.classList.toggle('open', state.overview);
+      overview.setAttribute('aria-hidden', state.overview ? 'false' : 'true');
+      setModeButtons();
+    }
+
+    function toggleFocus(force) {
+      state.focus = typeof force === 'boolean' ? force : !state.focus;
+      setModeButtons();
+      layoutCards();
+    }
+
+    function toggleBlackout(force) {
+      state.blackout = typeof force === 'boolean' ? force : !state.blackout;
+      blackout.classList.toggle('on', state.blackout);
+      setModeButtons();
+    }
+
+    function setSlide(targetIndex, options = {}) {
+      const index = Math.max(0, Math.min(SLIDES.length - 1, targetIndex));
+      if (index === state.index && !options.force) return;
+      if (state.transitionLock) return;
+
+      const direction = index > state.index ? 1 : -1;
+      state.transitionLock = true;
+      state.index = index;
+      setAccentTarget(SLIDES[index]);
+      syncLabels();
+      syncThumbs();
+      layoutCards();
+
+      gsap.fromTo(
+        deckCluster,
+        { x: direction * 24, rotateZ: direction * 0.55, filter: 'brightness(1.12)' },
+        { x: 0, rotateZ: 0, filter: 'brightness(1)', duration: 0.9, ease: 'expo.out' }
+      );
+
+      gsap.fromTo(
+        '.reflection-wrap',
+        { opacity: 0.18, y: 18 },
+        { opacity: 0.38, y: 0, duration: 1.0, ease: 'power2.out' }
+      );
+
+      setTimeout(() => {
+        state.transitionLock = false;
+      }, 760);
+    }
+
+    function spawnShockwave(x, y) {
+      const element = document.createElement('div');
+      element.className = 'shockwave';
+      element.style.left = `${x}px`;
+      element.style.top = `${y}px`;
+      shockwaveLayer.appendChild(element);
+      setTimeout(() => element.remove(), 920);
+    }
+
+    function parseHashIndex() {
+      const match = location.hash.match(/slide-(\d{1,2})/i);
+      if (!match) return 0;
+      const raw = Number(match[1]) - 1;
+      if (Number.isNaN(raw)) return 0;
+      return Math.max(0, Math.min(SLIDES.length - 1, raw));
+    }
+
+    modeButtons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const action = button.dataset.action;
+        if (action === 'overview') toggleOverview();
+        if (action === 'focus') toggleFocus();
+        if (action === 'blackout') toggleBlackout();
+      });
+    });
+
+    overview.addEventListener('click', (event) => {
+      if (event.target === overview) toggleOverview(false);
+    });
+
+    viewerZone.addEventListener('dblclick', () => toggleFocus());
+
+    composition.addEventListener('pointermove', (event) => {
+      state.pointerX = event.clientX / window.innerWidth - 0.5;
+      state.pointerY = event.clientY / window.innerHeight - 0.5;
+      composition.style.setProperty('--glow-x', `${(event.clientX / window.innerWidth) * 100}%`);
+      composition.style.setProperty('--glow-y', `${(event.clientY / window.innerHeight) * 100}%`);
+      const cursorGlow = document.getElementById('cursor-glow');
+      cursorGlow.style.left = `${event.clientX}px`;
+      cursorGlow.style.top = `${event.clientY}px`;
+    });
+
+    composition.addEventListener('click', (event) => {
+      spawnShockwave(event.clientX, event.clientY);
+      if (event.target.closest('button')) return;
+      if (state.overview) return;
+      if (state.blackout) {
+        toggleBlackout(false);
+        return;
+      }
+      if (event.clientX < window.innerWidth * 0.34) {
+        setSlide(state.index - 1);
+      } else if (event.clientX > window.innerWidth * 0.66) {
+        setSlide(state.index + 1);
+      }
+    });
+
+    window.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        if (state.overview) {
+          toggleOverview(false);
+          return;
+        }
+        toggleBlackout(!state.blackout);
+        return;
+      }
+
+      if (state.blackout) {
+        toggleBlackout(false);
+        return;
+      }
+
+      if (event.key === 'ArrowRight' || event.key === 'PageDown' || event.key === ' ') {
+        event.preventDefault();
+        setSlide(state.index + 1);
+      } else if (event.key === 'ArrowLeft' || event.key === 'PageUp' || event.key === 'Backspace') {
+        event.preventDefault();
+        setSlide(state.index - 1);
+      } else if (event.key === 'Home') {
+        event.preventDefault();
+        setSlide(0);
+      } else if (event.key === 'End') {
+        event.preventDefault();
+        setSlide(SLIDES.length - 1);
+      } else if (event.key.toLowerCase() === 'o') {
+        event.preventDefault();
+        toggleOverview();
+      } else if (event.key.toLowerCase() === 'f') {
+        event.preventDefault();
+        toggleFocus();
+      } else if (event.key.toLowerCase() === 'b') {
+        event.preventDefault();
+        toggleBlackout();
+      } else if (/^\d$/.test(event.key)) {
+        const value = Number(event.key);
+        if (value > 0 && value <= SLIDES.length) {
+          event.preventDefault();
+          setSlide(value - 1);
+        }
+      }
+    });
+
+    window.addEventListener('resize', () => {
+      resizeCanvases();
+      layoutCards(true);
+    });
+
+    const depthCanvas = document.getElementById('depth-layer');
+    const matrixCanvas = document.getElementById('matrix-layer');
+    const depthCtx = depthCanvas.getContext('2d');
+    const matrixCtx = matrixCanvas.getContext('2d');
+
+    const particles = Array.from({ length: 180 }, () => ({
+      x: rng(),
+      y: rng(),
+      z: 0.12 + rng() * 1.18,
+      size: 0.6 + rng() * 2.4,
+      speed: 0.05 + rng() * 0.18,
+      drift: (rng() - 0.5) * 0.18
+    }));
+
+    const ringLayers = Array.from({ length: 7 }, (_, index) => ({
+      radius: 130 + index * 92,
+      alpha: 0.08 - index * 0.008,
+      speed: 0.12 + index * 0.03,
+      offset: rng() * Math.PI * 2
+    }));
+
+    const matrixChars = 'ｱｲｳｴｵｶｷｸｹｺｻｼｽｾｿﾀﾁﾂﾃﾄﾅﾆﾇﾈﾉﾊﾋﾌﾍﾎﾏﾐﾑﾒﾓﾔﾕﾖﾗﾘﾙﾚﾛﾜﾝ0123456789{}[]<>/=+*'.split('');
+    let matrixCols = [];
+    let canvasState = { width: 0, height: 0, dpr: 1 };
+
+    function resizeCanvases() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvasState = {
+        width: window.innerWidth,
+        height: window.innerHeight,
+        dpr
+      };
+      [depthCanvas, matrixCanvas].forEach((canvas) => {
+        canvas.width = Math.floor(canvasState.width * dpr);
+        canvas.height = Math.floor(canvasState.height * dpr);
+        canvas.style.width = `${canvasState.width}px`;
+        canvas.style.height = `${canvasState.height}px`;
+      });
+      depthCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      matrixCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      const count = Math.ceil(canvasState.width / 18);
+      matrixCols = Array.from({ length: count }, (_, index) => ({
+        offset: -rng() * canvasState.height * 1.4,
+        speed: 48 + rng() * 78,
+        seed: Math.floor(rng() * matrixChars.length) + index * 3
+      }));
+    }
+
+    function drawDepth(time) {
+      const { width, height } = canvasState;
+      depthCtx.clearRect(0, 0, width, height);
+
+      const accent = state.accent.map((value) => Math.round(value));
+      const secondary = state.secondary.map((value) => Math.round(value));
+
+      const centerX = width * (0.5 + state.smoothX * 0.03);
+      const centerY = height * (0.48 + state.smoothY * 0.02);
+      const horizonY = height * (0.34 + state.smoothY * 0.03);
+
+      const floorGlow = depthCtx.createRadialGradient(centerX, height * 0.72, 0, centerX, height * 0.72, height * 0.42);
+      floorGlow.addColorStop(0, `rgba(${accent.join(',')},0.12)`);
+      floorGlow.addColorStop(0.34, `rgba(${secondary.join(',')},0.05)`);
+      floorGlow.addColorStop(1, 'rgba(0,0,0,0)');
+      depthCtx.fillStyle = floorGlow;
+      depthCtx.fillRect(0, 0, width, height);
+
+      depthCtx.lineWidth = 1;
+      for (let index = 0; index < 18; index += 1) {
+        const progress = index / 17;
+        const y = horizonY + Math.pow(progress, 1.85) * (height * 0.78 - horizonY);
+        depthCtx.strokeStyle = `rgba(${secondary.join(',')},${0.05 + progress * 0.12})`;
+        depthCtx.beginPath();
+        depthCtx.moveTo(width * 0.06, y);
+        depthCtx.lineTo(width * 0.94, y);
+        depthCtx.stroke();
+      }
+
+      for (let index = 0; index < 18; index += 1) {
+        const progress = index / 17;
+        const baseX = width * 0.1 + progress * width * 0.8;
+        const skew = (progress - 0.5) * width * 0.18;
+        depthCtx.strokeStyle = `rgba(${accent.join(',')},0.08)`;
+        depthCtx.beginPath();
+        depthCtx.moveTo(baseX, height * 0.88);
+        depthCtx.lineTo(centerX + skew * 0.2, horizonY);
+        depthCtx.stroke();
+      }
+
+      ringLayers.forEach((ring, index) => {
+        const radius = ring.radius + Math.sin(time * ring.speed + ring.offset) * 8;
+        depthCtx.strokeStyle = `rgba(${accent.join(',')},${Math.max(0.012, ring.alpha)})`;
+        depthCtx.lineWidth = 1 + index * 0.06;
+        depthCtx.beginPath();
+        depthCtx.ellipse(
+          centerX,
+          centerY - 28 + index * 6,
+          radius * 1.44,
+          radius * 0.28,
+          (Math.PI / 180) * (index % 2 === 0 ? 6 : -6),
+          0,
+          Math.PI * 2
+        );
+        depthCtx.stroke();
+      });
+
+      particles.forEach((particle) => {
+        const z = ((particle.z + time * particle.speed) % 1.32) + 0.1;
+        const depth = 1 / z;
+        const x = centerX + (particle.x - 0.5) * width * 0.9 * depth + Math.sin(time * 0.4 + particle.drift) * 18;
+        const y = centerY + (particle.y - 0.5) * height * 0.62 * depth - time * particle.speed * 12;
+        const size = particle.size * depth;
+        const alpha = Math.min(0.72, 0.12 + depth * 0.28);
+        depthCtx.fillStyle = `rgba(${secondary.join(',')},${alpha})`;
+        depthCtx.beginPath();
+        depthCtx.arc(x, ((y + height) % (height + 120)) - 60, size, 0, Math.PI * 2);
+        depthCtx.fill();
+      });
+
+      const beam = depthCtx.createLinearGradient(width * 0.5, 0, width * 0.5, height);
+      beam.addColorStop(0, `rgba(${secondary.join(',')},0.0)`);
+      beam.addColorStop(0.22, `rgba(${secondary.join(',')},0.08)`);
+      beam.addColorStop(0.5, `rgba(${accent.join(',')},0.12)`);
+      beam.addColorStop(1, `rgba(${accent.join(',')},0.0)`);
+      depthCtx.fillStyle = beam;
+      depthCtx.fillRect(width * 0.475, 0, width * 0.05, height);
+    }
+
+    function drawMatrix(time) {
+      const { width, height } = canvasState;
+      matrixCtx.fillStyle = 'rgba(0, 0, 0, 0.12)';
+      matrixCtx.fillRect(0, 0, width, height);
+      matrixCtx.font = "15px 'Azeret Mono', monospace";
+
+      for (let column = 0; column < matrixCols.length; column += 1) {
+        const entry = matrixCols[column];
+        const x = column * 18;
+        const y = ((time * entry.speed) + entry.offset) % (height + 140) - 70;
+        const leadingIndex = (entry.seed + Math.floor(time * 18) + column) % matrixChars.length;
+        const trailIndex = (leadingIndex + 9) % matrixChars.length;
+        const tailIndex = (leadingIndex + 18) % matrixChars.length;
+
+        matrixCtx.fillStyle = 'rgba(234, 251, 244, 0.95)';
+        matrixCtx.fillText(matrixChars[leadingIndex], x, y);
+        matrixCtx.fillStyle = `rgba(${rgbComma(state.accent)},0.58)`;
+        matrixCtx.fillText(matrixChars[trailIndex], x, y - 18);
+        matrixCtx.fillStyle = `rgba(${rgbComma(state.secondary)},0.28)`;
+        matrixCtx.fillText(matrixChars[tailIndex], x, y - 36);
+      }
+    }
+
+    function tick() {
+      state.smoothX = lerp(state.smoothX, state.pointerX, 0.08);
+      state.smoothY = lerp(state.smoothY, state.pointerY, 0.08);
+
+      state.accent = state.accent.map((value, index) => lerp(value, state.targetAccent[index], 0.06));
+      state.secondary = state.secondary.map((value, index) => lerp(value, state.targetSecondary[index], 0.06));
+      applyAccentVars();
+
+      composition.style.setProperty('--tilt-x', (state.smoothX * 8).toFixed(3));
+      composition.style.setProperty('--tilt-y', (state.smoothY * -8).toFixed(3));
+
+      const seconds = performance.now() / 1000;
+      drawDepth(seconds);
+      drawMatrix(seconds);
+      requestAnimationFrame(tick);
+    }
+
+    window.__timelines = window.__timelines || {};
+
+    function buildIntroTimeline() {
+      const timeline = gsap.timeline({ paused: true });
+      timeline
+        .to('#loading-veil', { autoAlpha: 0, duration: 0.55, ease: 'power2.out' }, 0)
+        .call(hideLoadingVeil)
+        .from('.chrome-block', { y: 24, opacity: 0, duration: 0.8, stagger: 0.08, ease: 'expo.out' }, 0.18)
+        .from('.thumb', { x: -30, opacity: 0, duration: 0.46, stagger: 0.035, ease: 'power3.out' }, 0.3)
+        .from('.mode-btn', { x: 20, opacity: 0, duration: 0.46, stagger: 0.04, ease: 'power3.out' }, 0.38)
+        .from('.bottom-bar .bar-chip', { y: 22, opacity: 0, duration: 0.58, stagger: 0.06, ease: 'power3.out' }, 0.46)
+        .from('.slide-card.is-active', { z: -220, opacity: 0, duration: 1.0, ease: 'expo.out' }, 0.36)
+        .from('.slide-card.is-visible:not(.is-active)', { opacity: 0, duration: 0.55, stagger: 0.06, ease: 'power2.out' }, 0.52);
+      window.__timelines['agentic-engineering-pptx'] = timeline;
+      return timeline;
+    }
+
+    function init() {
+      buildUI();
+      resizeCanvases();
+
+      const initialIndex = parseHashIndex();
+      state.index = initialIndex;
+      state.accent = [...SLIDES[initialIndex].accent];
+      state.secondary = [...SLIDES[initialIndex].secondary];
+      state.targetAccent = [...SLIDES[initialIndex].accent];
+      state.targetSecondary = [...SLIDES[initialIndex].secondary];
+      applyAccentVars();
+
+      syncLabels();
+      syncThumbs();
+      layoutCards(true);
+      setModeButtons();
+
+      const intro = buildIntroTimeline();
+      tick();
+
+      gsap.delayedCall(0.1, () => {
+        intro.play(0);
+      });
+
+      setTimeout(hideLoadingVeil, 1400);
+    }
+
+    let didInit = false;
+
+    function initOnce() {
+      if (didInit) return;
+      didInit = true;
+      init();
+    }
+
+    preloadSlides().then(initOnce).catch(initOnce);
+    setTimeout(initOnce, 1200);
+  </script>
+</body>
+</html>
