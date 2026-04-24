@@ -337,6 +337,7 @@
     .thumb img,
     .overview-tile img,
     .slide-card img,
+    .slide-card video,
     .reflection-card img {
       display: block;
       width: 100%;
@@ -636,9 +637,23 @@
       opacity: 0.7;
     }
 
-    .slide-card img {
+    .slide-card img,
+    .slide-card video {
       filter: contrast(1.04) saturate(1.05) brightness(1.02);
       transform: scale(1.001);
+    }
+
+    .slide-card video {
+      display: none;
+      background: #02050a;
+    }
+
+    .slide-card.is-video .slide-image {
+      display: none;
+    }
+
+    .slide-card.is-video .slide-video {
+      display: block;
     }
 
     .card-caption {
@@ -1060,8 +1075,8 @@
 
           <section class="chrome-block meta-stack">
             <div class="meta-k">Source deck</div>
-            <div class="meta-v"><span id="current-slide">01</span> <span class="slash">/ 15</span></div>
-            <div class="meta-k" id="integrity-note">1376×768 source slide rasters · myassets folder</div>
+            <div class="meta-v"><span id="current-slide">01</span> <span class="slash">/ <span id="total-slides">17</span></span></div>
+            <div class="meta-k" id="integrity-note">1376×768 slide rasters + product demo capture · myassets folder</div>
           </section>
         </div>
 
@@ -1101,7 +1116,7 @@
             <div class="title">myassets overview</div>
           </div>
           <div class="body">
-            All 15 source slides are preserved as folder images. Choose any slide to jump the live deck.
+            Source slides and the captured Orbital Inspect product demo are preserved in the asset folder. Choose any slide to jump the live deck.
           </div>
         </div>
         <div class="overview-grid" id="overview-grid"></div>
@@ -1119,6 +1134,7 @@
     const reflectionImage = document.getElementById('reflection-image');
     const shockwaveLayer = document.getElementById('shockwave-layer');
     const currentSlideEl = document.getElementById('current-slide');
+    const totalSlidesEl = document.getElementById('total-slides');
     const slideStatusEl = document.getElementById('slide-status');
     const blackout = document.getElementById('blackout');
     const loadingVeil = document.getElementById('loading-veil');
@@ -1232,25 +1248,37 @@
       'myassets/slide-07.png',
       'myassets/slide-08.png',
       'myassets/slide-09.png',
+      {
+        src: 'myassets/orbital-inspect-screen-capture.mp4',
+        poster: 'myassets/orbital-inspect-screen-capture-poster.png',
+        title: 'Orbital Inspect product demo'
+      },
       'myassets/slide-10.png',
       'myassets/Slide-11.png',
       'myassets/slide-12.png',
       'myassets/slide-13.png',
       'myassets/slide-14.png',
-      'myassets/slide-15.png'
+      'myassets/slide-15.png',
+      'myassets/slide-16.png'
     ];
 
-    const SLIDES = SLIDE_FILES.map((src, index) => {
+    const SLIDES = SLIDE_FILES.map((entry, index) => {
+      const slide = typeof entry === 'string' ? { src: entry } : entry;
       const colors = palette[index % palette.length];
+      const isVideo = /\.(webm|mp4|mov|m4v)$/i.test(slide.src);
       return {
         index,
         number: String(index + 1).padStart(2, '0'),
-        label: `${SOURCE_DECK_NAME} slide ${String(index + 1).padStart(2, '0')}`,
-        src,
+        label: slide.title || `${SOURCE_DECK_NAME} slide ${String(index + 1).padStart(2, '0')}`,
+        src: slide.src,
+        poster: slide.poster || slide.src,
+        type: isVideo ? 'video' : 'image',
         accent: colors.accent,
         secondary: colors.secondary
       };
     });
+
+    totalSlidesEl.textContent = String(SLIDES.length).padStart(2, '0');
 
     const state = {
       index: 0,
@@ -1300,6 +1328,13 @@
     function preloadSlides() {
       return Promise.all(
         SLIDES.map((slide) => new Promise((resolve) => {
+          if (slide.type === 'video') {
+            const img = new Image();
+            img.onload = resolve;
+            img.onerror = resolve;
+            img.src = slide.poster;
+            return;
+          }
           const img = new Image();
           img.onload = resolve;
           img.onerror = resolve;
@@ -1324,6 +1359,7 @@
         <div class="slide-stack">
           <div class="slide-frame">
             <img class="slide-image" src="" alt="" draggable="false">
+            <video class="slide-video" src="" poster="" preload="metadata" muted loop playsinline></video>
             <div class="inner-grid"></div>
             <div class="gloss"></div>
           </div>
@@ -1339,13 +1375,28 @@
 
     function updateCardForSlide(card, slide) {
       const image = card.querySelector('.slide-image');
+      const video = card.querySelector('.slide-video');
       const captionLeft = card.querySelector('.caption-left');
       const captionRight = card.querySelector('.caption-right');
       card.dataset.index = String(slide.index);
-      image.src = slide.src;
+      card.classList.toggle('is-video', slide.type === 'video');
+      image.src = slide.type === 'video' ? slide.poster : slide.src;
       image.alt = `${slide.label} extracted from the ${SOURCE_DECK_REFERENCE}`;
+      if (slide.type === 'video') {
+        if (video.dataset.src !== slide.src) {
+          video.src = slide.src;
+          video.dataset.src = slide.src;
+        }
+        video.poster = slide.poster;
+        video.setAttribute('aria-label', `${slide.label} embedded product demo video`);
+      } else {
+        video.pause();
+        video.removeAttribute('src');
+        video.dataset.src = '';
+        video.poster = '';
+      }
       captionLeft.textContent = slide.label;
-      captionRight.textContent = `source preserved · slide ${slide.number}`;
+      captionRight.textContent = slide.type === 'video' ? `embedded capture · slide ${slide.number}` : `source preserved · slide ${slide.number}`;
     }
 
     function buildThumb(slide) {
@@ -1355,7 +1406,7 @@
       button.dataset.index = String(slide.index);
       button.setAttribute('aria-label', `Go to ${slide.label}`);
       button.innerHTML = `
-        <img src="${slide.src}" alt="" draggable="false">
+        <img src="${slide.poster}" alt="" draggable="false">
         <span class="index">${slide.number}</span>
         <span class="bar"></span>
       `;
@@ -1371,9 +1422,9 @@
       button.dataset.index = String(slide.index);
       button.setAttribute('aria-label', `Open ${slide.label}`);
       button.innerHTML = `
-        <img src="${slide.src}" alt="" draggable="false">
+        <img src="${slide.poster}" alt="" draggable="false">
         <span class="index">${slide.number}</span>
-        <span class="tag"><span>${slide.label}</span><span>PNG</span></span>
+        <span class="tag"><span>${slide.label}</span><span>${slide.type === 'video' ? 'WEBM' : 'PNG'}</span></span>
       `;
       button.addEventListener('click', () => {
         toggleOverview(false);
@@ -1429,10 +1480,24 @@
       const slide = SLIDES[state.index];
       currentSlideEl.textContent = slide.number;
       slideStatusEl.textContent = '';
-      reflectionImage.src = slide.src;
+      reflectionImage.src = slide.poster;
       reflectionImage.alt = '';
       document.title = `${slide.label} · ${SOURCE_DECK_NAME} · HyperFrames`;
       updateHash();
+    }
+
+    function syncActiveVideos() {
+      dom.cards.forEach((card) => {
+        const video = card.querySelector('.slide-video');
+        if (!video) return;
+        const isActiveVideo = card.classList.contains('is-active') && card.classList.contains('is-video');
+        if (isActiveVideo) {
+          const playPromise = video.play();
+          if (playPromise && typeof playPromise.catch === 'function') playPromise.catch(() => {});
+        } else {
+          video.pause();
+        }
+      });
     }
 
     function syncThumbs() {
@@ -1478,6 +1543,7 @@
           });
         }
       });
+      syncActiveVideos();
     }
 
     function setModeButtons() {
