@@ -1,0 +1,2150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Loop Engineering: GPD as a Research Case Study</title>
+  <style>
+    :root {
+      --bg: #07111f;
+      --ink: #ffffff;
+      --muted: #e2ecf7;
+      --faint: rgba(247, 250, 255, .12);
+      --panel: transparent;
+      --panel-2: rgba(9, 24, 43, .72);
+      --cobalt: #155eef;
+      --cyan: #9be8ff;
+      --coral: #ff7b88;
+      --green: #45d29a;
+      --graphite: #101828;
+      --display: "Arial Black", "Segoe UI", sans-serif;
+      --body: "Segoe UI", Arial, sans-serif;
+      --mono: "Cascadia Mono", Consolas, monospace;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: var(--body);
+    }
+
+    html { scroll-behavior: auto; }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 14;
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 48%, transparent 42%, rgba(3, 9, 17, .24) 100%),
+        linear-gradient(0deg, rgba(3, 9, 17, .34), transparent 30%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: 15;
+      pointer-events: none;
+      opacity: .22;
+      background-image:
+        linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 64px 64px;
+      mask-image: radial-gradient(circle at 50% 42%, #000 0, transparent 72%);
+    }
+
+    #world {
+      position: relative;
+      z-index: 1;
+    }
+
+    .deck {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      isolation: isolate;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(360px, .78fr);
+      gap: clamp(28px, 4vw, 72px);
+      align-items: center;
+      padding: clamp(108px, 12vh, 132px) clamp(58px, 7vw, 126px) clamp(72px, 8vh, 92px) clamp(28px, 5vw, 82px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateX(44px);
+      transition: opacity .42s ease, transform .42s ease, visibility .42s;
+      overflow: hidden;
+    }
+
+    .slide::before,
+    .slide::after {
+      content: "";
+      position: absolute;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .45s ease;
+    }
+
+    .slide.active::before,
+    .slide.active::after {
+      opacity: 1;
+    }
+
+    /* Directional scrims follow the reading regions instead of dimming the world.
+       Every edge feathers to transparent, so the treatment never forms a panel. */
+    .scrim-left::before {
+      inset: 3% auto 2% -10%;
+      width: 78%;
+      background: radial-gradient(
+        ellipse 88% 78% at 18% 50%,
+        rgba(2, 8, 15, .95) 0%,
+        rgba(2, 8, 15, .82) 32%,
+        rgba(2, 8, 15, .4) 55%,
+        transparent 78%
+      );
+    }
+
+    .scrim-split::before {
+      inset: 3% auto 2% -9%;
+      width: 65%;
+      background: radial-gradient(
+        ellipse 90% 80% at 17% 50%,
+        rgba(2, 8, 15, .95) 0%,
+        rgba(2, 8, 15, .8) 34%,
+        rgba(2, 8, 15, .34) 57%,
+        transparent 79%
+      );
+    }
+
+    .scrim-split::after {
+      inset: 3% -9% 2% auto;
+      width: 57%;
+      background: radial-gradient(
+        ellipse 90% 80% at 83% 50%,
+        rgba(2, 8, 15, .94) 0%,
+        rgba(2, 8, 15, .78) 34%,
+        rgba(2, 8, 15, .32) 57%,
+        transparent 79%
+      );
+    }
+
+    .scrim-wide::before {
+      inset: -4% -7%;
+      background: radial-gradient(
+        ellipse 82% 78% at 50% 50%,
+        rgba(2, 8, 15, .9) 0%,
+        rgba(2, 8, 15, .76) 48%,
+        rgba(2, 8, 15, .3) 70%,
+        transparent 90%
+      );
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+      z-index: 2;
+    }
+
+    .slide.active .content,
+    .slide.active .panel,
+    .slide.active .wide-panel {
+      animation: world-enter .58s cubic-bezier(.2, .75, .2, 1) both;
+    }
+
+    .slide.active .panel { animation-delay: .07s; }
+
+    @keyframes world-enter {
+      from { opacity: 0; transform: translateY(18px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .slide.full {
+      grid-template-columns: 1fr;
+      align-items: stretch;
+    }
+
+    .bg { display: none; }
+
+    .content, .panel, .wide-panel {
+      position: relative;
+      z-index: 5;
+      text-shadow: 0 2px 12px rgba(0, 0, 0, .96), 0 1px 3px rgba(0, 0, 0, 1);
+    }
+
+    .panel a, .wide-panel a { pointer-events: auto; }
+
+    .content {
+      max-width: 860px;
+    }
+
+    .kicker, .utility, .chip, .slide-count, .rail, .note, .source {
+      font-family: var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .kicker {
+      margin: 0 0 18px;
+      color: var(--cyan);
+      font-size: clamp(11px, 1vw, 13px);
+      font-weight: 700;
+    }
+
+    h1, h2 {
+      margin: 0;
+      font-family: var(--display);
+      letter-spacing: 0;
+      line-height: 1.02;
+      text-wrap: balance;
+      color: #fff;
+      text-shadow: 0 4px 18px rgba(0, 0, 0, .96), 0 1px 3px rgba(0, 0, 0, 1);
+    }
+
+    h1 {
+      max-width: 880px;
+      font-size: clamp(42px, 5.2vw, 76px);
+    }
+
+    h2 {
+      max-width: 900px;
+      font-size: clamp(32px, 4vw, 58px);
+    }
+
+    h3 {
+      margin: 0 0 10px;
+      font-size: clamp(18px, 1.5vw, 24px);
+      line-height: 1.2;
+    }
+
+    p {
+      margin: 0;
+      color: #f4f8ff;
+      font-size: clamp(17px, 1.15vw, 20px);
+      font-weight: 500;
+      line-height: 1.55;
+      text-wrap: pretty;
+    }
+
+    .lede {
+      margin-top: 20px;
+      max-width: 740px;
+      color: #ffffff;
+      font-size: clamp(19px, 1.45vw, 24px);
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .fine {
+      color: #e2ebf5;
+      font-size: 15px;
+      line-height: 1.55;
+    }
+
+    .panel, .wide-panel {
+      background: transparent;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      backdrop-filter: none;
+    }
+
+    .panel {
+      padding: clamp(22px, 2.5vw, 32px);
+    }
+
+    .wide-panel {
+      padding: clamp(24px, 4vw, 44px);
+    }
+
+    .signal {
+      display: grid;
+      gap: 15px;
+    }
+
+    .signal-row {
+      display: grid;
+      grid-template-columns: 42px 1fr;
+      gap: 14px;
+      align-items: start;
+      padding: 14px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 4px;
+      background: rgba(3, 11, 20, .64);
+    }
+
+    .signal-dot {
+      width: 42px;
+      height: 42px;
+      display: grid;
+      place-items: center;
+      border-radius: 3px;
+      background: linear-gradient(180deg, var(--cyan), var(--cobalt));
+      color: #06111f;
+      font: 900 16px/1 var(--mono);
+    }
+
+    .signal-row strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #fff;
+      font-size: 18px;
+    }
+
+    .signal-row span {
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.44;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 24px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 28px;
+      padding: 7px 10px;
+      border: 1px solid rgba(114, 221, 255, .28);
+      border-radius: 3px;
+      color: #f0f6fd;
+      background: rgba(9, 24, 43, .78);
+      font-size: 10px;
+      letter-spacing: .06em;
+    }
+
+    .chip.coral {
+      border-color: rgba(255, 92, 108, .45);
+      color: #ffdce0;
+    }
+
+    /* Scroll World engine overrides: the engine owns the moving environment;
+       the presentation deck remains the readable foreground instrument layer. */
+    .sw-copylayer { display: none; }
+    .sw-particles, .sw-sky__glow { display: none; }
+    .sw-scrollbar { height: 4px; background: rgba(114, 221, 255, .1); }
+    .sw-scrollbar span { background: linear-gradient(90deg, var(--cyan), var(--cobalt)); }
+    .sw-topbar {
+      z-index: 50;
+      padding: 22px clamp(22px, 5vw, 76px);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+      background: linear-gradient(180deg, rgba(3, 9, 17, .82), rgba(3, 9, 17, 0));
+    }
+    .sw-brand__mark {
+      width: 22px;
+      height: 26px;
+      border-radius: 2px;
+      background: linear-gradient(180deg, var(--cyan), var(--cobalt));
+      box-shadow: 0 0 18px rgba(114, 221, 255, .34);
+    }
+    .sw-brand__name {
+      color: #fff;
+      font: 800 11px/1 var(--mono);
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+    .sw-route {
+      right: clamp(10px, 1.6vw, 24px);
+      gap: clamp(5px, .8vh, 10px);
+      z-index: 48;
+    }
+    .sw-route::before { background: rgba(114, 221, 255, .34); }
+    .sw-route__dot { width: 18px; height: 18px; }
+    .sw-route__dot i { width: 7px; height: 7px; border-radius: 2px; }
+    .sw-route__label {
+      right: 27px;
+      border-radius: 3px;
+      color: #fff;
+      background: rgba(4, 12, 23, .92);
+      border-color: rgba(114, 221, 255, .22);
+      font: 700 10px/1 var(--mono);
+      letter-spacing: .06em;
+      text-transform: uppercase;
+    }
+    .sw-scene__video, .sw-scene__still {
+      filter: saturate(.86) contrast(1.04) brightness(.68);
+    }
+    body .sw-scene {
+      transform: translate3d(var(--scene-shift-x, 0), var(--scene-shift-y, 0), 0) scale(var(--scene-zoom, 1.04));
+      transform-origin: center;
+      transition: transform .8s cubic-bezier(.2, .75, .2, 1);
+      will-change: opacity, transform;
+    }
+    body .sw-scene__video, body .sw-scene__still {
+      object-position: var(--scene-position-x, 50%) var(--scene-position-y, 42%);
+      transition: object-position .8s cubic-bezier(.2, .75, .2, 1);
+    }
+    body .sw-stage::after {
+      content: "";
+      position: absolute;
+      top: -3vh;
+      bottom: -3vh;
+      left: var(--scene-seam-x, 50%);
+      z-index: 5;
+      width: clamp(48px, 4.5vw, 82px);
+      transform: translateX(-50%);
+      opacity: var(--scene-seam-opacity, 0);
+      pointer-events: none;
+      background: linear-gradient(
+        90deg,
+        transparent 0%,
+        rgba(3, 12, 22, .18) 20%,
+        rgba(3, 12, 22, .64) 42%,
+        rgba(3, 12, 22, .78) 50%,
+        rgba(3, 12, 22, .64) 58%,
+        rgba(3, 12, 22, .18) 80%,
+        transparent 100%
+      );
+      -webkit-backdrop-filter: blur(20px) saturate(.08) brightness(.62);
+      backdrop-filter: blur(20px) saturate(.08) brightness(.62);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 28%, #000 72%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 28%, #000 72%, transparent);
+      transition: left .8s cubic-bezier(.2, .75, .2, 1), opacity .45s ease;
+    }
+    .sw-hint {
+      display: none !important;
+    }
+
+    .rail {
+      position: fixed;
+      z-index: 40;
+      top: 78px;
+      left: clamp(22px, 5vw, 76px);
+      right: clamp(22px, 5vw, 76px);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      color: #d0dfef;
+      font-size: 10px;
+      pointer-events: none;
+    }
+
+    .rail-line {
+      position: relative;
+      flex: 1;
+      height: 1px;
+      background: rgba(255,255,255,.2);
+    }
+
+    .rail-fill {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--cyan), var(--cobalt));
+      box-shadow: 0 0 14px rgba(114,221,255,.5);
+      transition: width .3s ease;
+    }
+
+    .nav {
+      position: fixed;
+      z-index: 65;
+      right: clamp(20px, 4vw, 56px);
+      bottom: clamp(18px, 4vh, 42px);
+      pointer-events: none;
+    }
+
+    .slide-count {
+      min-width: 68px;
+      color: #f0f6fd;
+      font-size: 11px;
+      text-align: center;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, .95);
+    }
+
+    .list {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .list-item {
+      display: grid;
+      grid-template-columns: 86px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 16px 18px;
+      border: 1px solid rgba(255,255,255,.13);
+      border-radius: 4px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .list-item .code {
+      color: var(--cyan);
+      font: 800 12px/1.2 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .list-item strong {
+      display: block;
+      margin-bottom: 4px;
+      font-size: 18px;
+    }
+
+    .list-item span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.38;
+    }
+
+    .matrix {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(5,14,27,.38);
+    }
+
+    .cell {
+      min-height: 160px;
+      padding: 20px;
+      border: 1px solid rgba(255,255,255,.12);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .cell strong {
+      font: 900 18px/1 var(--mono);
+      color: #fff;
+    }
+
+    .cell span {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.36;
+    }
+
+    .cell.green { background: rgba(24, 166, 106, .12); }
+    .cell.coral { background: rgba(255, 92, 108, .13); }
+    .cell.blue { background: rgba(21, 94, 239, .14); }
+
+    .diagram {
+      display: grid;
+      gap: 12px;
+      margin-top: 24px;
+    }
+
+    .stage {
+      position: relative;
+      display: grid;
+      grid-template-columns: 132px 1fr 108px;
+      gap: 16px;
+      align-items: center;
+      padding: 14px 16px;
+      border: 1px solid rgba(114, 221, 255, .19);
+      border-left: 4px solid var(--cyan);
+      border-radius: 4px;
+      background: rgba(7, 17, 31, .74);
+    }
+
+    .stage:nth-child(3), .stage:nth-child(6) {
+      border-left-color: var(--coral);
+    }
+
+    .stage .name {
+      color: #fff;
+      font: 900 13px/1.2 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .stage .desc {
+      color: #e4edf7;
+      font-size: 16px;
+      line-height: 1.42;
+    }
+
+    .stage .gate {
+      justify-self: end;
+      color: #06111f;
+      background: var(--cyan);
+      border-radius: 3px;
+      padding: 8px 9px;
+      font: 900 10px/1 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .stage:nth-child(3) .gate, .stage:nth-child(6) .gate {
+      background: var(--coral);
+      color: #fff;
+    }
+
+    .quote {
+      position: relative;
+      padding: 26px;
+      border-left: 4px solid var(--cyan);
+      background: rgba(114, 221, 255, .08);
+      border-radius: 4px;
+    }
+
+    .quote p {
+      font-size: clamp(20px, 1.55vw, 25px);
+      color: #fff;
+      line-height: 1.4;
+    }
+
+    .source {
+      display: block;
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 10px;
+      line-height: 1.4;
+    }
+
+    a { color: var(--cyan); }
+
+    .loop-equation {
+      margin-top: 24px;
+      padding: 14px 0;
+      border-top: 1px solid rgba(114, 221, 255, .3);
+      border-bottom: 1px solid rgba(114, 221, 255, .3);
+      color: #fff;
+      font: 800 clamp(12px, 1vw, 15px)/1.5 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .ladder-shell {
+      display: grid;
+      grid-template-columns: minmax(300px, .9fr) minmax(420px, 1.1fr);
+      gap: clamp(28px, 4vw, 58px);
+      align-items: center;
+      margin-top: 18px;
+    }
+
+    .ladder-stage {
+      position: relative;
+      width: min(100%, 54vh, 470px);
+      aspect-ratio: 1;
+      margin: 0 auto;
+      overflow: hidden;
+      cursor: pointer;
+      pointer-events: auto;
+      background: radial-gradient(circle at center, rgba(114, 221, 255, .08), transparent 58%);
+    }
+
+    .ladder-stage:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 4px;
+    }
+
+    #ladderRings {
+      position: absolute;
+      inset: 0;
+      transition: transform 1s cubic-bezier(.2, .75, .2, 1);
+    }
+
+    .ladder-ring {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      border: 1px solid rgba(114, 221, 255, .2);
+      border-radius: 8px;
+      transition: border-color .55s, box-shadow .55s, opacity .55s, background .55s;
+    }
+
+    .ladder-ring.lit {
+      border-color: rgba(114, 221, 255, .9);
+      background: rgba(114, 221, 255, .025);
+      box-shadow: 0 0 54px rgba(114, 221, 255, .16), inset 0 0 40px rgba(114, 221, 255, .05);
+    }
+
+    .ladder-ring.lit.top {
+      border-color: rgba(255, 92, 108, .94);
+      box-shadow: 0 0 58px rgba(255, 92, 108, .18), inset 0 0 42px rgba(255, 92, 108, .05);
+    }
+
+    .ladder-ring.past { opacity: .64; }
+
+    .ladder-ring .ladder-label {
+      position: absolute;
+      top: 4%;
+      left: 50%;
+      transform: translateX(-50%);
+      color: #fff;
+      font-family: var(--display);
+      line-height: 1;
+      white-space: nowrap;
+      opacity: 0;
+      transition: opacity .5s;
+    }
+
+    .ladder-ring.revealed .ladder-label { opacity: .82; }
+    .ladder-ring.lit .ladder-label { opacity: 1; }
+
+    .ladder-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 12;
+      width: 8px;
+      height: 8px;
+      transform: translate(-50%, -50%);
+      border-radius: 2px;
+      background: #fff;
+      pointer-events: none;
+      animation: ladder-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes ladder-pulse {
+      0%, 100% { opacity: .58; box-shadow: 0 0 8px rgba(114, 221, 255, .45); }
+      50% { opacity: 1; box-shadow: 0 0 22px rgba(114, 221, 255, .95); }
+    }
+
+    .ladder-hint {
+      position: absolute;
+      bottom: 12px;
+      left: 50%;
+      z-index: 14;
+      transform: translateX(-50%);
+      padding: 7px 10px;
+      border: 1px solid rgba(114, 221, 255, .26);
+      border-radius: 3px;
+      color: #f0f6fd;
+      background: rgba(3, 9, 17, .5);
+      font: 750 9px/1 var(--mono);
+      text-transform: uppercase;
+      white-space: nowrap;
+      pointer-events: none;
+    }
+
+    .ladder-side {
+      min-width: 0;
+      width: min(100%, 640px);
+      justify-self: end;
+      transform: translateX(clamp(18px, 2.4vw, 42px));
+      padding: 18px 20px;
+      border: 1px solid rgba(155, 232, 255, .18);
+      border-radius: 4px;
+      background: rgba(3, 11, 20, .66);
+      box-shadow: 0 18px 48px rgba(0, 0, 0, .24);
+      -webkit-backdrop-filter: blur(14px);
+      backdrop-filter: blur(14px);
+    }
+
+    .ladder-steps {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .ladder-steps::before {
+      content: "";
+      position: absolute;
+      top: 18px;
+      bottom: 18px;
+      left: 16px;
+      width: 1px;
+      background: rgba(114, 221, 255, .24);
+    }
+
+    .ladder-step {
+      position: relative;
+      display: flex;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 6px 0;
+      border: 0;
+      color: inherit;
+      background: none;
+      text-align: left;
+      cursor: pointer;
+      pointer-events: auto;
+    }
+
+    .ladder-step:focus-visible {
+      outline: 2px solid var(--cyan);
+      outline-offset: 2px;
+    }
+
+    .ladder-number {
+      position: relative;
+      z-index: 2;
+      width: 33px;
+      height: 33px;
+      flex: 0 0 33px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(114, 221, 255, .3);
+      border-radius: 3px;
+      color: #d8e6f3;
+      background: rgba(3, 9, 17, .88);
+      font: 750 10px/1 var(--mono);
+      transition: .35s ease;
+    }
+
+    .ladder-step.on .ladder-number {
+      color: #06111f;
+      border-color: var(--cyan);
+      background: linear-gradient(180deg, var(--cyan), #8fb7ff);
+      box-shadow: 0 0 18px rgba(114, 221, 255, .34);
+    }
+
+    .ladder-step:last-child.on .ladder-number {
+      color: #fff;
+      border-color: var(--coral);
+      background: var(--coral);
+      box-shadow: 0 0 18px rgba(255, 92, 108, .3);
+    }
+
+    .ladder-body { min-width: 0; padding-top: 2px; }
+
+    .ladder-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 5px 12px;
+      align-items: baseline;
+    }
+
+    .ladder-title {
+      color: #d5e2ef;
+      font-size: 17px;
+      font-weight: 750;
+      line-height: 1.2;
+      transition: color .35s;
+    }
+
+    .ladder-step.on .ladder-title { color: #fff; }
+
+    .ladder-era {
+      color: #bdd0e4;
+      font: 700 9.5px/1.2 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .ladder-summary {
+      display: block;
+      max-height: 0;
+      margin-top: 0;
+      overflow: hidden;
+      opacity: 0;
+      color: #e1ebf5;
+      font-size: 13px;
+      line-height: 1.45;
+      transition: max-height .45s cubic-bezier(.2, .75, .2, 1), opacity .35s, margin .35s;
+    }
+
+    .ladder-step.on .ladder-summary {
+      max-height: 90px;
+      margin-top: 5px;
+      opacity: 1;
+    }
+
+    .ladder-remarks {
+      margin: 10px 0 0 47px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(255, 255, 255, .13);
+      color: #d5e2ef;
+      font-size: 11.5px;
+      line-height: 1.45;
+    }
+
+    .ladder-remarks strong { color: #fff; }
+
+    .voice-strip {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(114, 221, 255, .28);
+    }
+
+    .voice-strip p {
+      color: #fff;
+      font-size: 15px;
+      line-height: 1.4;
+    }
+
+    .voice-strip span {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font: 700 9px/1.35 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    .feature {
+      min-height: 126px;
+      padding: 15px;
+      border: 1px solid rgba(255, 255, 255, .15);
+      border-top: 3px solid rgba(114, 221, 255, .72);
+      background: rgba(3, 11, 20, .56);
+    }
+
+    .feature:nth-child(5) { border-top-color: var(--coral); }
+
+    .feature b {
+      color: var(--cyan);
+      font: 850 10px/1 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .feature strong {
+      display: block;
+      margin: 10px 0 6px;
+      color: #fff;
+      font-size: 17px;
+    }
+
+    .feature span {
+      color: #e3edf7;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .warning-slide h2 span {
+      color: #d7e0ea;
+      font-weight: 650;
+      font-style: italic;
+    }
+
+    .warning-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: clamp(16px, 2vw, 28px);
+      margin-top: 28px;
+    }
+
+    .warning {
+      min-height: 228px;
+      padding: 18px 18px 0;
+      border-top: 3px solid var(--cyan);
+      background: linear-gradient(180deg, rgba(3, 11, 20, .58), rgba(3, 11, 20, .08) 88%);
+    }
+
+    .warning:nth-child(2) { border-top-color: var(--coral); }
+    .warning:nth-child(3) { border-top-color: var(--green); }
+
+    .warning-mark {
+      display: grid;
+      width: 36px;
+      height: 36px;
+      place-items: center;
+      margin-bottom: 18px;
+      border: 1px solid rgba(255, 255, 255, .2);
+      border-radius: 3px;
+      color: var(--cyan);
+      font: 850 10px/1 var(--mono);
+    }
+
+    .warning:nth-child(2) .warning-mark { color: var(--coral); }
+    .warning:nth-child(3) .warning-mark { color: #6fe3ad; }
+
+    .warning h3 {
+      color: #fff;
+      font-size: clamp(18px, 1.55vw, 23px);
+    }
+
+    .warning-line {
+      color: #f3f7fc;
+      font-size: 16px;
+      line-height: 1.5;
+    }
+
+    .warning-proof {
+      margin-top: 17px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(255, 255, 255, .14);
+      color: #d2deeb;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .warning-proof strong { color: #fff; }
+
+    .outer-loop-rule {
+      margin-top: 22px;
+      padding: 12px 0;
+      border-top: 1px solid rgba(114, 221, 255, .3);
+      border-bottom: 1px solid rgba(114, 221, 255, .3);
+      color: #fff;
+      font: 850 clamp(14px, 1.2vw, 18px)/1.3 var(--mono);
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .voices {
+      display: grid;
+      gap: 0;
+    }
+
+    .voice {
+      padding: 16px 0;
+    }
+
+    .voice + .voice {
+      border-top: 1px solid rgba(255, 255, 255, .15);
+    }
+
+    .voice:first-child { padding-top: 0; }
+    .voice:last-child { padding-bottom: 0; }
+
+    .voice .remark {
+      color: #fff;
+      font-size: clamp(17px, 1.25vw, 21px);
+      font-weight: 650;
+      line-height: 1.42;
+    }
+
+    .voice .source { margin-top: 7px; }
+
+    .bridge-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px 14px;
+      margin-top: 18px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(114, 221, 255, .24);
+      color: #f0f6fd;
+      font: 750 12px/1.45 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .bridge-strip b { color: var(--cyan); }
+
+    .audit-slide .wide-panel {
+      width: min(100%, 1440px);
+      margin: auto;
+      align-self: center;
+    }
+
+    .audit-slide .kicker { margin-bottom: 14px; }
+
+    .audit-slide h2 {
+      max-width: 1180px;
+      font-family: var(--body);
+      font-size: clamp(31px, 3.1vw, 46px);
+      font-weight: 720;
+      line-height: 1.08;
+    }
+
+    .framework-line {
+      max-width: 1100px;
+      margin-top: 15px;
+      padding-left: 14px;
+      border-left: 3px solid var(--cyan);
+      color: #f0f6fd;
+      font-size: clamp(16px, 1.15vw, 19px);
+      line-height: 1.46;
+    }
+
+    .framework-line strong { color: #fff; }
+
+    .audit-table {
+      margin-top: 24px;
+      border-top: 1px solid rgba(255, 255, 255, .24);
+    }
+
+    .audit-row {
+      display: grid;
+      grid-template-columns: minmax(176px, .8fr) minmax(0, 3fr) 96px;
+      gap: clamp(18px, 1.8vw, 28px);
+      align-items: start;
+      min-height: 52px;
+      padding: 12px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, .13);
+      background: linear-gradient(90deg, rgba(3, 11, 20, .44), rgba(3, 11, 20, .08));
+    }
+
+    .audit-row b {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 1.32;
+    }
+
+    .audit-row > span:not(.audit-status) {
+      color: #e5edf6;
+      font-size: 15.5px;
+      line-height: 1.42;
+    }
+
+    .audit-status {
+      align-self: center;
+      justify-self: end;
+      color: #72e0b1;
+      font: 850 10.5px/1.2 var(--mono);
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .audit-status.partial { color: #ffd58a; }
+    .audit-status.exceeds { color: #fff; }
+    .audit-status.next { color: #8ecbff; }
+
+    .htv-rule {
+      margin-top: 18px;
+      padding: 2px 0 2px 16px;
+      border-left: 4px solid var(--coral);
+    }
+
+    .htv-rule strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #fff;
+      font-size: 17px;
+    }
+
+    .htv-rule span {
+      color: #edf4fb;
+      font-size: 15px;
+      line-height: 1.5;
+    }
+
+    .protocol {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 28px;
+    }
+
+    .protocol .step {
+      min-height: 180px;
+      padding: 16px;
+      border: 1px solid rgba(255,255,255,.2);
+      border-radius: 4px;
+      background: rgba(3, 11, 20, .62);
+    }
+
+    .step b {
+      display: block;
+      margin-bottom: 12px;
+      color: var(--cyan);
+      font: 900 12px/1 var(--mono);
+    }
+
+    .step strong {
+      display: block;
+      color: #fff;
+      font-size: 18px;
+      line-height: 1.12;
+      margin-bottom: 8px;
+    }
+
+    .step span {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.42;
+    }
+
+    .locks {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .lock {
+      padding: 18px;
+      border-radius: 4px;
+      background: rgba(255, 92, 108, .1);
+      border: 1px solid rgba(255, 92, 108, .32);
+    }
+
+    .lock strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #ffdce0;
+      font: 900 13px/1.1 var(--mono);
+      text-transform: uppercase;
+    }
+
+    .lock span {
+      color: #e5c5ca;
+      font-size: 15px;
+      line-height: 1.36;
+    }
+
+    .lesson-list {
+      display: grid;
+      gap: 13px;
+      margin-top: 24px;
+    }
+
+    .lesson {
+      display: grid;
+      grid-template-columns: 54px 1fr;
+      gap: 16px;
+      align-items: start;
+      padding: 18px 20px;
+      border-radius: 5px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: linear-gradient(90deg, rgba(9,24,43,.88), rgba(5,14,27,.62));
+    }
+
+    .lesson-num {
+      width: 38px;
+      height: 38px;
+      display: grid;
+      place-items: center;
+      border-radius: 3px;
+      background: rgba(114,221,255,.12);
+      border: 1px solid rgba(114,221,255,.34);
+      color: var(--cyan);
+      font: 900 13px/1 var(--mono);
+    }
+
+    .lesson p {
+      color: #e6eef7;
+      font-size: clamp(16px, 1.25vw, 20px);
+      line-height: 1.42;
+    }
+
+    .lesson strong {
+      color: #fff;
+    }
+
+    .cost-slide .wide-panel {
+      width: min(100%, 1420px);
+      margin: auto;
+      align-self: center;
+    }
+
+    .cost-slide .kicker { margin-bottom: 14px; }
+
+    .cost-slide h2 {
+      max-width: 1120px;
+      font-family: var(--body);
+      font-size: clamp(34px, 3.5vw, 52px);
+      font-weight: 720;
+      line-height: 1.08;
+    }
+
+    .cost-slide h2 em {
+      color: var(--cyan);
+      font-style: normal;
+      font-weight: 500;
+    }
+
+    .cost-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.08fr) minmax(360px, .92fr);
+      gap: clamp(24px, 3vw, 44px);
+      align-items: stretch;
+      margin-top: 26px;
+    }
+
+    .cost-curve {
+      min-height: 330px;
+      padding: 20px 22px 16px;
+      border: 1px solid rgba(255,255,255,.22);
+      border-radius: 6px;
+      background: linear-gradient(135deg, rgba(3,11,20,.58), rgba(3,11,20,.18));
+    }
+
+    .cost-curve svg {
+      display: block;
+      width: 100%;
+      height: 100%;
+      overflow: visible;
+    }
+
+    .cost-curve .axis {
+      stroke: rgba(255,255,255,.24);
+      stroke-width: 1;
+    }
+
+    .cost-curve .grid-line {
+      stroke: rgba(255,255,255,.09);
+      stroke-width: 1;
+    }
+
+    .cost-curve .curve-fill { fill: url(#costArea); }
+
+    .cost-curve .curve-line {
+      fill: none;
+      stroke: #fff;
+      stroke-width: 3;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .cost-curve .curve-dot {
+      fill: #fff;
+      stroke: rgba(114,221,255,.65);
+      stroke-width: 2;
+    }
+
+    .cost-curve .chart-label,
+    .cost-curve .chart-note {
+      fill: #eef6ff;
+      font-family: var(--body);
+    }
+
+    .cost-curve .chart-label {
+      fill: #b9c8d8;
+      font-family: var(--mono);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .cost-curve .chart-note {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .cost-curve .leader {
+      stroke: rgba(155,232,255,.55);
+      stroke-width: 1;
+    }
+
+    .cost-rules {
+      display: grid;
+      align-content: center;
+      gap: 0;
+    }
+
+    .cost-rule-item {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 14px;
+      padding: 16px 4px;
+      border-bottom: 1px solid rgba(255,255,255,.16);
+    }
+
+    .cost-rule-item:first-child { border-top: 1px solid rgba(255,255,255,.16); }
+
+    .cost-rule-num {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(155,232,255,.42);
+      border-radius: 50%;
+      color: var(--cyan);
+      font: 800 10px/1 var(--mono);
+    }
+
+    .cost-rule-item strong {
+      display: block;
+      margin-bottom: 5px;
+      color: #fff;
+      font-size: 17px;
+      line-height: 1.2;
+    }
+
+    .cost-rule-item p {
+      color: #dce8f4;
+      font-size: 14px;
+      line-height: 1.42;
+    }
+
+    .cost-principle {
+      margin-top: 18px;
+      padding-left: 15px;
+      border-left: 3px solid var(--cyan);
+      color: #f2f7fc;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .cost-principle strong { color: #fff; }
+
+    .two {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .callout {
+      padding: 18px;
+      border-radius: 4px;
+      border: 1px solid rgba(114, 221, 255, .24);
+      background: rgba(21, 94, 239, .12);
+    }
+
+    .callout strong {
+      display: block;
+      margin-bottom: 8px;
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .callout span {
+      color: #e3edf8;
+      font-size: 16px;
+      line-height: 1.42;
+    }
+
+    .terminal {
+      margin-top: 24px;
+      border-radius: 6px;
+      border: 1px solid rgba(114, 221, 255, .23);
+      background: #050e1b;
+      overflow: hidden;
+    }
+
+    .terminal-bar {
+      display: flex;
+      justify-content: space-between;
+      padding: 11px 14px;
+      border-bottom: 1px solid rgba(255,255,255,.1);
+      color: var(--muted);
+      font: 700 10px/1 var(--mono);
+      text-transform: uppercase;
+    }
+
+    pre {
+      margin: 0;
+      white-space: pre-wrap;
+      color: #f0f6fd;
+      font: 14px/1.55 var(--mono);
+      padding: 18px;
+    }
+
+    .no-results {
+      display: inline-flex;
+      margin-top: 18px;
+      padding: 10px 12px;
+      border-radius: 3px;
+      border: 1px solid rgba(255, 92, 108, .42);
+      background: rgba(255, 92, 108, .1);
+      color: #ffdce0;
+      font: 800 11px/1 var(--mono);
+      text-transform: uppercase;
+      letter-spacing: .08em;
+    }
+
+    @media (max-width: 960px) {
+      .slide {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 118px 58px 82px 22px;
+        overflow: hidden;
+      }
+
+      .panel { max-width: none; }
+      .protocol { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .locks { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+      .two { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .lesson { grid-template-columns: 44px 1fr; }
+      .stage { grid-template-columns: 108px 1fr 88px; }
+      .ladder-shell { grid-template-columns: minmax(240px, .85fr) minmax(320px, 1.15fr); gap: 24px; }
+      .ladder-stage { width: min(100%, 46vh, 360px); }
+      .ladder-title { font-size: 17px; }
+      .ladder-era { font-size: 9px; }
+      .ladder-summary { font-size: 12.5px; }
+      .ladder-remarks { font-size: 11px; }
+      .ladder-side { transform: translateX(12px); padding: 14px 16px; }
+      .feature-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .audit-row { grid-template-columns: 124px minmax(0, 1fr) 70px; }
+      .warning-grid { gap: 12px; }
+      .cost-grid { grid-template-columns: minmax(0, .95fr) minmax(320px, 1.05fr); gap: 20px; }
+      .cost-curve { min-height: 280px; padding: 16px; }
+      .cost-rule-item { padding: 12px 2px; }
+      .cost-rule-item p { font-size: 13px; }
+      .nav { left: 18px; right: auto; }
+      h1 { font-size: clamp(40px, 9vw, 62px); }
+      h2 { font-size: clamp(31px, 7vw, 48px); }
+
+      .slide.scrim-left::before,
+      .slide.scrim-split::before,
+      .slide.scrim-wide::before {
+        inset: 2% -22%;
+        width: auto;
+        background: radial-gradient(
+          ellipse 72% 84% at 43% 50%,
+          rgba(2, 8, 15, .95) 0%,
+          rgba(2, 8, 15, .8) 56%,
+          rgba(2, 8, 15, .26) 75%,
+          transparent 92%
+        );
+      }
+
+      .slide.scrim-split::after { display: none; }
+    }
+
+    @media (max-width: 600px) {
+      .slide { padding: 108px 46px 76px 18px; }
+      h1 { font-size: 36px; }
+      h2 { font-size: 29px; }
+      h3 { font-size: 18px; }
+      p { font-size: 16px; }
+      .lede { font-size: 17px; }
+      .lede { margin-top: 14px; }
+      .panel, .wide-panel { padding: 14px; }
+      .protocol { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px; margin-top: 14px; }
+      .protocol .step { min-height: 104px; padding: 10px; }
+      .step b { margin-bottom: 6px; }
+      .step strong { font-size: 14px; margin-bottom: 4px; }
+      .step span { font-size: 11px; }
+      .lesson-list { gap: 6px; margin-top: 12px; }
+      .lesson { grid-template-columns: 28px 1fr; gap: 8px; padding: 8px; }
+      .lesson-num { width: 26px; height: 26px; font-size: 10px; }
+      .lesson p { font-size: 12px; line-height: 1.28; }
+      .diagram { gap: 6px; margin-top: 12px; }
+      .stage { grid-template-columns: 74px 1fr 62px; gap: 8px; padding: 8px; }
+      .stage .name, .stage .desc { font-size: 11px; }
+      .stage .gate { padding: 6px; font-size: 8px; }
+      .no-results { margin-top: 10px; font-size: 9px; }
+      .voice { padding: 10px 0; }
+      .voice .remark { font-size: 14px; }
+      .audit-slide h2 { font-size: 27px; }
+      .framework-line { margin-top: 9px; padding-left: 10px; font-size: 12px; line-height: 1.34; }
+      .audit-table { margin-top: 12px; }
+      .audit-row { grid-template-columns: 92px minmax(0, 1fr) 52px; gap: 8px; min-height: 0; padding: 6px 3px; }
+      .audit-row b { font-size: 10.5px; }
+      .audit-row > span:not(.audit-status) { font-size: 10px; line-height: 1.3; }
+      .audit-status { font-size: 7.5px; letter-spacing: .04em; }
+      .warning-slide h2 { font-size: 27px; }
+      .warning-grid { gap: 7px; margin-top: 12px; }
+      .warning { min-height: 210px; padding: 10px 7px 0; }
+      .warning-mark { width: 27px; height: 27px; margin-bottom: 9px; font-size: 8px; }
+      .warning h3 { margin-bottom: 7px; font-size: 12px; }
+      .warning-line, .warning-proof { font-size: 9px; line-height: 1.3; }
+      .warning-proof { margin-top: 9px; padding-top: 8px; }
+      .outer-loop-rule { margin-top: 10px; padding: 8px 0; font-size: 9px; }
+      .cost-slide h2 { font-size: 27px; }
+      .cost-grid { grid-template-columns: 1fr; gap: 9px; margin-top: 12px; }
+      .cost-curve { min-height: 150px; padding: 8px 10px; }
+      .cost-rules { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 12px; }
+      .cost-rule-item { grid-template-columns: 24px 1fr; gap: 7px; padding: 7px 0; }
+      .cost-rule-item:nth-child(2) { border-top: 1px solid rgba(255,255,255,.16); }
+      .cost-rule-num { width: 22px; height: 22px; font-size: 7px; }
+      .cost-rule-item strong { margin-bottom: 2px; font-size: 11px; }
+      .cost-rule-item p { font-size: 9px; line-height: 1.28; }
+      .cost-principle { margin-top: 8px; padding-left: 9px; font-size: 9.5px; line-height: 1.3; }
+      .cost-curve .chart-label { font-size: 8px; }
+      .cost-curve .chart-note { font-size: 9px; }
+      .htv-rule span { font-size: 12px; }
+      .htv-rule { margin-top: 10px; }
+      .bridge-strip { margin-top: 10px; padding-top: 10px; font-size: 9px; }
+      .ladder-shell { grid-template-columns: minmax(130px, .72fr) minmax(0, 1.28fr); gap: 12px; margin-top: 10px; }
+      .ladder-stage { width: min(100%, 34vh, 170px); }
+      .ladder-side { transform: none; padding: 8px; }
+      .ladder-hint { bottom: 4px; padding: 5px 6px; font-size: 7px; }
+      .ladder-steps::before { left: 12px; }
+      .ladder-step { gap: 8px; padding: 3px 0; }
+      .ladder-number { width: 25px; height: 25px; flex-basis: 25px; font-size: 9px; }
+      .ladder-title { font-size: 13.5px; }
+      .ladder-era { font-size: 8px; }
+      .ladder-summary { font-size: 10.5px; line-height: 1.3; }
+      .ladder-step.on .ladder-summary { max-height: 48px; margin-top: 2px; }
+      .ladder-remarks { margin: 5px 0 0 33px; padding-top: 5px; font-size: 9.5px; line-height: 1.35; }
+      .voice-strip { gap: 12px; margin-top: 10px; padding-top: 8px; }
+      .voice-strip p { font-size: 11px; }
+      .feature-grid { gap: 6px; margin-top: 10px; }
+      .feature { min-height: 92px; padding: 9px; }
+      .feature strong { margin: 6px 0 3px; font-size: 13px; }
+      .feature span { font-size: 10px; line-height: 1.3; }
+      .sw-brand__name { max-width: 190px; line-height: 1.25; }
+      body .sw-scene { transform: translate3d(0, -1vh, 0) scale(1.04); }
+      body .sw-scene__video, body .sw-scene__still { object-position: center 44%; }
+      body .sw-stage::after { left: 50%; width: 46px; }
+    }
+
+    @media (max-height: 800px) and (min-width: 961px) {
+      .slide { padding-top: 92px; padding-bottom: 54px; }
+      .wide-panel { padding: 22px 30px; }
+      h1 { font-size: clamp(40px, 4.8vw, 68px); }
+      h2 { font-size: clamp(31px, 3.6vw, 50px); }
+      .lede { margin-top: 15px; }
+      .diagram { gap: 8px; margin-top: 16px; }
+      .stage { padding: 10px 14px; }
+      .protocol { margin-top: 18px; }
+      .protocol .step { min-height: 148px; padding: 13px; }
+      .audit-slide { padding-top: 82px; padding-bottom: 42px; }
+      .audit-slide .wide-panel { padding: 16px 26px; }
+      .audit-slide h2 { font-size: 36px; }
+      .audit-slide .framework-line { margin-top: 11px; font-size: 14px; }
+      .audit-table { margin-top: 16px; }
+      .audit-row { grid-template-columns: 154px minmax(0, 1fr) 82px; gap: 18px; min-height: 0; padding: 7px 6px; }
+      .audit-row b { font-size: 14px; }
+      .audit-row > span:not(.audit-status) { font-size: 13.5px; line-height: 1.34; }
+      .audit-status { font-size: 9px; }
+      .warning-slide { padding-top: 84px; padding-bottom: 42px; }
+      .warning-slide .wide-panel { padding: 18px 28px; }
+      .warning-slide h2 { font-size: 38px; }
+      .warning-grid { margin-top: 18px; }
+      .warning { min-height: 192px; padding-top: 13px; }
+      .warning-mark { margin-bottom: 12px; }
+      .warning-line { font-size: 14px; line-height: 1.4; }
+      .warning-proof { margin-top: 12px; padding-top: 10px; font-size: 12.5px; line-height: 1.4; }
+      .outer-loop-rule { margin-top: 14px; padding: 9px 0; }
+      .terminal { margin-top: 16px; }
+      pre { padding: 14px 18px; font-size: 13px; line-height: 1.4; }
+      .verifier-slide .lede { font-size: 18px; line-height: 1.35; }
+      .verifier-slide .diagram { gap: 5px; margin-top: 10px; }
+      .verifier-slide .stage { grid-template-columns: 112px 1fr 74px; padding: 7px 12px; }
+      .verifier-slide .stage .desc { font-size: 13px; line-height: 1.3; }
+      .verifier-slide .htv-rule { margin-top: 10px; }
+      .lesson-slide { padding-top: 82px; padding-bottom: 42px; }
+      .lesson-slide .wide-panel { padding: 17px 24px; }
+      .lesson-slide h2 { font-size: 39px; }
+      .lesson-slide .lesson-list { gap: 7px; margin-top: 12px; }
+      .lesson-slide .lesson { grid-template-columns: 38px 1fr; gap: 10px; padding: 10px 14px; }
+      .lesson-slide .lesson-num { width: 32px; height: 32px; }
+      .lesson-slide .lesson p { font-size: 14px; line-height: 1.32; }
+      .cost-slide { padding-top: 82px; padding-bottom: 42px; }
+      .cost-slide .wide-panel { padding: 16px 26px; }
+      .cost-slide h2 { font-size: 36px; }
+      .cost-grid { gap: 24px; margin-top: 17px; }
+      .cost-curve { min-height: 276px; padding: 15px 18px 12px; }
+      .cost-rule-item { grid-template-columns: 32px 1fr; gap: 11px; padding: 10px 2px; }
+      .cost-rule-num { width: 28px; height: 28px; font-size: 9px; }
+      .cost-rule-item strong { margin-bottom: 3px; font-size: 14px; }
+      .cost-rule-item p { font-size: 12.5px; line-height: 1.35; }
+      .cost-principle { margin-top: 12px; font-size: 13px; }
+    }
+
+    @media (max-height: 500px) {
+      .slide { padding: 88px 54px 48px 22px; }
+      .slide:not(.full) .panel { display: none; }
+      .slide.full .wide-panel > :not(.kicker):not(h2):not(.no-results) { display: none; }
+      h1 { font-size: 38px; }
+      h2 { font-size: 31px; }
+      .lede { font-size: 14px; margin-top: 10px; }
+      .kicker { margin-bottom: 10px; }
+      .rail { top: 66px; }
+      .nav { bottom: 10px; }
+    }
+
+    @media print {
+      html, body { overflow: visible; height: auto; }
+      body::before, body::after, #world, .rail, .nav { display: none !important; }
+      .deck { position: static; overflow: visible; }
+      .slide, .slide.active {
+        position: relative;
+        min-height: 100vh;
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+        page-break-after: always;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="top"></div>
+  <div id="world" aria-label="Scroll-driven journey through the Get Physics Done research loop"></div>
+
+  <div class="rail">
+    <span>Loop engineering control plane</span>
+    <span class="rail-line"><i class="rail-fill" id="railFill"></i></span>
+    <span id="railCount">01 / 09</span>
+  </div>
+
+  <main class="deck" id="deck">
+    <section class="slide scrim-split active" data-note="Open with the topic, not the case study. Loop engineering moves the leverage from composing the next prompt to designing the system that decides the next action.">
+      <img class="bg" src="assets/tech-scene-01.webp" alt="">
+      <div class="content">
+        <p class="kicker">Loop engineering</p>
+        <h1>Design the system that prompts the agent.</h1>
+        <p class="lede">The leverage is a loop that finds work, equips agents, verifies outcomes, remembers state, and decides what happens next.</p>
+        <span class="no-results">GPD is the case study, not the topic</span>
+      </div>
+      <aside class="panel signal">
+        <div class="signal-row"><div class="signal-dot">P</div><div><strong>Prompt: one move.</strong><span>The human supplies the next instruction.</span></div></div>
+        <div class="signal-row"><div class="signal-dot">H</div><div><strong>Harness: one agent.</strong><span>Context, tools, permissions, and evals shape the work.</span></div></div>
+        <div class="signal-row"><div class="signal-dot">L</div><div><strong>Loop: the system.</strong><span>Discover, delegate, verify, remember, stop.</span></div></div>
+      </aside>
+    </section>
+
+    <section class="slide full ladder-slide scrim-split" id="ladderSlide" data-note="Click the rings or the steps to climb. Each level contains the previous one: prompts remain inside system prompts, agents, context, harnesses, and finally loops. The human moves up the abstraction stack; the prompt does not disappear.">
+      <img class="bg" src="assets/tech-scene-05.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">The abstraction ladder - 2022 to 2026</p>
+        <h2>The abstraction rises from words to control.</h2>
+        <div class="ladder-shell">
+          <div class="ladder-stage" id="ladderFrame" role="button" tabindex="0" aria-label="Abstraction ladder. Click to ascend one level.">
+            <div id="ladderRings"></div>
+            <div class="ladder-core" aria-hidden="true"></div>
+            <div class="ladder-hint" id="ladderHint">Click to ascend</div>
+          </div>
+          <div class="ladder-side">
+            <div class="ladder-steps" id="ladderSteps" role="tablist" aria-label="Abstraction levels"></div>
+            <p class="ladder-remarks"><strong>Peter Steinberger:</strong> design loops that prompt agents. <strong>Boris Cherny:</strong> "My job is to write loops."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide full scrim-wide" data-note="These are Addy's five pieces plus external memory. Explain them as responsibilities, not products. Then add /goal as the persistence and stop-condition primitive that keeps the loop moving until a verifier agrees.">
+      <img class="bg" src="assets/tech-scene-02.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">The loop engineering stack</p>
+        <h2>Six primitives turn autonomy into a system.</h2>
+        <div class="feature-grid">
+          <div class="feature"><b>Heartbeat</b><strong>Automation</strong><span>Finds and starts work.</span></div>
+          <div class="feature"><b>Isolation</b><strong>Worktrees</strong><span>Isolate parallel workers.</span></div>
+          <div class="feature"><b>Intent</b><strong>Skills</strong><span>Carry project rules into every run.</span></div>
+          <div class="feature"><b>Reach</b><strong>Connectors</strong><span>Connect sources, tools, and real actions.</span></div>
+          <div class="feature"><b>Separation</b><strong>Sub-agents</strong><span>Separate maker from checker.</span></div>
+          <div class="feature"><b>Memory</b><strong>External state</strong><span>Record attempts, decisions, and next actions.</span></div>
+        </div>
+        <p class="loop-equation"><code>/goal</code> adds persistence + a verifiable stop condition</p>
+      </div>
+    </section>
+
+    <section class="slide full scrim-wide" data-note="This is the application slide, not the thesis. Show how the open-source GPD framework instantiated the general loop and its verifier for agentic economy fraud research. Keep every statement about method, never findings.">
+      <img class="bg" src="assets/tech-scene-01.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">Application: agentic economy fraud research</p>
+        <h2>The research ran as a six-stage operating loop.</h2>
+        <div class="protocol">
+          <div class="step"><b>01 / Trigger</b><strong>Contract</strong><span>Fix scope, non-goals, and false progress.</span></div>
+          <div class="step"><b>02 / Context</b><strong>Map sources</strong><span>Rank evidence by authority.</span></div>
+          <div class="step"><b>03 / Worker</b><strong>Model mechanisms</strong><span>Form causal claims and predicted traces.</span></div>
+          <div class="step"><b>04 / Verifier</b><strong>Challenge</strong><span>Seek counterarguments and disconfirming evidence.</span></div>
+          <div class="step"><b>05 / Artifact</b><strong>Instrument</strong><span>Build inspectable traces and simulations.</span></div>
+          <div class="step"><b>06 / State</b><strong>Record + decide</strong><span>Advance, repair, or mark unresolved.</span></div>
+        </div>
+        <span class="no-results">Loop design only: research findings remain off-slide</span>
+      </div>
+    </section>
+
+    <section class="slide full verifier-slide scrim-wide" data-note="This is the key GPD contribution to the case study: a useful loop needs a verifier, not just persistence. Hard-to-vary is the research test inside that verifier. Explain the chain from question to gate.">
+      <img class="bg" src="assets/tech-scene-04.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">The verification mechanism</p>
+        <h2>A loop is only as good as the rule that lets it advance.</h2>
+        <p class="lede">Confidence does not advance the loop. Evidence does.</p>
+        <div class="diagram">
+          <div class="stage"><span class="name">Question</span><span class="desc">What exactly is being claimed?</span><span class="gate">scope</span></div>
+          <div class="stage"><span class="name">Mechanism</span><span class="desc">What causal process would produce it?</span><span class="gate">why</span></div>
+          <div class="stage"><span class="name">Prediction</span><span class="desc">What trace should that process leave?</span><span class="gate">trace</span></div>
+          <div class="stage"><span class="name">Challenge</span><span class="desc">What rival explanation could survive?</span><span class="gate">attack</span></div>
+          <div class="stage"><span class="name">Gate</span><span class="desc">Advance, repair, or mark unresolved.</span><span class="gate">decide</span></div>
+        </div>
+        <div class="htv-rule"><strong>Hard to vary</strong><span>Change the mechanism and its predicted evidence must change too.</span></div>
+      </div>
+    </section>
+
+    <section class="slide full audit-slide scrim-wide" data-note="Introduce GPD precisely: it is an open-source Agentic AI system framework that you applied to agentic economy fraud research. Then audit the implementation against Addy's loop discipline. These are system capabilities and operating lessons, not fraud findings.">
+      <img class="bg" src="assets/tech-scene-03.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">The audit / Get Physics Done vs the discipline</p>
+        <h2>Where it matches, where it exceeds &mdash; and where it honestly doesn't.</h2>
+        <p class="framework-line"><strong>GPD is an open-source Agentic AI system framework</strong> that I applied to agentic economy fraud research.</p>
+        <div class="audit-table" aria-label="Audit of GPD against loop engineering principles">
+          <div class="audit-row"><b>Parallel isolation</b><span>Five streams, three dependency-ordered waves. Review bandwidth was the limit.</span><span class="audit-status">Match</span></div>
+          <div class="audit-row"><b>Externalized knowledge</b><span>Skills inform runs; lessons do not yet write back.</span><span class="audit-status partial">Partial</span></div>
+          <div class="audit-row"><b>Connectors</b><span>81,904 real transactions entered through an in-loop connector.</span><span class="audit-status">Match</span></div>
+          <div class="audit-row"><b>Maker / checker</b><span>A 2.9-point drift triggered a hostile external judge.</span><span class="audit-status exceeds">Exceeds</span></div>
+          <div class="audit-row"><b>Memory / state</b><span>State files preserve decisions and self-correction receipts.</span><span class="audit-status">Match</span></div>
+          <div class="audit-row"><b>The heartbeat</b><span>Discovery loops are designed, not yet proven in operation.</span><span class="audit-status next">Next step</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide full warning-slide scrim-wide" data-note="These are the boundary conditions of loop engineering. The incidents make the outer-loop principle concrete: verification, system comprehension, and cognitive ownership remain human responsibilities. Close with the rule that the loop controls motion while the researcher controls belief.">
+      <img class="bg" src="assets/tech-scene-05.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">What the loop still does not do for you</p>
+        <h2>Three warnings <span>&mdash; three scars.</span></h2>
+        <div class="warning-grid">
+          <article class="warning">
+            <span class="warning-mark">01</span>
+            <h3>Verification stays yours</h3>
+            <p class="warning-line">&ldquo;Done&rdquo; is a claim.</p>
+            <p class="warning-proof"><strong>The scar:</strong> 97% public-test score; held-out score: zero.</p>
+          </article>
+          <article class="warning">
+            <span class="warning-mark">02</span>
+            <h3>Comprehension debt compounds</h3>
+            <p class="warning-line">Shipping &ne; understanding.</p>
+            <p class="warning-proof"><strong>The scar:</strong> 60+ project folders and a plaintext API key.</p>
+          </article>
+          <article class="warning">
+            <span class="warning-mark">03</span>
+            <h3>Cognitive surrender is comfortable</h3>
+            <p class="warning-line">A loop can sharpen or hollow out an engineer.</p>
+            <p class="warning-proof"><strong>The defense:</strong> read what it produces, daily.</p>
+          </article>
+        </div>
+        <p class="outer-loop-rule">The loop controls motion. The researcher controls belief.</p>
+      </div>
+    </section>
+
+    <section class="slide full lesson-slide scrim-wide" data-note="Move from the case study to practitioner judgment. These lessons are about loop design itself: discovery, learning, system comprehension, harness verification, and budget as a stop rule.">
+      <img class="bg" src="assets/tech-scene-02.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">Design lessons from building loops</p>
+        <h2>Five things I'd tell myself a year ago.</h2>
+        <div class="lesson-list">
+          <div class="lesson"><span class="lesson-num">01</span><p><strong>Persistence isn't the frontier; discovery is.</strong> Mine are chartered, not yet proven.</p></div>
+          <div class="lesson"><span class="lesson-num">02</span><p><strong>Knowledge must flow both ways.</strong> Human-gated write-back matters more than another loop.</p></div>
+          <div class="lesson"><span class="lesson-num">03</span><p><strong>Audit the estate, not just the code.</strong> Comprehension debt accumulates between projects.</p></div>
+          <div class="lesson"><span class="lesson-num">04</span><p><strong>Verify the plumbing.</strong> A lost sub-agent report can invalidate the loop.</p></div>
+          <div class="lesson"><span class="lesson-num">05</span><p><strong>Budget caps are stop conditions.</strong> Cost per verified result must fall as the loop matures.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="slide full cost-slide scrim-wide" data-note="Make cost an engineering signal, not an afterthought. A mature loop should spend less per verified result because it preserves state, retrieves only what is needed, routes work to the right model, and stops weak runs early.">
+      <img class="bg" src="assets/tech-scene-04.webp" alt="">
+      <div class="wide-panel">
+        <p class="kicker">Designing for cost / the token meter is always running</p>
+        <h2>A good loop gets <em>cheaper every lap.</em></h2>
+        <div class="cost-grid">
+          <div class="cost-curve" role="img" aria-label="A downward curve showing cost per verified result falling as a loop preserves state, gates expensive work, and right-sizes models.">
+            <svg viewBox="0 0 560 310" aria-hidden="true">
+              <defs>
+                <linearGradient id="costArea" x1="0" x2="0" y1="0" y2="1">
+                  <stop offset="0" stop-color="#9be8ff" stop-opacity=".18" />
+                  <stop offset="1" stop-color="#9be8ff" stop-opacity="0" />
+                </linearGradient>
+              </defs>
+              <text class="chart-label" x="54" y="18">Cost per verified result</text>
+              <line class="axis" x1="54" y1="32" x2="54" y2="274" />
+              <line class="axis" x1="54" y1="274" x2="526" y2="274" />
+              <line class="grid-line" x1="54" y1="112" x2="526" y2="112" />
+              <line class="grid-line" x1="54" y1="193" x2="526" y2="193" />
+              <path class="curve-fill" d="M60 68 C128 70 150 132 188 152 C238 180 246 215 304 226 C382 244 450 247 516 252 L516 274 L60 274 Z" />
+              <path class="curve-line" d="M60 68 C128 70 150 132 188 152 C238 180 246 215 304 226 C382 244 450 247 516 252" />
+              <circle class="curve-dot" cx="60" cy="68" r="5" />
+              <circle class="curve-dot" cx="188" cy="152" r="5" />
+              <circle class="curve-dot" cx="304" cy="226" r="5" />
+              <circle class="curve-dot" cx="412" cy="244" r="5" />
+              <circle class="curve-dot" cx="516" cy="252" r="5" />
+              <line class="leader" x1="188" y1="152" x2="238" y2="112" />
+              <text class="chart-note" x="244" y="110">state carried, not re-learnt</text>
+              <line class="leader" x1="304" y1="226" x2="350" y2="184" />
+              <text class="chart-note" x="356" y="182">cheap checks gate big runs</text>
+              <line class="leader" x1="412" y1="244" x2="442" y2="270" />
+              <text class="chart-note" x="302" y="296">right-sized models per step</text>
+              <text class="chart-label" x="480" y="294">Runs</text>
+            </svg>
+          </div>
+          <div class="cost-rules">
+            <div class="cost-rule-item"><span class="cost-rule-num">01</span><div><strong>Remember, don't re-learn</strong><p>State on disk means short warm-ups &mdash; no run pays to rediscover what the last one knew.</p></div></div>
+            <div class="cost-rule-item"><span class="cost-rule-num">02</span><div><strong>Point, don't paste</strong><p>Send references, fetch only what the step needs &mdash; the biggest bills are context that was never read.</p></div></div>
+            <div class="cost-rule-item"><span class="cost-rule-num">03</span><div><strong>Right-size the model</strong><p>Small models for routine steps, the big one only where judgment lives.</p></div></div>
+            <div class="cost-rule-item"><span class="cost-rule-num">04</span><div><strong>Stop early, stop often</strong><p>Cheap checks run first; budget caps end a bad lap before it gets expensive.</p></div></div>
+          </div>
+        </div>
+        <p class="cost-principle"><strong>The test:</strong> if cost per verified result does not bend down as the loop matures, redesign the loop &mdash; not the metrics.</p>
+      </div>
+    </section>
+
+    <section class="slide scrim-split" data-note="Return to the opening thesis. The memorable distinction is not prompt versus no prompt; prompts remain components. The engineering object is now the loop around them. GPD is your proof-by-application.">
+      <img class="bg" src="assets/tech-scene-01.webp" alt="">
+      <div class="content">
+        <p class="kicker">The presenter close</p>
+        <h2>Do not design a bigger prompt. Design a better loop.</h2>
+        <p class="lede">A prompt directs the next move. A loop governs what the system does next.</p>
+        <p class="loop-equation">Trigger &rarr; context &rarr; worker &rarr; verifier &rarr; state &rarr; repeat / stop</p>
+        <span class="no-results">GPD provided the research case study</span>
+      </div>
+      <aside class="panel">
+        <h3>Evidence trail</h3>
+        <p class="fine">Addy Osmani on <a href="https://addyosmani.com/blog/loop-engineering/">loop engineering</a> and the <a href="https://addyosmani.com/blog/own-the-outer-loop/">outer loop</a>.<br><a href="https://www.youtube.com/watch?v=RkQQ7WEor7w">Boris Cherny</a> on writing loops.<br><a href="https://x.com/steipete/status/2063697162748260627">Peter Steinberger</a> on loops that prompt agents.<br>GPD and fraud-research project artifacts.</p>
+      </aside>
+    </section>
+  </main>
+
+  <div class="nav" aria-label="Slide position">
+    <span class="slide-count" id="slideCount">01 / 10</span>
+  </div>
+
+  <script src="scrub-engine.js"></script>
+  <script>
+    const slides = Array.from(document.querySelectorAll(".slide"));
+    const railFill = document.getElementById("railFill");
+    const railCount = document.getElementById("railCount");
+    const slideCount = document.getElementById("slideCount");
+    const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const clip = (n) => `assets/video/tech-leg-0${n}-local.mp4`;
+    const beatWeights = [1.5, 1.65, 1.55, 1.65, 1.5, 1.5, 1.4, 1.75, 1.55, 1.5];
+    const backgroundFrames = [
+      { x: "0vw", y: "0vh", zoom: "1.04", positionX: "50%", positionY: "42%", seamX: "50%", seamOpacity: "1" },
+      { x: "0vw", y: "1vh", zoom: "1.07", positionX: "50%", positionY: "40%", seamX: "50%", seamOpacity: "1" },
+      { x: "5vw", y: "-2vh", zoom: "1.12", positionX: "62%", positionY: "38%", seamX: "55%", seamOpacity: "1" },
+      { x: "0vw", y: "-1vh", zoom: "1.07", positionX: "50%", positionY: "40%", seamX: "50%", seamOpacity: "1" },
+      { x: "-4vw", y: "1vh", zoom: "1.10", positionX: "42%", positionY: "44%", seamX: "50%", seamOpacity: "0" },
+      { x: "4vw", y: "0vh", zoom: "1.11", positionX: "58%", positionY: "43%", seamX: "50%", seamOpacity: "0" },
+      { x: "0vw", y: "-5vh", zoom: "1.10", positionX: "50%", positionY: "36%", seamX: "50%", seamOpacity: "0" },
+      { x: "0vw", y: "-6vh", zoom: "1.12", positionX: "50%", positionY: "34%", seamX: "50%", seamOpacity: "0" },
+      { x: "-3vw", y: "-4vh", zoom: "1.11", positionX: "46%", positionY: "37%", seamX: "50%", seamOpacity: "0" },
+      { x: "0vw", y: "-4vh", zoom: "1.08", positionX: "50%", positionY: "36%", seamX: "50%", seamOpacity: "0" }
+    ];
+    const weight = (start, end) => beatWeights.slice(start, end).reduce((total, value) => total + value, 0);
+
+    /* Five camera legs carry ten talk beats. The film advances continuously;
+       foreground chapters change inside each leg without restarting the camera. */
+    const worldSections = [
+      { id: "foundry", label: "Loop engineering", still: "assets/tech-scene-01.webp", clip: clip(1), accent: "#72ddff", scroll: weight(0, 2), linger: .34 },
+      { id: "stack", label: "Loop stack", still: "assets/tech-scene-02.webp", clip: clip(2), accent: "#155eef", scroll: weight(2, 4), linger: .38 },
+      { id: "gpd-research", label: "GPD research system", still: "assets/tech-scene-03.webp", clip: clip(3), accent: "#ff5c6c", scroll: weight(4, 6), linger: .42 },
+      { id: "lessons", label: "Limits, lessons, economics", still: "assets/tech-scene-04.webp", clip: clip(4), accent: "#18a66a", scroll: weight(6, 9), linger: .48 },
+      { id: "control-tower", label: "Close", still: "assets/tech-scene-05.webp", clip: clip(5), accent: "#72ddff", scroll: weight(9, 10), linger: .5 }
+    ];
+    const sceneStartBeats = [0, 2, 4, 6, 9];
+
+    mountScrollWorld(document.getElementById("world"), {
+      brand: { name: "Loop Engineering / GPD Case Study", href: "#top" },
+      hint: "scroll to run the research loop",
+      nav: false,
+      atmosphere: false,
+      crossfade: .18,
+      sections: worldSections,
+      connectors: []
+    });
+
+    /* Adapted from the interactive concentric ladder in HTML presentation overhaul.zip.
+       The visual treatment stays native to this scroll world's instrument-panel theme. */
+    (() => {
+      const levels = [
+        { title: "Prompt", era: "2022 / words", summary: "One instruction, one answer. Quality lives in phrasing, and the human supplies every next turn." },
+        { title: "System prompt", era: "2023 / instructions", summary: "Standing rules externalize role and behavior beyond one user message." },
+        { title: "Agentic engineering", era: "2024 / actor", summary: "The model uses tools, files, and terminals. Done becomes a claim that needs verification." },
+        { title: "Context engineering", era: "2025 / knowledge", summary: "The system curates what the agent sees at each moment. Relevance becomes designed." },
+        { title: "Harness engineering", era: "early 2026 / environment", summary: "Tests, permissions, and sandboxes reduce classes of mistakes through the environment." },
+        { title: "Loop engineering", era: "mid 2026 / system", summary: "The system finds work, delegates, verifies, remembers, and chooses repeat, stop, or escalate." }
+      ];
+      const sizes = [.22, .34, .48, .64, .82, 1];
+      const ringsContainer = document.getElementById("ladderRings");
+      const frame = document.getElementById("ladderFrame");
+      const steps = document.getElementById("ladderSteps");
+      const hint = document.getElementById("ladderHint");
+      const slide = document.getElementById("ladderSlide");
+      if (!ringsContainer || !frame || !steps || !hint || !slide) return;
+
+      const rings = levels.map((level, index) => {
+        const ring = document.createElement("div");
+        const size = sizes[index] * 92;
+        ring.className = "ladder-ring";
+        ring.style.width = size + "%";
+        ring.style.height = size + "%";
+        ring.style.zIndex = String(10 - index);
+        const label = document.createElement("span");
+        label.className = "ladder-label";
+        label.textContent = level.title;
+        label.style.fontSize = Math.max(9, 21 * sizes[index]).toFixed(1) + "px";
+        ring.appendChild(label);
+        ringsContainer.appendChild(ring);
+        return ring;
+      });
+
+      const stepButtons = levels.map((level, index) => {
+        const button = document.createElement("button");
+        button.className = "ladder-step";
+        button.type = "button";
+        button.setAttribute("role", "tab");
+        button.setAttribute("aria-label", "Level " + (index + 1) + ": " + level.title);
+        button.innerHTML =
+          '<span class="ladder-number">0' + (index + 1) + '</span>' +
+          '<span class="ladder-body">' +
+            '<span class="ladder-row"><span class="ladder-title"></span><span class="ladder-era"></span></span>' +
+            '<span class="ladder-summary"></span>' +
+          '</span>';
+        button.querySelector(".ladder-title").textContent = level.title;
+        button.querySelector(".ladder-era").textContent = level.era;
+        button.querySelector(".ladder-summary").textContent = level.summary;
+        steps.appendChild(button);
+        return button;
+      });
+
+      let ladderLevel = 0;
+
+      function setLadderLevel(nextLevel) {
+        ladderLevel = (nextLevel + levels.length) % levels.length;
+        rings.forEach((ring, index) => {
+          ring.classList.toggle("lit", index === ladderLevel);
+          ring.classList.toggle("past", index < ladderLevel);
+          ring.classList.toggle("revealed", index <= ladderLevel);
+          ring.classList.toggle("top", index === levels.length - 1);
+        });
+        stepButtons.forEach((button, index) => {
+          const selected = index === ladderLevel;
+          button.classList.toggle("on", selected);
+          button.setAttribute("aria-selected", selected ? "true" : "false");
+          button.tabIndex = selected ? 0 : -1;
+        });
+        ringsContainer.style.transform = "scale(" + (1 / sizes[ladderLevel]).toFixed(3) + ")";
+        hint.textContent = ladderLevel < levels.length - 1
+          ? "Click to ascend / 0" + (ladderLevel + 1) + " of 06"
+          : "Top of ladder / click to restart";
+        frame.setAttribute("aria-label", "Abstraction ladder. Current level: " + levels[ladderLevel].title + ". Click to ascend.");
+      }
+
+      function ascend(event) {
+        if (event) event.stopPropagation();
+        setLadderLevel(ladderLevel + 1);
+      }
+
+      frame.addEventListener("click", ascend);
+      frame.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          ascend(event);
+        }
+      });
+
+      stepButtons.forEach((button, index) => {
+        button.addEventListener("click", (event) => {
+          event.stopPropagation();
+          setLadderLevel(index);
+        });
+        button.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            event.stopPropagation();
+            setLadderLevel(index);
+            return;
+          }
+          if (["ArrowDown", "ArrowRight", "ArrowUp", "ArrowLeft"].includes(event.key)) {
+            event.preventDefault();
+            event.stopPropagation();
+            const direction = ["ArrowDown", "ArrowRight"].includes(event.key) ? 1 : -1;
+            setLadderLevel(ladderLevel + direction);
+            stepButtons[ladderLevel].focus();
+          }
+        });
+      });
+
+      new MutationObserver(() => {
+        if (slide.classList.contains("active")) setLadderLevel(0);
+      }).observe(slide, { attributes: true, attributeFilter: ["class"] });
+
+      setLadderLevel(0);
+    })();
+
+    let index = 0;
+    let ticking = false;
+
+    function label(n) {
+      return String(n + 1).padStart(2, "0") + " / " + String(slides.length).padStart(2, "0");
+    }
+
+    function applyBackgroundFrame(slideIndex) {
+      const frame = backgroundFrames[slideIndex] || backgroundFrames[0];
+      const root = document.documentElement;
+      root.style.setProperty("--scene-shift-x", frame.x);
+      root.style.setProperty("--scene-shift-y", frame.y);
+      root.style.setProperty("--scene-zoom", frame.zoom);
+      root.style.setProperty("--scene-position-x", frame.positionX);
+      root.style.setProperty("--scene-position-y", frame.positionY);
+      root.style.setProperty("--scene-seam-x", frame.seamX);
+      root.style.setProperty("--scene-seam-opacity", frame.seamOpacity);
+    }
+
+    function bounds() {
+      let cursor = 0;
+      return beatWeights.map((beatWeight) => {
+        const start = cursor * window.innerHeight;
+        cursor += beatWeight;
+        return { start, end: cursor * window.innerHeight };
+      });
+    }
+
+    function chapterAt(y, chapterBounds) {
+      const focus = y + window.innerHeight * .42;
+      let target = 0;
+      for (let i = 0; i < chapterBounds.length; i += 1) {
+        if (focus >= chapterBounds[i].start) target = i;
+      }
+      return Math.min(target, slides.length - 1);
+    }
+
+    function render(nextIndex, updateHash = true) {
+      const changed = nextIndex !== index;
+      index = nextIndex;
+      applyBackgroundFrame(index);
+      slides.forEach((slide, i) => slide.classList.toggle("active", i === index));
+      railCount.textContent = label(index);
+      slideCount.textContent = label(index);
+      if (changed && updateHash) {
+        history.replaceState(null, "", "#slide-" + String(index + 1).padStart(2, "0"));
+      }
+    }
+
+    function updateFromScroll() {
+      const max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      const progress = Math.max(0, Math.min(1, window.scrollY / max));
+      railFill.style.width = (progress * 100) + "%";
+      render(chapterAt(window.scrollY, bounds()));
+      ticking = false;
+    }
+
+    function requestUpdate() {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(updateFromScroll);
+    }
+
+    function goTo(target, behavior = "smooth") {
+      const next = Math.max(0, Math.min(slides.length - 1, target));
+      const chapter = bounds()[next];
+      const top = next === 0 ? 0 : chapter.start + (chapter.end - chapter.start) * .42;
+      window.scrollTo({ top, behavior: reduceMotion ? "auto" : behavior });
+      render(next);
+    }
+
+    function targetFromHash() {
+      const match = location.hash.match(/slide-(\d+)/);
+      if (!match) return 0;
+      return Math.max(0, Math.min(slides.length - 1, Number(match[1]) - 1));
+    }
+
+    document.querySelectorAll(".sw-route__dot").forEach((dot, sceneIndex) => {
+      dot.addEventListener("click", (event) => {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        goTo(sceneStartBeats[sceneIndex]);
+      }, true);
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (["ArrowDown", "ArrowRight", "PageDown", " "].includes(event.key)) {
+        event.preventDefault();
+        goTo(index + 1);
+      }
+      if (["ArrowUp", "ArrowLeft", "PageUp"].includes(event.key)) {
+        event.preventDefault();
+        goTo(index - 1);
+      }
+      if (event.key === "Home") {
+        event.preventDefault();
+        goTo(0);
+      }
+      if (event.key === "End") {
+        event.preventDefault();
+        goTo(slides.length - 1);
+      }
+    });
+
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    window.addEventListener("hashchange", () => goTo(targetFromHash(), "auto"));
+    window.addEventListener("load", () => {
+      requestAnimationFrame(() => {
+        goTo(targetFromHash(), "auto");
+        updateFromScroll();
+      });
+    });
+
+    render(0, false);
+  </script>
+</body>
+</html>
