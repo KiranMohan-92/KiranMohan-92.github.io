@@ -1,0 +1,30 @@
+/* ============ deck runtime — minimal presentation engine ============ */
+*,*::before,*::after{box-sizing:border-box}
+html,body{margin:0;padding:0;height:100%}
+html{-webkit-text-size-adjust:100%}
+body{background:#000}
+
+.deck{position:fixed;inset:0;overflow:hidden}
+.deck .slide{position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;transition:opacity .55s ease,visibility .55s;z-index:1;overflow:hidden}
+.deck .slide.is-active{opacity:1;visibility:visible;pointer-events:auto;z-index:2}
+
+.notes{display:none}
+.slide-number::after{content:attr(data-current) " / " attr(data-total)}
+
+.progress-bar{position:fixed;top:0;left:0;right:0;height:2px;z-index:300;background:rgba(255,255,255,.07);pointer-events:none}
+.progress-bar>span{display:block;height:100%;width:0;background:#fff;transition:width .45s cubic-bezier(.22,1,.36,1)}
+
+.deck-nav{position:fixed;bottom:18px;left:24px;z-index:280;display:flex;gap:8px}
+.deck-nav button{width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.16);background:rgba(18,18,18,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:rgba(255,255,255,.85);cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;transition:background .2s,transform .2s}
+.deck-nav button:hover{background:rgba(255,255,255,.12);transform:scale(1.06)}
+.deck-nav button:focus-visible{outline:2px solid rgba(255,255,255,.6);outline-offset:2px}
+
+@media (prefers-reduced-motion:reduce){
+  .deck .slide{transition:none}
+  .progress-bar>span{transition:none}
+}
+@media print{
+  .deck{position:static}
+  .deck .slide{position:relative;inset:auto;opacity:1;visibility:visible;page-break-after:always;height:100vh;overflow:hidden}
+  .progress-bar,.deck-nav,.gnav{display:none!important}
+}
