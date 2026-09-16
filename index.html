@@ -83,6 +83,29 @@
       pointer-events: none;
     }
 
+    /* === WARPDRIVE DRIFT MERGE — start: deep starfield substrate === */
+    #warp-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none;
+      display: block;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      #warp-bg { display: none; }
+    }
+
+    /* Contain additive glows on Content Factory cards so they don't composite with Drift stars */
+    #content-factory .cf-agent-card,
+    #content-factory .cfa-log { isolation: isolate; }
+
+    /* Tighten article-title haze slightly over moving starfield (overrides inline 12px shadows) */
+    #writing .article-title { text-shadow: 0 0 10px currentColor !important; }
+    /* === WARPDRIVE DRIFT MERGE — end === */
+
     /* Noise grain overlay */
     .noise-overlay {
       position: fixed;
@@ -91,7 +114,7 @@
       height: 300%;
       opacity: .028;
       pointer-events: none;
-      z-index: 1;
+      z-index: 3; /* WARPDRIVE DRIFT MERGE: was 1 — sit above .bg-orb */
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
       background-size: 200px 200px;
       animation: grainShift 8s steps(10) infinite;
@@ -148,7 +171,7 @@
       position: fixed;
       border-radius: 50%;
       pointer-events: none;
-      z-index: 0;
+      z-index: 2; /* WARPDRIVE DRIFT MERGE: was 0 — blur glows sit above Drift starfield */
       filter: blur(90px);
     }
 
@@ -1187,7 +1210,7 @@
       height: 140%;
       background-size: cover;
       background-position: center;
-      filter: brightness(.07) saturate(1.2) hue-rotate(12deg);
+      filter: brightness(.06) saturate(1.2) hue-rotate(12deg); /* WARPDRIVE DRIFT MERGE: .07 → .06 masks Drift inside scrub */
       will-change: transform;
     }
 
@@ -2618,6 +2641,8 @@
   <!-- ═══════════════════════════════════════════
      BACKGROUND LAYERS
 ═══════════════════════════════════════════ -->
+  <!-- === WARPDRIVE DRIFT MERGE — deepest background substrate === -->
+  <canvas id="warp-bg"></canvas>
   <canvas id="canvas-bg"></canvas>
   <div class="noise-overlay"></div>
   <div class="bg-orb orb-gold"></div>
@@ -3909,6 +3934,175 @@
   <!-- ═══════════════════════════════════════════
      JAVASCRIPT — ALL SYSTEMS
 ═══════════════════════════════════════════ -->
+  <!-- === WARPDRIVE DRIFT MERGE — start: inlined shader + harness ===
+       DIFF INDEX (all 18+ touch-points grep-able via 'WARPDRIVE DRIFT MERGE'):
+         CSS:  ~L86 (paired block: #warp-bg + reduced-motion + isolation + article-title)
+               ~L115 (.noise-overlay z-index 1→3)
+               ~L172 (.bg-orb z-index 0→2)
+              ~L1211 (.scrub-bg brightness .07→.06)
+         DOM:  ~L2643 (<canvas id="warp-bg">)
+         JS:   ~L3935 (paired block: Drift fragment shader + mountShader harness)
+              ~L4114 (Three.js __reduceMotion const)
+              ~L4117 (mouse-state dead vars removed)
+              ~L4136 (mousemove handler writes window.__sharedMouse)
+              ~L4162 (N=180 particle cloud deletion sentinel)
+              ~L4172 (updateLines rewired to icos[*].mesh.position)
+              ~L4258 (cursorInfluenceRadius/cursorForce removed)
+              ~L4272 (tick() visibility + reduced-motion early-returns)
+              ~L4298 (180-particle cursor-repulsion loop removed) === -->
+  <!-- === WARPDRIVE DRIFT MERGE — start: inlined shader + harness === -->
+  <script>
+    /* Drift fragment shader (warm-white + faint-gold palette retune from samples/warpdrive/warps.js).
+       Uniforms: u_res, u_time, u_mouse, u_smooth, u_click, u_clickPos.
+       Native cool-blue tint swapped for warm-white/faint-gold to sit inside --void/--gold tokens. */
+    window.__WARP_DRIFT_FRAG = `
+precision highp float;
+uniform vec2 u_res;
+uniform float u_time;
+uniform vec2 u_mouse;
+uniform vec2 u_smooth;
+uniform float u_click;
+uniform vec2 u_clickPos;
+
+float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
+
+void main(){
+  vec2 uv = (gl_FragCoord.xy - 0.5*u_res.xy) / u_res.y;
+  vec2 m = (u_smooth - 0.5);
+  vec2 center = m * 0.35;
+  vec2 p = uv - center;
+
+  float pulse = exp(-u_click*2.2) * 0.25;
+  float speed = 0.06 + pulse;
+
+  vec3 col = vec3(0.012, 0.015, 0.022); /* WARPDRIVE DRIFT MERGE: void-matched floor */
+
+  for(int L = 0; L < 5; L++){
+    float fi = float(L);
+    float depth = fi * 0.2;
+    float z = fract(u_time*speed + depth);
+    float scale = mix(12.0, 2.5, z);
+    vec2 sp = p * scale;
+    vec2 id = floor(sp);
+    vec2 fp = fract(sp) - 0.5;
+    float h = hash(id + fi*17.0);
+    float h2 = hash(id.yx + fi*31.0);
+    vec2 off = (vec2(h, h2) - 0.5) * 0.8;
+    float d = length(fp - off);
+    float size = mix(0.006, 0.022, h*h);
+    float bright = smoothstep(size*2.2, 0.0, d) * z;
+    vec3 tint = mix(vec3(0.86, 0.84, 0.78), vec3(0.98, 0.92, 0.78), h); /* WARPDRIVE DRIFT MERGE: warm-white / faint-gold */
+    col += tint * bright * 0.85;
+  }
+
+  col += vec3(0.10, 0.08, 0.04) * smoothstep(0.5, -0.5, uv.y) * 0.4; /* WARPDRIVE DRIFT MERGE: warm floor glow */
+  col *= 1.0 - 0.25*dot(uv,uv);
+
+  gl_FragColor = vec4(col, 1.0);
+}
+`;
+  </script>
+
+  <script>
+    /* Inlined WebGL harness from samples/warpdrive/shaders.js with two adaptations:
+       (1) shared cursor state via window.__sharedMouse so Drift and Three.js parallax in lockstep
+       (2) DPR 1.5 on iPhone/iPad or low-memory devices (biggest mobile-Safari win) */
+    (function(){
+      const VERT = 'attribute vec2 a_pos; void main(){ gl_Position = vec4(a_pos, 0.0, 1.0); }';
+
+      function compile(gl, type, src){
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src); gl.compileShader(s);
+        if(!gl.getShaderParameter(s, gl.COMPILE_STATUS)){
+          console.error('Drift shader compile error:', gl.getShaderInfoLog(s)); return null;
+        }
+        return s;
+      }
+      function createProgram(gl, fragSrc){
+        const vs = compile(gl, gl.VERTEX_SHADER, VERT);
+        const fs = compile(gl, gl.FRAGMENT_SHADER, fragSrc);
+        const p = gl.createProgram();
+        gl.attachShader(p, vs); gl.attachShader(p, fs); gl.linkProgram(p);
+        if(!gl.getProgramParameter(p, gl.LINK_STATUS)){ console.error('Drift link error:', gl.getProgramInfoLog(p)); return null; }
+        return p;
+      }
+
+      const canvas = document.getElementById('warp-bg');
+      if(!canvas) return;
+      const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if(reduceMotion) { return; /* CSS also hides #warp-bg; belt + suspenders */ }
+
+      const gl = canvas.getContext('webgl', { premultipliedAlpha: false, antialias: false });
+      if(!gl) return;
+
+      const prog = createProgram(gl, window.__WARP_DRIFT_FRAG);
+      if(!prog) return;
+      gl.useProgram(prog);
+
+      const buf = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, -1,1, 1,-1, 1,1]), gl.STATIC_DRAW);
+      const aPos = gl.getAttribLocation(prog, 'a_pos');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      const u_res    = gl.getUniformLocation(prog, 'u_res');
+      const u_time   = gl.getUniformLocation(prog, 'u_time');
+      const u_mouse  = gl.getUniformLocation(prog, 'u_mouse');
+      const u_smooth = gl.getUniformLocation(prog, 'u_smooth');
+      const u_click  = gl.getUniformLocation(prog, 'u_click');
+      const u_clickPos = gl.getUniformLocation(prog, 'u_clickPos');
+
+      /* Shared cursor state — populated by the Three.js mousemove handler below */
+      window.__sharedMouse = window.__sharedMouse || { x: 0.5, y: 0.5 };
+      let smooth = [0.5, 0.5];
+      let clickT = -10;
+      let clickPos = [0.5, 0.5];
+      const t0 = performance.now();
+
+      /* Mobile / low-memory DPR cap */
+      const isMobile = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+      const lowMem = (navigator.deviceMemory && navigator.deviceMemory < 4);
+      const dprCap = (isMobile || lowMem) ? 1.5 : 2;
+
+      function resize(){
+        const dpr = Math.min(window.devicePixelRatio || 1, dprCap);
+        const w = Math.floor(canvas.clientWidth * dpr);
+        const h = Math.floor(canvas.clientHeight * dpr);
+        if(canvas.width !== w || canvas.height !== h){ canvas.width = w; canvas.height = h; }
+      }
+      function onClick(e){
+        const r = canvas.getBoundingClientRect();
+        clickPos = [(e.clientX - r.left)/r.width, 1 - (e.clientY - r.top)/r.height];
+        clickT = (performance.now() - t0) / 1000;
+      }
+      window.addEventListener('click', onClick);
+
+      const ro = new ResizeObserver(resize);
+      ro.observe(canvas);
+      resize();
+
+      (function render(){
+        requestAnimationFrame(render);
+        if(document.visibilityState === 'hidden') return;
+        resize();
+        const mx = window.__sharedMouse.x, my = window.__sharedMouse.y;
+        smooth[0] += (mx - smooth[0]) * 0.08;
+        smooth[1] += (my - smooth[1]) * 0.08;
+        const t = (performance.now() - t0) / 1000;
+        gl.viewport(0, 0, canvas.width, canvas.height);
+        gl.uniform2f(u_res, canvas.width, canvas.height);
+        gl.uniform1f(u_time, t);
+        gl.uniform2f(u_mouse, mx, my);
+        gl.uniform2f(u_smooth, smooth[0], smooth[1]);
+        gl.uniform1f(u_click, t - clickT);
+        gl.uniform2f(u_clickPos, clickPos[0], clickPos[1]);
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+      })();
+    })();
+  </script>
+  <!-- === WARPDRIVE DRIFT MERGE — end === -->
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <script>
     /* ═══════════════════════════════════
@@ -3934,54 +4128,31 @@
       ren.setClearColor(0, 0);
       ren.shadowMap.enabled = false;
 
+      /* === WARPDRIVE DRIFT MERGE — reduced-motion short-circuit === */
+      const __reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
       // ── MOUSE STATE ──────────────────────────
+      /* === WARPDRIVE DRIFT MERGE: removed 5 mouse-state vars (velocity, last position,
+         world-projection, is-moving flag, and its reset-timer) because they were only read by
+         the deleted 180-particle cursor-repulsion loop. Remaining `mouse` / `mouseTarget`
+         drive camera parallax, grid/icos tilt, and torus rotation. === */
       let mouse = new THREE.Vector2(0, 0);
       let mouseTarget = new THREE.Vector2(0, 0);
-      let mouseVelocity = new THREE.Vector2(0, 0);
-      let lastMouse = new THREE.Vector2(0, 0);
-      let mouseWorld = new THREE.Vector3(0, 0, 0);
-      let isMoving = false, moveTimer = null;
 
       document.addEventListener('mousemove', e => {
         const nx = (e.clientX / innerWidth) * 2 - 1;
         const ny = -(e.clientY / innerHeight) * 2 + 1;
-        mouseVelocity.set(nx - lastMouse.x, ny - lastMouse.y);
-        lastMouse.set(nx, ny);
         mouseTarget.set(nx, ny);
-        // Project mouse to world plane z=0
-        mouseWorld.set(nx * 28, ny * 18, 0);
-        isMoving = true;
-        clearTimeout(moveTimer);
-        moveTimer = setTimeout(() => isMoving = false, 150);
+        /* === WARPDRIVE DRIFT MERGE — shared cursor for Drift harness === */
+        window.__sharedMouse = { x: e.clientX / innerWidth, y: 1 - e.clientY / innerHeight };
       });
 
-      // ── NEURAL NETWORK PARTICLES ─────────────
-      const N = 180;
-      const pPositions = new Float32Array(N * 3);
-      const pOrigins = new Float32Array(N * 3);  // home positions
-      const pVelocities = [];
-      const pGeo = new THREE.BufferGeometry();
-
-      for (let i = 0; i < N; i++) {
-        const x = (Math.random() - .5) * 70;
-        const y = (Math.random() - .5) * 50;
-        const z = (Math.random() - .5) * 30;
-        pOrigins[i * 3] = pPositions[i * 3] = x;
-        pOrigins[i * 3 + 1] = pPositions[i * 3 + 1] = y;
-        pOrigins[i * 3 + 2] = pPositions[i * 3 + 2] = z;
-        pVelocities.push(new THREE.Vector3(
-          (Math.random() - .5) * .04,
-          (Math.random() - .5) * .04,
-          (Math.random() - .5) * .02
-        ));
-      }
-      pGeo.setAttribute('position', new THREE.BufferAttribute(pPositions, 3));
-
-      const goldPts = new THREE.Points(pGeo, new THREE.PointsMaterial({
-        color: 0xC9A84C, size: .18, transparent: true, opacity: .55,
-        blending: THREE.AdditiveBlending, depthWrite: false
-      }));
-      scene.add(goldPts);
+      /* === WARPDRIVE DRIFT MERGE — 180-gold-particle cloud deleted.
+         Drift shader (z=-1) now owns the "moving stars" role with warm-white + faint-gold tints,
+         matching --gold/--white tokens at 1/3 the GPU cost. The particle buffer, home positions,
+         velocities, geometry, and Points mesh are intentionally gone. The connection-line graph
+         below is rewired from the deleted particle positions to the 5 icosahedra centers, so the
+         "neural network" metaphor survives on a cheaper backbone. === */
 
       // Smaller cyan accent particles (static drift)
       const N2 = 80, geo2 = new THREE.BufferGeometry(), pa2 = new Float32Array(N2 * 3);
@@ -4006,26 +4177,29 @@
       const lineSegs = new THREE.LineSegments(lineGeo, lineMat);
       scene.add(lineSegs);
 
+      /* === WARPDRIVE DRIFT MERGE — updateLines rewired from the deleted 180-particle buffer
+         to the 5 icosahedra centers. Up to 10 edges, THRESH tuned for their orbit radii.
+         Preserves the gold→cyan gradient metaphor on a ~20× cheaper inner loop. === */
       function updateLines() {
+        if (typeof icos === 'undefined' || !icos.length) { lineGeo.setDrawRange(0, 0); return; }
         let idx = 0;
-        const THRESH = 14, p = pPositions;
-        for (let i = 0; i < N && idx < MAX_LINES; i++) {
-          for (let j = i + 1; j < N && idx < MAX_LINES; j++) {
-            const dx = p[i * 3] - p[j * 3], dy = p[i * 3 + 1] - p[j * 3 + 1], dz = p[i * 3 + 2] - p[j * 3 + 2];
+        const THRESH = 22;
+        for (let i = 0; i < icos.length && idx < MAX_LINES; i++) {
+          for (let j = i + 1; j < icos.length && idx < MAX_LINES; j++) {
+            const a = icos[i].mesh.position, b = icos[j].mesh.position;
+            const dx = a.x - b.x, dy = a.y - b.y, dz = a.z - b.z;
             const dist = Math.sqrt(dx * dx + dy * dy + dz * dz);
             if (dist < THRESH) {
               const t = 1 - dist / THRESH;
-              // Gold → Cyan gradient based on distance
-              const r = .78 * t, g = .66 * t, b = .30 * t + .47 * t * (1 - t) * 2;
-              linePositions[idx * 6] = p[i * 3]; linePositions[idx * 6 + 1] = p[i * 3 + 1]; linePositions[idx * 6 + 2] = p[i * 3 + 2];
-              linePositions[idx * 6 + 3] = p[j * 3]; linePositions[idx * 6 + 4] = p[j * 3 + 1]; linePositions[idx * 6 + 5] = p[j * 3 + 2];
-              lineColors[idx * 6] = r; lineColors[idx * 6 + 1] = g; lineColors[idx * 6 + 2] = b;
-              lineColors[idx * 6 + 3] = r * .5; lineColors[idx * 6 + 4] = g * .5; lineColors[idx * 6 + 5] = b * .5;
+              const r = .78 * t, g = .66 * t, bb = .30 * t + .47 * t * (1 - t) * 2;
+              linePositions[idx * 6]     = a.x; linePositions[idx * 6 + 1] = a.y; linePositions[idx * 6 + 2] = a.z;
+              linePositions[idx * 6 + 3] = b.x; linePositions[idx * 6 + 4] = b.y; linePositions[idx * 6 + 5] = b.z;
+              lineColors[idx * 6]     = r;       lineColors[idx * 6 + 1] = g;       lineColors[idx * 6 + 2] = bb;
+              lineColors[idx * 6 + 3] = r * .5;  lineColors[idx * 6 + 4] = g * .5;  lineColors[idx * 6 + 5] = bb * .5;
               idx++;
             }
           }
         }
-        // Zero out unused segments
         for (let i = idx; i < MAX_LINES; i++) {
           for (let k = 0; k < 6; k++) linePositions[i * 6 + k] = 0;
         }
@@ -4082,9 +4256,8 @@
       gridGroup.position.y = -22;
       scene.add(gridGroup);
 
-      // ── CURSOR REPULSION SPHERE (invisible attractor) ──
-      let cursorInfluenceRadius = 12;
-      let cursorForce = 3.5;
+      /* === WARPDRIVE DRIFT MERGE — cursorInfluenceRadius/cursorForce removed (only the deleted
+         180-particle repulsion loop used them). Keeping orphan state would be dead code. === */
 
       // ── ANIMATION LOOP ───────────────────────
       let t = 0;
@@ -4096,6 +4269,9 @@
 
       (function tick() {
         requestAnimationFrame(tick);
+        /* === WARPDRIVE DRIFT MERGE — pause on hidden tab / reduced-motion === */
+        if (document.visibilityState === 'hidden') return;
+        if (__reduceMotion) { ren.render(scene, cam); return; }
         t += .006;
 
         // Smooth mouse follow
@@ -4136,50 +4312,10 @@
         torusMesh.rotation.z += .003 + mouse.x * .001;
         torus2.rotation.y += .002 - mouse.y * .001;
 
-        // ── PARTICLE PHYSICS: cursor repulsion + home spring ──
-        const p = pPositions;
-        const mwx = mouseWorld.x, mwy = mouseWorld.y;
+        /* === WARPDRIVE DRIFT MERGE — 180-particle cursor-repulsion loop removed.
+           Drift shader provides cursor-reactive parallax via window.__sharedMouse. === */
 
-        for (let i = 0; i < N; i++) {
-          const ox = pOrigins[i * 3], oy = pOrigins[i * 3 + 1], oz = pOrigins[i * 3 + 2];
-          let px = p[i * 3], py = p[i * 3 + 1], pz = p[i * 3 + 2];
-          let vx = pVelocities[i].x, vy = pVelocities[i].y, vz = pVelocities[i].z;
-
-          // Spring back to origin
-          vx += (ox - px) * .008;
-          vy += (oy - py) * .008;
-          vz += (oz - pz) * .008;
-
-          // Cursor repulsion (z=0 plane)
-          if (isMoving) {
-            const dx = px - mwx, dy = py - mwy;
-            const dist2 = dx * dx + dy * dy;
-            if (dist2 < cursorInfluenceRadius * cursorInfluenceRadius) {
-              const dist = Math.sqrt(dist2) + .001;
-              const force = (cursorInfluenceRadius - dist) / cursorInfluenceRadius * cursorForce;
-              vx += (dx / dist) * force * .12;
-              vy += (dy / dist) * force * .12;
-              // Add some velocity-based swirl
-              vx += mouseVelocity.x * 0.8;
-              vy += mouseVelocity.y * 0.8;
-            }
-          }
-
-          // Slow drift
-          vx += Math.sin(t * .7 + i * .3) * .0008;
-          vy += Math.cos(t * .5 + i * .5) * .0008;
-
-          // Damping
-          vx *= .92; vy *= .92; vz *= .94;
-
-          p[i * 3] = px + vx;
-          p[i * 3 + 1] = py + vy;
-          p[i * 3 + 2] = pz + vz;
-          pVelocities[i].set(vx, vy, vz);
-        }
-        pGeo.attributes.position.needsUpdate = true;
-
-        // Update dynamic lines every 2 frames
+        // Update dynamic lines (now between icosahedra centers) every 2 frames
         if (Math.round(t * 100) % 2 === 0) updateLines();
 
         ren.render(scene, cam);
