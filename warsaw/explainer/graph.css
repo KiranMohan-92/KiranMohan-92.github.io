@@ -1,0 +1,109 @@
+@layer components {
+  .hero h1 { font-size: clamp(62px, 6.3vw, 96px); }
+  .graph-definition { border-left: 2px solid var(--blue); padding: 5px 0 5px 27px; margin: -14px 0 45px; max-width: 900px; }
+  .graph-definition > p:nth-child(2) { margin-top: 13px; font-size: 16px; }
+  .graph-definition strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 9px; }
+  .route-lab { display: grid; grid-template-columns: .9fr 1.6fr; border: 1px solid #314758; border-radius: 5px; overflow: hidden; background: #0e1a27; margin: 45px 0; }
+  .route-intro { padding: 35px; border-right: 1px solid var(--line); }
+  .route-intro h3 { font-size: 29px; margin: 18px 0; }
+  .route-intro > p:not(.eyebrow) { font-size: 13px; }
+  .route-controls { display: grid; gap: 17px; margin-top: 30px; }
+  .route-controls label { font-size: 12px; display: flex; align-items: center; gap: 11px; cursor: pointer; color: #c3d0db; line-height: 1.5; }
+  .route-controls input { accent-color: var(--blue); width: 17px; height: 17px; flex-shrink: 0; }
+  .route-controls button { justify-self: start; }
+  .route-stage { padding: 22px 27px 28px; min-width: 0; background: radial-gradient(ellipse at 50% 25%, #17314680, transparent 70%); }
+  #route-graph { width: 100%; height: auto; overflow: visible; }
+  .route-edge line { stroke: #385369; stroke-width: 2; }
+  .route-edge rect { fill: #132333; stroke: #3a566a; }
+  .route-edge text { fill: #a7bdce; font-size: 16px; font-family: var(--sans); }
+  .route-edge.active line { stroke: var(--blue); stroke-width: 3; stroke-dasharray: 7 8; animation: route-travel 2s linear infinite; }
+  .route-edge.active rect { stroke: var(--blue); }
+  .route-edge.active text { fill: var(--blue); }
+  .route-edge.closed line { stroke: var(--coral); stroke-dasharray: 4 7; }
+  .route-edge.closed rect { fill: #402b2a; stroke: var(--coral); }
+  .route-edge.closed text { fill: var(--coral); font-size: 21px; }
+  .route-node circle { fill: #101e2b; stroke: #51738a; stroke-width: 1.5; }
+  .route-node .node-core { fill: #7494aa; stroke: none; }
+  .route-node.visited circle { stroke: var(--blue); fill: #1b3a4d; }
+  .route-node.visited .node-core { fill: var(--blue); }
+  .route-node.goal circle { stroke: var(--coral); }
+  .route-node text { fill: #d9e5ec; font: 20px var(--sans); }
+  .route-legend { display: flex; gap: 20px; justify-content: center; font-size: 9px; color: var(--muted); }
+  .route-legend > span { display: flex; align-items: center; gap: 7px; }
+  .route-legend i { display: inline-block; width: 16px; height: 2px; }
+  .legend-blue { background: var(--blue); } .legend-coral { background: var(--coral); }
+  #route-status { border-top: 1px solid #2d4659; margin-top: 23px; padding-top: 23px; min-height: 180px; }
+  #route-status h4 { font-size: 20px; margin: 14px 0 10px; }
+  #route-status p { font-size: 12px; max-width: 580px; }
+  .route-path { font-size: 11px; color: var(--blue); margin-top: 15px; line-height: 1.8; }
+  .lab-disclaimer { grid-column: 1/-1; font-size: 9px; color: #8ba2b5; padding: 17px 30px; border-top: 1px solid var(--line); background: #0a1420; }
+  .scope-statement { border: 1px solid var(--line); background: var(--panel); padding: 30px; }
+  .scope-statement h3 { margin: 16px 0 12px; }
+  .scope-statement p { font-size: 14px; max-width: 920px; }
+  .flow-svg { width: 100%; height: auto; max-height: 210px; }
+  .flow-node rect { fill: #102235; stroke: #527b95; stroke-width: 1.4; }
+  .flow-node text { fill: var(--blue); font: 16px var(--sans); }
+  .flow-edge { stroke: #749cb5; stroke-width: 1.5; fill: none; }
+  .flow-note { fill: #96afc1; font: 12px var(--sans); letter-spacing: .03em; }
+  .graph-linear { display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; }
+  .graph-form { margin-top: -12px; }
+  .detail-when { background: #99dcff06; border-left: 2px solid #5989a5; padding: 17px 20px; margin-top: 25px; }
+  .detail-when h4 { color: var(--blue); font-size: 9px; letter-spacing: .15em; margin-bottom: 10px; }
+  .detail-when p { font-size: 13px; line-height: 1.8; }
+  .when-section { background: #0c1621; }
+  .when-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 20px; }
+  .when-grid article { border-top: 1px solid #426079; padding: 24px 28px 30px; background: #101e2b; }
+  .when-grid article > span { color: var(--blue); font-size: 9px; letter-spacing: .12em; }
+  .when-grid h3 { font-size: 25px; margin: 18px 0 13px; }
+  .when-grid p { font-size: 14px; max-width: 440px; }
+  .when-grid a { display: inline-block; font-size: 11px; color: var(--blue); margin-top: 22px; }
+  .when-grid a:hover { text-decoration: underline; text-underline-offset: 5px; }
+  .when-checklist { display: grid; grid-template-columns: 1fr 1.5fr; gap: 45px; padding: 40px 0; }
+  .when-checklist h3 { margin-top: 16px; }
+  .when-checklist ol { margin: 0; padding-left: 20px; display: grid; gap: 13px; font-size: 13px; color: var(--muted); }
+  .when-checklist strong { color: #c9d6df; font-weight: 500; }
+  .simple-note { padding: 24px 28px; border-left: 2px solid var(--coral); background: #17202b; margin-bottom: 45px; }
+  .simple-note h3 { font-size: 21px; margin-bottom: 12px; }
+  .simple-note p { font-size: 13px; max-width: 950px; }
+  .bot-flow { display: grid; justify-items: center; margin-top: 28px; gap: 7px; }
+  .bot-flow span { font-size: 11px; border: 1px solid #39596e; padding: 10px 17px; color: var(--blue); border-radius: 3px; }
+  .bot-flow b { color: #608aa3; font-weight: 400; line-height: 1; }
+  .glossary dd a { color: var(--blue); }
+  @keyframes route-travel { to { stroke-dashoffset: -30; } }
+}
+@layer responsive {
+  @media (max-width: 1100px) {
+    .route-intro { padding: 27px; }
+    .route-stage { padding: 25px 20px; }
+    .route-intro h3 { font-size: 25px; }
+  }
+  @media (max-width: 760px) {
+    .hero h1 { font-size: clamp(56px, 11.5vw, 87px); }
+    .graph-definition { margin-top: -5px; padding-left: 20px; }
+    .graph-definition > p:nth-child(2) { font-size: 14px; }
+    .route-lab { grid-template-columns: 1fr; }
+    .route-intro { border-right: 0; border-bottom: 1px solid var(--line); padding: 25px; }
+    .route-intro h3 { font-size: 29px; }
+    .route-controls { gap: 20px; }
+    .route-stage { padding: 20px 14px 25px; }
+    .route-node text { font-size: 23px; }
+    .route-edge text { font-size: 20px; }
+    #route-status { padding: 20px 10px 0; }
+    #route-status h4 { font-size: 20px; }
+    .route-path { font-size: 11px; }
+    .lab-disclaimer { padding: 20px 23px; font-size: 9px; }
+    .scope-statement { padding: 25px; }
+    .scope-statement h3 { font-size: 23px; }
+    .scope-statement p { font-size: 13px; }
+    .flow-node text { font-size: 18px; }
+    .flow-note { font-size: 15px; }
+    .graph-linear { gap: 9px; }
+    .detail-when { padding: 15px; }
+    .when-grid { grid-template-columns: 1fr; }
+    .when-grid article { padding: 24px; }
+    .when-grid h3 { font-size: 23px; }
+    .when-grid p { font-size: 13px; }
+    .when-checklist { grid-template-columns: 1fr; gap: 25px; padding: 35px 0; }
+    .simple-note { padding: 23px; }
+  }
+}

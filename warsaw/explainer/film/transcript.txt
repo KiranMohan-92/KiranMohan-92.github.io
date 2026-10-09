@@ -1,0 +1,72 @@
+Warsaw / How agents build
+
+00:00  Warsaw / How agents build
+Warsaw Downtown is our real game case study. A person sets the goal. Coding agents make changes. Tests and fresh reviewers challenge the result. The lesson is how evidence makes ambitious work safer.
+
+00:13  Start with a model
+Start even simpler than agents. A model is software that learns patterns from examples. A language model generates text and can suggest code from the context it receives. Tools around it provide file access and checks.
+
+00:26  What is an agent?
+An agent is a loop around a model, aimed toward a goal. It reads context, chooses an action, uses a tool, observes what happened, and then tries the next step. The loop matters because real engineering needs feedback.
+
+00:40  What these agents were
+In this project, the agents were development assistants. They worked on code and evidence under human direction. The game characters running inside Warsaw Downtown are a different system.
+
+00:51  Principle one: context
+The first principle is context. Before changing files, an agent needs the project rules, the current code, the visual target, and Kiran's constraints. Without that map, fluent code can still be wrong code.
+
+01:04  Principle two: tools
+The second principle is tool use. A useful coding agent does not just talk. It searches files, runs checks, opens browser probes, compares screenshots, and records what it saw.
+
+01:17  Principle three: bounded jobs
+The project split work into bounded jobs and separate working copies. One lane could inspect market stalls. Another could polish columns. Another could review multiplayer rules. Smaller lanes made ownership clearer.
+
+01:30  Clear handoffs
+A handoff protocol said what an agent could edit, what it must leave alone, and what proof it had to bring back. That kind of boring contract is what lets dramatic-looking work stay controlled.
+
+01:41  Fresh review
+Reviewers were meant to see the changed code, the project rules, and the review rubric with fresh context. They did not have to trust the builder's private story about why the change was probably fine.
+
+01:52  Many lenses
+The review used lenses: correctness, multiplayer safety, rendering cost, tests, conventions, assets, and visual quality. Each lens asked a different question, because one big yes can hide many small noes.
+
+02:05  Skeptics challenge claims
+When a serious problem was reported, skeptic agents tried to challenge the failure scenario. Confirmed serious problems blocked progress. Uncertain findings stayed uncertain instead of being dressed up as proof.
+
+02:17  Incomplete is not safe
+One gate lesson was especially important. If a required reviewer failed, or a serious verification was incomplete, the gate had to stop. Incomplete review is not proof of safety.
+
+02:28  Concrete example: hidden grooves
+Here is a real visual lesson. A column improvement could look reasonable in code while the decorative grooves ended up hidden behind flat front panels. The fix needed geometry checks and browser views, not just confident text.
+
+02:41  Later column refinement
+A later fourth of October column comparison shows a refinement in an isolated branch. The images help explain the direction of the work. Version fingerprints identify what was inspected; they do not prove beauty by themselves.
+
+02:54  Market example
+The market work added richer stalls, containers, lighting, and gameplay footage. The video capture is real browser capture. Its encoded frame rate is not the same thing as a universal game performance claim.
+
+03:07  Evidence is specific
+Performance evidence was treated carefully. Browser timing, graphics processor identity, graphics work time, and how smooth the game feels are related signals, not the same signal. A bad sample was rejected.
+
+03:20  Different checks answer different questions
+Tests ask whether logic works. Browser probes ask whether the game loads and responds. Screenshots ask whether it looks right. Performance probes ask whether the timing evidence is valid. None replaces the others.
+
+03:34  Human steering
+The human role did not disappear. Kiran set taste, scope, risk tolerance, and the bar for realism. The agents supplied drafts, checks, and repairs inside that direction.
+
+03:45  Development agents versus game bots
+Current inspected game bots use behavior trees and game input logic. They are game characters. Development agents helped build the project. They may share the word agent, but they are different systems.
+
+03:58  Next experiment: agentic bots
+Kiran's next planned experiment is agentic game bots. The experiment could let models choose actions under shared game rules. That is future work, and it would need fairness, latency, and cost checks before acceptance.
+
+04:10  The pattern
+The pattern is simple: define the job, isolate the working copy, make the smallest useful change, test it, review it cold, challenge the review, and keep the evidence.
+
+04:21  Honest conclusion
+That is agentic engineering at its best: not full autonomy, not instant perfection, but uncertainty made visible and work forced through evidence.
+
+04:30  Open the world
+The website opens the same story as an interactive city: principles, examples, sources, and the checks that made the Warsaw workflow more trustworthy.
+
+

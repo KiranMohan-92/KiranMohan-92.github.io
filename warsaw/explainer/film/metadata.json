@@ -1,0 +1,178 @@
+{
+    "durationSeconds":  280.97,
+    "fps":  30,
+    "width":  1920,
+    "height":  1080,
+    "chapters":  [
+                     {
+                         "title":  "Why this game matters",
+                         "time":  0
+                     },
+                     {
+                         "title":  "Models and agents",
+                         "time":  13.03
+                     },
+                     {
+                         "title":  "Principles in practice",
+                         "time":  51.33
+                     },
+                     {
+                         "title":  "Review and skepticism",
+                         "time":  101.43
+                     },
+                     {
+                         "title":  "Real examples",
+                         "time":  148.57
+                     },
+                     {
+                         "title":  "Humans and the next experiment",
+                         "time":  214.33
+                     }
+                 ],
+    "scenes":  [
+                   {
+                       "id":  "opening",
+                       "title":  "Warsaw / How agents build",
+                       "time":  0,
+                       "duration":  13.03
+                   },
+                   {
+                       "id":  "model-basic",
+                       "title":  "Start with a model",
+                       "time":  13.03,
+                       "duration":  13.53
+                   },
+                   {
+                       "id":  "agent-basic",
+                       "title":  "What is an agent?",
+                       "time":  26.57,
+                       "duration":  13.83
+                   },
+                   {
+                       "id":  "not-magic",
+                       "title":  "What these agents were",
+                       "time":  40.4,
+                       "duration":  10.93
+                   },
+                   {
+                       "id":  "context",
+                       "title":  "Principle one: context",
+                       "time":  51.33,
+                       "duration":  13.63
+                   },
+                   {
+                       "id":  "tools",
+                       "title":  "Principle two: tools",
+                       "time":  64.97,
+                       "duration":  12.33
+                   },
+                   {
+                       "id":  "bounded-lanes",
+                       "title":  "Principle three: bounded jobs",
+                       "time":  77.3,
+                       "duration":  13.57
+                   },
+                   {
+                       "id":  "handoff",
+                       "title":  "Clear handoffs",
+                       "time":  90.87,
+                       "duration":  10.57
+                   },
+                   {
+                       "id":  "fresh-review",
+                       "title":  "Fresh review",
+                       "time":  101.43,
+                       "duration":  10.93
+                   },
+                   {
+                       "id":  "lenses",
+                       "title":  "Many lenses",
+                       "time":  112.37,
+                       "duration":  12.67
+                   },
+                   {
+                       "id":  "skeptic",
+                       "title":  "Skeptics challenge claims",
+                       "time":  125.03,
+                       "duration":  12.27
+                   },
+                   {
+                       "id":  "fail-closed",
+                       "title":  "Incomplete is not safe",
+                       "time":  137.3,
+                       "duration":  11.27
+                   },
+                   {
+                       "id":  "column-defect",
+                       "title":  "Concrete example: hidden grooves",
+                       "time":  148.57,
+                       "duration":  12.93
+                   },
+                   {
+                       "id":  "column-refinement",
+                       "title":  "Later column refinement",
+                       "time":  161.5,
+                       "duration":  12.93
+                   },
+                   {
+                       "id":  "market-case",
+                       "title":  "Market example",
+                       "time":  174.43,
+                       "duration":  12.7
+                   },
+                   {
+                       "id":  "perf-case",
+                       "title":  "Evidence is specific",
+                       "time":  187.13,
+                       "duration":  13.53
+                   },
+                   {
+                       "id":  "proof-questions",
+                       "title":  "Different checks answer different questions",
+                       "time":  200.67,
+                       "duration":  13.67
+                   },
+                   {
+                       "id":  "human-steering",
+                       "title":  "Human steering",
+                       "time":  214.33,
+                       "duration":  11.43
+                   },
+                   {
+                       "id":  "bots-boundary",
+                       "title":  "Development agents versus game bots",
+                       "time":  225.77,
+                       "duration":  12.3
+                   },
+                   {
+                       "id":  "future-bots",
+                       "title":  "Next experiment: agentic bots",
+                       "time":  238.07,
+                       "duration":  12.9
+                   },
+                   {
+                       "id":  "workflow",
+                       "title":  "The pattern",
+                       "time":  250.97,
+                       "duration":  10.83
+                   },
+                   {
+                       "id":  "honest-end",
+                       "title":  "Honest conclusion",
+                       "time":  261.8,
+                       "duration":  8.5
+                   },
+                   {
+                       "id":  "site-open",
+                       "title":  "Open the world",
+                       "time":  270.3,
+                       "duration":  8.67
+                   }
+               ],
+    "caveats":  [
+                    "The film explains development-time language-model coding agents, not shipped runtime agentic bots.",
+                    "Current inspected game bots use behavior-tree/input logic; Kiran\u0027s model-directed game bots are framed as future work.",
+                    "Real gameplay capture is encoded at 30 fps; that is not a claim that the game rendered every frame at 30 fps.",
+                    "Performance claims in the film are framed as evidence types, not universal guarantees."
+                ]
+}

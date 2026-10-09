@@ -58,7 +58,9 @@
   const filmCanSeek = () => !!ytId(FILM_URL);
   // The player reports its real state (playing / muted) through postMessage once we say we're listening,
   // so K and M always send the right command even after someone uses the player's own buttons.
-  let filmPlaying = false, filmMuted = false;
+  // A pause sent while a fresh player is still starting can be dropped (autoplay then wins), so a pause
+  // stays pending until the player reports "paused", and is re-sent if it reports "playing" first.
+  let filmPlaying = false, filmMuted = false, pendingPause = false;
   const filmFrame = () => document.querySelector('#film-embed iframe');
   const ytCommand = (func) => {
     const f = filmFrame();
@@ -70,7 +72,11 @@
     let d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
     const info = d && d.info;
     if (!info || typeof info !== 'object') return;
-    if (typeof info.playerState === 'number') filmPlaying = info.playerState === 1 || info.playerState === 3;
+    if (typeof info.playerState === 'number') {
+      filmPlaying = info.playerState === 1 || info.playerState === 3;
+      if (info.playerState === 2) pendingPause = false;
+      else if (filmPlaying && pendingPause) { ytCommand('pauseVideo'); filmPlaying = false; }
+    }
     if (typeof info.muted === 'boolean') filmMuted = info.muted;
   });
   const listenToFilm = () => {
@@ -314,8 +320,11 @@
       v.hidden = true;
       const box = $('#film-embed');
       box.hidden = false;
-      box.innerHTML = `<iframe src="${filmEmbedUrl(0)}" title="The City the Agents Built (film)" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy" referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
-      listenToFilm();
+      box.innerHTML = `<button type="button" class="film-facade" aria-label="Play the film, ${fmtTime(timeline.total)}">
+        <img src="${MEDIA.poster}" alt="" decoding="async">
+        <span class="ff-play"><i><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5v13l11-6.5z"/></svg></i>Play the film <b>${fmtTime(timeline.total)}</b></span>
+      </button>`;
+      box.querySelector('.film-facade').addEventListener('click', () => mountFilm(0));
     } else {
       v.removeAttribute('controls');
       $('#film-pending').hidden = false;
@@ -343,11 +352,18 @@
     v.addEventListener('pointerup', () => setTimeout(() => v.blur(), 0));
   }
 
+  // Swap the poster for the YouTube player only when someone presses play (or picks a chapter).
+  function mountFilm(t) {
+    const box = $('#film-embed');
+    box.innerHTML = `<iframe src="${filmEmbedUrl(t, true)}" title="The City the Agents Built (film)" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen referrerpolicy="strict-origin-when-cross-origin"></iframe>`;
+    filmPlaying = true; pendingPause = false;
+    listenToFilm();
+  }
   function filmSeek(t) {
     const frame = $('#film-embed iframe');
-    if (!frame) return;
+    if (!frame) { mountFilm(t); return; }
     frame.src = filmEmbedUrl(t, true);
-    filmPlaying = true;
+    filmPlaying = true; pendingPause = false;
     listenToFilm();
   }
 
@@ -664,7 +680,7 @@
   }
 
   function leave(slide) {
-    if (slide.id === 'film') { ytCommand('pauseVideo'); filmPlaying = false; }
+    if (slide.id === 'film' && filmFrame()) { ytCommand('pauseVideo'); filmPlaying = false; pendingPause = true; }
     $$('.clip.with-sound', slide).forEach(f => silence(f, false));
     $$('video', slide).forEach(v => { if (!v.paused) v.pause(); });
   }
@@ -747,7 +763,8 @@
     else if (key === 'End') goTo(slides.length - 1);
     else if (key === 'f' || key === 'F') toggleFullscreen();
     else if (key === 'p' || key === 'P') setPresenting(!presenting);
-    else if ((key === 'k' || key === 'K') && slides[currentIdx]?.id === 'film' && $('#film-embed iframe')) { filmPlaying = !filmPlaying; ytCommand(filmPlaying ? 'playVideo' : 'pauseVideo'); }
+    else if ((key === 'k' || key === 'K') && slides[currentIdx]?.id === 'film' && $('#film-embed .film-facade')) { mountFilm(0); }
+    else if ((key === 'k' || key === 'K') && slides[currentIdx]?.id === 'film' && $('#film-embed iframe')) { filmPlaying = !filmPlaying; pendingPause = !filmPlaying; ytCommand(filmPlaying ? 'playVideo' : 'pauseVideo'); }
     else if ((key === 'm' || key === 'M') && slides[currentIdx]?.id === 'film' && $('#film-embed iframe')) { filmMuted = !filmMuted; ytCommand(filmMuted ? 'mute' : 'unMute'); }
     else if (key === 'k' || key === 'K') { const v = activeVideo(); if (v && (v.src || v.currentSrc)) v.paused ? playSafe(v) : v.pause(); }
     else if (key === 'm' || key === 'M') { const v = activeVideo(); if (v) v.muted = !v.muted; }

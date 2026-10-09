@@ -1,0 +1,1379 @@
+{
+  "schemaVersion": 2,
+  "audited": "2026-10-05",
+  "graphSourceReview": "2026-10-06",
+  "graphSourceSnapshot": [
+    {
+      "path": "warsaw-downtown/.claude/workflows/fresh-review.js",
+      "bytes": 11923,
+      "sha256": "24dbcc147421b1892730fc1edb51284243bedd4771eb9d4aed7e8dd7e5a91478"
+    },
+    {
+      "path": "warsaw-downtown/tools/handoff/PROTOCOL.md",
+      "bytes": 2987,
+      "sha256": "8bcc662f21aa306425092367d6d2ffbc48f9c827ac3f65475e5bc04108302c0e"
+    },
+    {
+      "path": "warsaw-downtown-codex/packages/server/src/bots/nav.ts",
+      "bytes": 15385,
+      "sha256": "db8bd10ffc29d308aea8bee4945e82a320b73c8823922b5f68f08df2bec23c35"
+    },
+    {
+      "path": "warsaw-downtown-codex/packages/server/src/bots/behaviorTree.ts",
+      "bytes": 35419,
+      "sha256": "0c029bcb6ff2b74034ac517a0e6cda1d1322ef5b83313f09f079dddb6c9f5505"
+    },
+    {
+      "path": "warsaw-downtown-codex/packages/client/tsconfig.json",
+      "bytes": 367,
+      "sha256": "42c7a73e8eca28e6e482ff4c711e5b2ac7fa97a9bdb810741e40aee651df9161"
+    },
+    {
+      "path": "warsaw-downtown-codex/packages/server/tsconfig.json",
+      "bytes": 339,
+      "sha256": "981683f6091099fdd42ee30a6f92445a3987b19534294d3e57b8597e00c59bbd"
+    },
+    {
+      "path": "warsaw-downtown-codex/package.json",
+      "bytes": 1701,
+      "sha256": "452a778930f1529d31bbcca02eca261a02eb97e1f5d2a05ae0724b0c2aee5e72"
+    },
+    {
+      "path": "warsaw-downtown-codex/packages/client/src/render/partnerView.ts",
+      "bytes": 21767,
+      "sha256": "3cd80355c143bcdab234150f3a657882da544c390c7df583e685efeeb72fabc1"
+    },
+    {
+      "path": "warsaw-downtown-codex/tools/bake/install_market_neon.py",
+      "bytes": 9571,
+      "sha256": "ec4bfdf5267116f038f64dbed604c2718d290f6c81bff51dc74d8c7342d4d6f6"
+    },
+    {
+      "path": "warsaw-downtown-codex/packages/client/src/render/marketNeonBake.ts",
+      "bytes": 5367,
+      "sha256": "07fe20bc8e69d5d10f96a3d5201b6a80b97837569a3cff754eaeb65f331a4ad7"
+    }
+  ],
+  "codeSnapshots": {
+    "original": "cb35f065f7b5b78a2e38a61bc61a321fc5c6244e",
+    "continuation": "d243fe339e4469a8883587e5a9f792197ae4647a",
+    "workingTree": "active edits; source evidence is time-bounded"
+  },
+  "featured": [
+    "graph-nav",
+    "graph-build",
+    "fresh",
+    "gate",
+    "graph-scene",
+    "graph-assets"
+  ],
+  "sources": {
+    "future": {
+      "kind": "documented",
+      "title": "Kiran’s next experiment: agentic bots",
+      "date": "5 OCTOBER 2026",
+      "summary": "Kiran explicitly stated a plan to try agentic bots next. This is a future direction, separate from the inspected behavior-tree bots.",
+      "entries": [
+        {
+          "title": "Directly stated future direction",
+          "path": "Current task / Kiran’s instruction",
+          "line": null,
+          "type": "human-stated plan",
+          "explanation": "This establishes intent to explore agentic bots. It does not establish an implementation, launch date, selected model, or performance result.",
+          "excerpt": "I plan to try agentic bots next",
+          "date": "2026-10-05"
+        },
+        {
+          "title": "Current runtime baseline",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/behaviorTree.ts",
+          "line": 32,
+          "type": "implementation",
+          "explanation": "The current inspected provider is a programmed behavior tree.",
+          "excerpt": "",
+          "date": ""
+        }
+      ],
+      "limit": "The website’s candidate input boundary and fairness, responsiveness, reliability, and cost questions are proposed evaluation considerations. They are not existing agentic bot features."
+    },
+    "isolated": {
+      "kind": "observed",
+      "title": "Separate work. Checkable boundaries.",
+      "date": "3–4 OCTOBER 2026",
+      "summary": "A linked worktree separated the continuation from the original project. Acceptance and preservation checks have different evidence strengths.",
+      "card": "A separate continuation, separate ports, and recorded checks tied to selected files.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/ISOLATED-CONTINUATION.md",
+          "line": 16,
+          "type": "plan",
+          "explanation": "The isolated continuation listed preservation, build/test, health, regression and visual checks before implementation. The Market pass specified unchanged doors and collision, triangle limits, and matched captures.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 3,
+          "type": "plan",
+          "explanation": "The isolated continuation listed preservation, build/test, health, regression and visual checks before implementation. The Market pass specified unchanged doors and collision, triangle limits, and matched captures.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 321,
+          "type": "assistant plan",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "I’ll create a separate worktree and branch for the unfinished features, preserving Claude’s branches and uncommitted files.",
+          "date": "2026-10-03T20:54:47.312Z"
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/.git",
+          "line": 1,
+          "type": "observed file",
+          "explanation": "Codex continued in a linked Git worktree on codex/isolated-finish, with separate client/server ports. Claude’s original branches and unfinished files were treated as read-only inputs. Historical checks recorded original file hashes.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/ISOLATED-CONTINUATION.md",
+          "line": 7,
+          "type": "plan",
+          "explanation": "Codex continued in a linked Git worktree on codex/isolated-finish, with separate client/server ports. Claude’s original branches and unfinished files were treated as read-only inputs. Historical checks recorded original file hashes.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 22,
+          "type": "historical report",
+          "explanation": "Codex continued in a linked Git worktree on codex/isolated-finish, with separate client/server ports. Claude’s original branches and unfinished files were treated as read-only inputs. Historical checks recorded original file hashes.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 6428,
+          "type": "observed tool result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "All ten final snapshot files unchanged",
+          "date": "2026-10-04T20:33:28.403Z"
+        }
+      ],
+      "limit": "The ten-file output verifies the Market review snapshot, not all original files. Seven original/Claude hashes are documented historical checks, not freshly rechecked in this audit. Written acceptance criteria are plans, not passed checks."
+    },
+    "memory": {
+      "kind": "documented",
+      "title": "A project handbook for continuing work",
+      "summary": "Files preserve commands, contracts, decisions, and incomplete work across sessions.",
+      "entries": [
+        {
+          "title": "Engineering memory",
+          "path": "warsaw-downtown/CLAUDE.md",
+          "line": 5,
+          "type": "project handbook",
+          "explanation": "Lists the commands used to run, build, test, profile, and host the game.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Continuation instructions",
+          "path": "warsaw-downtown/tools/handoff/PROTOCOL.md",
+          "line": 3,
+          "type": "written protocol",
+          "explanation": "Directs a continuing assistant to read the project memory and lane state before changes.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Scoped continuation record",
+          "path": "warsaw-downtown-codex/docs/ISOLATED-CONTINUATION.md",
+          "line": 16,
+          "type": "written criteria",
+          "explanation": "Records what to preserve and which checks must establish completion.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Sampled Claude event: Codex handoff protocol and scripts",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 53496,
+          "type": "observed assistant Write action",
+          "explanation": "The record directly shows this bounded action. A call or file edit does not establish every subsequent check passed.",
+          "excerpt": "",
+          "date": "2026-10-03T07:15:23.379Z"
+        },
+        {
+          "title": "Sampled Claude event: Codex handoff protocol and scripts",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 53513,
+          "type": "observed assistant Write action",
+          "explanation": "The record directly shows this bounded action. A call or file edit does not establish every subsequent check passed.",
+          "excerpt": "",
+          "date": "2026-10-03T07:15:50.176Z"
+        }
+      ],
+      "limit": "Stored files supply context; they are not model training and do not prove every later assistant obeyed them."
+    },
+    "tools": {
+      "kind": "observed",
+      "title": "Tools made the result inspectable",
+      "date": "3–4 OCTOBER 2026",
+      "summary": "Tools produced test and browser observations that could contradict the assistant’s proposal.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-final-soak.log",
+          "line": 1,
+          "type": "historical simulation output",
+          "explanation": "Type/lint/build checks, geometry unit tests, a virtual six-client match, and actual browser captures checked different risks. The virtual soak simulated 600 seconds at 150 ms round-trip delay and passed its thresholds.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-final-soak.log",
+          "line": 24,
+          "type": "historical simulation output",
+          "explanation": "Type/lint/build checks, geometry unit tests, a virtual six-client match, and actual browser captures checked different risks. The virtual soak simulated 600 seconds at 150 ms round-trip delay and passed its thresholds.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/ARCHITECTURE-PASS.md",
+          "line": 24,
+          "type": "historical report",
+          "explanation": "Type/lint/build checks, geometry unit tests, a virtual six-client match, and actual browser captures checked different risks. The virtual soak simulated 600 seconds at 150 ms round-trip delay and passed its thresholds.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 6419,
+          "type": "observed tool result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "Test Files 8 passed (8); Tests 47 passed (47); Duration 15.87s",
+          "date": "2026-10-04T20:32:28.123Z"
+        },
+        {
+          "title": "Browser feature sweep",
+          "path": "warsaw-downtown/tools/feature-sweep.mjs",
+          "line": 1,
+          "type": "implementation",
+          "explanation": "The tool drives feature actions and checks state and rendering observations.",
+          "excerpt": "",
+          "date": ""
+        }
+      ],
+      "limit": "Recorded tool results apply to their inputs, code snapshots, and environment. No game tests were rerun for this website audit."
+    },
+    "lanes": {
+      "kind": "documented",
+      "title": "Bounded jobs, shared integration",
+      "summary": "Named lanes and assigned areas are a coordination method. The records also show a boundary violation that required correction.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 12,
+          "type": "plan",
+          "explanation": "Three helpers owned container details, stall props, and interior details with their tests. The lead owned shared integration and review. A helper crossed that boundary; the lead removed duplicate integration and restored a single path.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 37,
+          "type": "retrospective",
+          "explanation": "Three helpers owned container details, stall props, and interior details with their tests. The lead owned shared integration and review. A helper crossed that boundary; the lead removed duplicate integration and restored a single path.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 6133,
+          "type": "assistant report",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "The detail kits now cover the stalls, containers, hall, and metro. Review caught some stall props hidden inside the original counters; I’ve corrected those.",
+          "date": "2026-10-04T20:12:00.266Z"
+        },
+        {
+          "title": "Lane boundary",
+          "path": "warsaw-downtown/tools/handoff/PROTOCOL.md",
+          "line": 7,
+          "type": "written protocol",
+          "explanation": "Restricts edits to a lane’s own worktree; shared integration is reserved to the lead.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Review lenses",
+          "path": "warsaw-downtown/.claude/workflows/fresh-review.js",
+          "line": 24,
+          "type": "workflow implementation",
+          "explanation": "Defines separate review lenses covering correctness, security, rendering, tests, and conventions.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Sampled Claude event: Codex handoff protocol and scripts",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 53496,
+          "type": "observed assistant Write action",
+          "explanation": "The record directly shows this bounded action. A call or file edit does not establish every subsequent check passed.",
+          "excerpt": "",
+          "date": "2026-10-03T07:15:23.379Z"
+        }
+      ],
+      "limit": "More lanes do not establish faster or cheaper delivery. Shared files and external processes still require ownership."
+    },
+    "authority": {
+      "kind": "documented",
+      "title": "One rulebook for humans and bots",
+      "summary": "The shared input contract and server authority are game architecture choices that bound how agents may change the implementation.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/server/src/match/bots.ts",
+          "line": 110,
+          "type": "implementation",
+          "explanation": "Humans and game bots drive the same PlayerInput path. Bot decisions are sanitized, queued with receiveInputs, and handled by the shared simulation. Visual art remains separate from collision and outcomes.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/server/src/match/bots.ts",
+          "line": 227,
+          "type": "implementation",
+          "explanation": "Humans and game bots drive the same PlayerInput path. Bot decisions are sanitized, queued with receiveInputs, and handled by the shared simulation. Visual art remains separate from collision and outcomes.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/behaviorTree.ts",
+          "line": 112,
+          "type": "implementation",
+          "explanation": "Humans and game bots drive the same PlayerInput path. Bot decisions are sanitized, queued with receiveInputs, and handled by the shared simulation. Visual art remains separate from collision and outcomes.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Validated network protocol",
+          "path": "warsaw-downtown/packages/shared/src/net/protocol.ts",
+          "line": 125,
+          "type": "implementation",
+          "explanation": "Client inputs enter through a shared protocol rather than client-authored hit or score decisions.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Lag compensation bounds",
+          "path": "warsaw-downtown/packages/server/src/match/lagComp.ts",
+          "line": 77,
+          "type": "implementation",
+          "explanation": "The inspected code constrains rewind behavior.",
+          "excerpt": "",
+          "date": ""
+        }
+      ],
+      "limit": "This is architecture evidence in the inspected code, not proof that all runtime combinations are bug-free. These NPC decisions are rule-based game AI, not LLM conversations."
+    },
+    "fresh": {
+      "kind": "documented",
+      "title": "A reviewer—and a challenge to the review",
+      "summary": "The review implementation supplies focused, fresh contexts and challenges proposed findings. That is stronger than treating any model complaint as true.",
+      "entries": [
+        {
+          "title": "Fresh context",
+          "path": "warsaw-downtown/.claude/workflows/fresh-review.js",
+          "line": 15,
+          "type": "workflow implementation",
+          "explanation": "The workflow starts reviewers from the diff, repository rules, and review rubric rather than the builder’s conversation.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Scenario requirement",
+          "path": "warsaw-downtown/tools/review/rubric.md",
+          "line": 16,
+          "type": "written rubric",
+          "explanation": "A finding must identify inputs or state and a concrete wrong outcome.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Challenge findings",
+          "path": "warsaw-downtown/.claude/workflows/fresh-review.js",
+          "line": 177,
+          "type": "workflow implementation",
+          "explanation": "Skeptics trace the path, look for guards, and may refute a reported issue.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Sampled Claude event: Fresh-context review creation and execution",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 31652,
+          "type": "observed Workflow invocation",
+          "explanation": "The record directly shows this bounded action. A call or file edit does not establish every subsequent check passed.",
+          "excerpt": "",
+          "date": "2026-09-29T17:03:30.558Z"
+        },
+        {
+          "title": "Sampled Claude event: Fresh-context review creation and execution",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 31713,
+          "type": "tool_result gate verdict",
+          "explanation": "A recorded tool or workflow result for this episode. It applies to the inspected change and date, not every later revision.",
+          "excerpt": "**Gate: BLOCK** (2 CONFIRMED P2). Commit 153afb4: meshopt packing of models...",
+          "date": "2026-09-29T17:10:16.181Z"
+        }
+      ],
+      "limit": "Workflow code demonstrates the method implemented. It does not by itself prove every run completed or every bug was found."
+    },
+    "column": {
+      "kind": "observed",
+      "title": "The grooves nobody could see",
+      "date": "3–4 OCTOBER 2026",
+      "summary": "The first proposed grooves were hidden. A correction needed exposed geometry, not just a confident implementation claim.",
+      "card": "Hidden column detail prompted a correction, ray-based checks, and visual review.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/ARCHITECTURE-PASS.md",
+          "line": 28,
+          "type": "historical report",
+          "explanation": "The first proposed Palace column grooves were behind flat panels and could not be seen. Review rejected them. A raycast test checks the raised face and recessed groove differ by more than seven centimetres; the recorded two-file run passed 23 checks.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/client/src/render/palaceColumns.test.ts",
+          "line": 158,
+          "type": "implementation",
+          "explanation": "The first proposed Palace column grooves were behind flat panels and could not be seen. Review rejected them. A raycast test checks the raised face and recessed groove differ by more than seven centimetres; the recorded two-file run passed 23 checks.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-columns-final-tests.log",
+          "line": 5,
+          "type": "historical test output",
+          "explanation": "The first proposed Palace column grooves were behind flat panels and could not be seen. Review rejected them. A raycast test checks the raised face and recessed groove differ by more than seven centimetres; the recorded two-file run passed 23 checks.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 2794,
+          "type": "assistant report",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "I caught one detail that wouldn’t actually show up: the proposed column grooves were hidden behind flat panels.",
+          "date": "2026-10-03T23:36:58.710Z"
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 2896,
+          "type": "observed tool result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "Test Files 2 passed (2); Tests 23 passed (23); Duration 19.46s",
+          "date": "2026-10-03T23:41:29.324Z"
+        }
+      ],
+      "limit": "A geometry test proves a particular shape is exposed; visual taste and photorealism need additional judgment. The current column tests also contain later changes."
+    },
+    "gate": {
+      "kind": "documented",
+      "title": "The review process needed review too",
+      "date": "PROJECT REVIEW RECORDS",
+      "summary": "A sampled Claude review blocked the review system itself. The subsequent patch, current gate code and scenario tests corroborate a correction for incomplete required output.",
+      "card": "An absent reviewer became an error instead of a clean review.",
+      "entries": [
+        {
+          "title": "Reported gate failure",
+          "path": "warsaw-downtown/.review/review-system.md",
+          "line": 5,
+          "type": "review report",
+          "explanation": "The record describes a review pipeline capable of passing incomplete review output.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Current gate decision",
+          "path": "warsaw-downtown/tools/review/gate.mjs",
+          "line": 64,
+          "type": "implementation",
+          "explanation": "Returns BLOCK for a confirmed serious finding; ERROR for failed reviewers or incomplete serious verification.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Gate scenario checks",
+          "path": "warsaw-downtown/tools/review/gate.test.mjs",
+          "line": 38,
+          "type": "test implementation",
+          "explanation": "Covers a dead reviewer and a failed skeptic. This audit inspected test code, rather than running these game tests.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Sampled Claude event: Fail-closed review gate fix after self-review",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 31860,
+          "type": "observed Workflow invocation",
+          "explanation": "The record directly shows this bounded action. A call or file edit does not establish every subsequent check passed.",
+          "excerpt": "",
+          "date": "2026-09-29T17:14:50.759Z"
+        },
+        {
+          "title": "Sampled Claude event: Fail-closed review gate fix after self-review",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 31870,
+          "type": "reported review outcome via queued handback",
+          "explanation": "A reported review or lane outcome, corroborated with the project artifacts above. It is not separately inspected raw command output.",
+          "excerpt": "<result>{\"gate\":\"block\",\"label\":\"review-system\",\"scope\":\"The staged change adds a fresh-context... review system",
+          "date": "2026-09-29T17:23:11.463Z"
+        },
+        {
+          "title": "Sampled Claude event: Fail-closed review gate fix after self-review",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 31949,
+          "type": "observed assistant edit action corroborating fail-closed change",
+          "explanation": "The record directly shows this bounded action. A call or file edit does not establish every subsequent check passed.",
+          "excerpt": "",
+          "date": "2026-09-29T17:25:01.763Z"
+        }
+      ],
+      "limit": "Report, implementation, and test code corroborate the correction. They do not prove every review or publication path invokes this gate."
+    },
+    "evaluation": {
+      "kind": "observed",
+      "title": "Several checks. Several questions.",
+      "date": "4 OCTOBER 2026",
+      "summary": "A recorded focused test run and browser captures examine different risks.",
+      "card": "A focused 47-test run is evidence about that snapshot. Browser views answer a different question.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-final-soak.log",
+          "line": 1,
+          "type": "historical simulation output",
+          "explanation": "Type/lint/build checks, geometry unit tests, a virtual six-client match, and actual browser captures checked different risks. The virtual soak simulated 600 seconds at 150 ms round-trip delay and passed its thresholds.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-final-soak.log",
+          "line": 24,
+          "type": "historical simulation output",
+          "explanation": "Type/lint/build checks, geometry unit tests, a virtual six-client match, and actual browser captures checked different risks. The virtual soak simulated 600 seconds at 150 ms round-trip delay and passed its thresholds.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/ARCHITECTURE-PASS.md",
+          "line": 24,
+          "type": "historical report",
+          "explanation": "Type/lint/build checks, geometry unit tests, a virtual six-client match, and actual browser captures checked different risks. The virtual soak simulated 600 seconds at 150 ms round-trip delay and passed its thresholds.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 6419,
+          "type": "observed tool result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "Test Files 8 passed (8); Tests 47 passed (47); Duration 15.87s",
+          "date": "2026-10-04T20:32:28.123Z"
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 29,
+          "type": "historical report",
+          "explanation": "Nine Market before/after pairs used authored camera positions and the same daylight/night settings. A gravity-sensitive overview was excluded from matched comparisons. Source hashes tied evidence to ten source/test files.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 6391,
+          "type": "observed browser result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "Walking check: 224 displayed frame intervals, median 35.8 ms, p95 53.6 ms. Compositor timing, not GPU time.",
+          "date": "2026-10-04T20:30:06.822Z"
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 6428,
+          "type": "observed tool result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "All ten final snapshot files unchanged",
+          "date": "2026-10-04T20:33:28.403Z"
+        }
+      ],
+      "limit": "The virtual soak is simulated network time, not real internet traffic or a GPU benchmark. Visual captures were offline. Historical tests do not certify current edits."
+    },
+    "performance": {
+      "kind": "observed",
+      "title": "An unusable sample stayed unusable",
+      "date": "5 OCTOBER 2026",
+      "summary": "A tiny sample of very slow browser intervals was not accepted as proof of smooth gameplay.",
+      "card": "Fourteen roughly one-second intervals could not support a smooth-play claim.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-QUALITY-EVAL.md",
+          "line": 104,
+          "type": "historical report",
+          "explanation": "After confirming NVIDIA use, a browser probe still reported just 14 roughly one-second intervals. It was rejected as evidence of smooth play. GPU timer code discards old/in-flight results after a reset or disjoint event and rejects non-finite values.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/client/src/render/gpuTimer.ts",
+          "line": 65,
+          "type": "implementation",
+          "explanation": "After confirming NVIDIA use, a browser probe still reported just 14 roughly one-second intervals. It was rejected as evidence of smooth play. GPU timer code discards old/in-flight results after a reset or disjoint event and rejects non-finite values.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/client/src/render/gpuTimer.test.ts",
+          "line": 77,
+          "type": "implementation",
+          "explanation": "After confirming NVIDIA use, a browser probe still reported just 14 roughly one-second intervals. It was rejected as evidence of smooth play. GPU timer code discards old/in-flight results after a reset or disjoint event and rejects non-finite values.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 8196,
+          "type": "observed browser result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "14 intervals · median 1013.3 / p95 1013.6 / p99 1013.6 ms · document focus true / visible true. Compositor intervals; OS occlusion unknown.",
+          "date": "2026-10-05T14:19:50.282Z"
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 8676,
+          "type": "assistant report",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "Chrome confirms NVIDIA is active, but the inspection still shows slow frames, so I’m not calling this smooth or AAA-quality yet.",
+          "date": "2026-10-05T14:52:38.384Z"
+        }
+      ],
+      "limit": "GPU identity, compositor frame intervals, GPU work time and perceived gameplay are different facts. No measured agent speedup, stable 60-fps combat result, or AAA equivalence is established."
+    },
+    "recovery": {
+      "kind": "documented",
+      "title": "Failure, correction, and another check",
+      "summary": "A sampled Claude test result showed 92 test files and 761 tests passing. A later review handback reported a block on hosted settings; a subsequent report recorded a pass after correction. Project review artifacts corroborate the sequence. Other records distinguish code defects from environment failures.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-final-tests.log",
+          "line": 4,
+          "type": "historical test output",
+          "explanation": "The first broad run failed two helicopter-wreck walkability checks and a respawn timeout. Diagnosis separated detailed meshes used by shot rays from simpler movement hulls. Focused collision checks and the later broad run passed.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-final-tests.log",
+          "line": 14,
+          "type": "historical test output",
+          "explanation": "The first broad run failed two helicopter-wreck walkability checks and a respawn timeout. Diagnosis separated detailed meshes used by shot rays from simpler movement hulls. Focused collision checks and the later broad run passed.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/shared/src/physics/world.ts",
+          "line": 49,
+          "type": "implementation",
+          "explanation": "The first broad run failed two helicopter-wreck walkability checks and a respawn timeout. Diagnosis separated detailed meshes used by shot rays from simpler movement hulls. Focused collision checks and the later broad run passed.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 1902,
+          "type": "assistant report",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "The broader gameplay suite found two helicopter walkability failures and a respawn test that exceeded its time limit.",
+          "date": "2026-10-03T22:30:30.743Z"
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 2167,
+          "type": "helper diagnosis",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "overlapsStatic(...) currently sees the helicopter visible triangle mesh ... movement hull is clear.",
+          "date": "2026-10-03T22:46:17.317Z"
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/vitest.config.ts",
+          "line": 4,
+          "type": "implementation",
+          "explanation": "Heavy Rapier fixtures and network timing tests competed under parallel execution. Tests that passed alone were rerun sequentially, with the same prediction assertions and timeouts. The recorded broad run passed 186 files / 1,584 tests.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-final-tests-serial.log",
+          "line": 5,
+          "type": "historical test output",
+          "explanation": "Heavy Rapier fixtures and network timing tests competed under parallel execution. Tests that passed alone were rerun sequentially, with the same prediction assertions and timeouts. The recorded broad run passed 186 files / 1,584 tests.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 39,
+          "type": "retrospective",
+          "explanation": "Heavy Rapier fixtures and network timing tests competed under parallel execution. Tests that passed alone were rerun sequentially, with the same prediction assertions and timeouts. The recorded broad run passed 186 files / 1,584 tests.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 2101,
+          "type": "assistant report",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "The affected gameplay checks pass when run alone ... standard test run sequential. The assertions and time limits stay unchanged.",
+          "date": "2026-10-03T22:41:32.793Z"
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 2314,
+          "type": "observed tool result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "Test Files 186 passed (186); Tests 1584 passed (1584); Duration 727.64s",
+          "date": "2026-10-03T23:05:17.790Z"
+        },
+        {
+          "title": "Blocked then reviewed again",
+          "path": "warsaw-downtown/.review/grass-zfight-r2.md",
+          "line": 1,
+          "type": "review report",
+          "explanation": "A second review records no P1/P2 findings after a prior grass-path rendering block.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Hosted default rereview",
+          "path": "warsaw-downtown/.review/online-default-r2.md",
+          "line": 1,
+          "type": "review report",
+          "explanation": "The subsequent report records a P1/P2 pass, with residual minor findings noted.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Sampled Claude event: Hosted-online default red-to-green loop",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 34873,
+          "type": "tool_result tests",
+          "explanation": "A recorded tool or workflow result for this episode. It applies to the inspected change and date, not every later revision.",
+          "excerpt": "Test Files 92 passed (92)\n Tests 761 passed (761)\n50 passed in 25.67s",
+          "date": "2026-09-29T20:57:00.290Z"
+        },
+        {
+          "title": "Sampled Claude event: Hosted-online default red-to-green loop",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 34900,
+          "type": "reported review outcome via queued handback",
+          "explanation": "A reported review or lane outcome, corroborated with the project artifacts above. It is not separately inspected raw command output.",
+          "excerpt": "<result>{\"gate\":\"block\",\"label\":\"online-default\",\"scope\":\"The staged change makes DEFAULT_SETTINGS.online equal to import.meta.env.PROD",
+          "date": "2026-09-29T21:00:00.060Z"
+        },
+        {
+          "title": "Sampled Claude event: Hosted-online default red-to-green loop",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 34996,
+          "type": "reported review outcome via queued handback",
+          "explanation": "A reported review or lane outcome, corroborated with the project artifacts above. It is not separately inspected raw command output.",
+          "excerpt": "<result>{\"gate\":\"pass\",\"label\":\"online-default-r2\",\"scope\":\"This makes the `online` setting default to on in hosted production builds",
+          "date": "2026-09-29T21:12:12.302Z"
+        },
+        {
+          "title": "Sampled Claude event: Grass z-fight and visual correctness loop",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 35182,
+          "type": "tool_result failing test",
+          "explanation": "A recorded tool or workflow result for this episode. It applies to the inspected change and date, not every later revision.",
+          "excerpt": "× overlapping flats of different materials never share a depth (no grass/paving z...",
+          "date": "2026-09-29T21:44:07.303Z"
+        },
+        {
+          "title": "Sampled Claude event: Grass z-fight and visual correctness loop",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 35297,
+          "type": "tool_result review report",
+          "explanation": "A recorded tool or workflow result for this episode. It applies to the inspected change and date, not every later revision.",
+          "excerpt": "**Gate: BLOCK** (2 CONFIRMED P2)\n### P2 - packages/client/src/render/mapMesh.ts:765 - Grass now draws over foot",
+          "date": "2026-09-29T21:53:21.323Z"
+        },
+        {
+          "title": "Sampled Claude event: Grass z-fight and visual correctness loop",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 35350,
+          "type": "tool_result tests",
+          "explanation": "A recorded tool or workflow result for this episode. It applies to the inspected change and date, not every later revision.",
+          "excerpt": "Tests 18 passed (18)",
+          "date": "2026-09-29T21:55:53.948Z"
+        }
+      ],
+      "limit": "A later pass is evidence of its scope. It does not erase the original failure or guarantee that all future changes stay correct."
+    },
+    "human": {
+      "kind": "documented",
+      "title": "People set the destination and judge the experience",
+      "summary": "The project records attribute scope and presentation choices to Kiran and keep playtest status separate from implementation.",
+      "entries": [
+        {
+          "title": "Requested separate continuation",
+          "path": "warsaw-downtown-codex/docs/ISOLATED-CONTINUATION.md",
+          "line": 3,
+          "type": "project record",
+          "explanation": "Records Kiran’s request for a separate playable continuation preserving the earlier work.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Presentation direction",
+          "path": "warsaw-downtown-codex/docs/ISOLATED-CONTINUATION.md",
+          "line": 35,
+          "type": "project record",
+          "explanation": "Records the selected dark sci-fi presentation direction and its constraints.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Playtest status",
+          "path": "warsaw-downtown/CLAUDE.md",
+          "line": 46,
+          "type": "project status",
+          "explanation": "Separates code completion from human playtest sign-off.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Handoff authority boundaries",
+          "path": "warsaw-downtown/tools/handoff/PROTOCOL.md",
+          "line": 15,
+          "type": "written protocol",
+          "explanation": "Reserves shared integration, hosting, and some decisions to the lead.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Sampled Claude event: Human steering converted into concrete engineering constraints",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 5534,
+          "type": "captured direction in automated compaction summary",
+          "explanation": "A session summary captures attributed human direction. This is a secondary record, not the original human message.",
+          "excerpt": "realistic gaming feel, mouse feel and physics; modern graphics; weather options (rainy/dark, sunny/bright)",
+          "date": "2026-09-26T06:44:31.854Z"
+        },
+        {
+          "title": "Sampled Claude event: Human steering converted into concrete engineering constraints",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 9034,
+          "type": "observed assistant write action",
+          "explanation": "A recorded tool or workflow result for this episode. It applies to the inspected change and date, not every later revision.",
+          "excerpt": "Cover fill: make sure nowhere on the street level is far from cover (Kiran: \"too open... we lose each other...\"",
+          "date": "2026-09-26T11:36:11.475Z"
+        },
+        {
+          "title": "Sampled Claude event: Human steering converted into concrete engineering constraints",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 10515,
+          "type": "observed assistant edit action",
+          "explanation": "The record directly shows this bounded action. A call or file edit does not establish every subsequent check passed.",
+          "excerpt": "",
+          "date": "2026-09-26T16:41:05.788Z"
+        }
+      ],
+      "limit": "Human direction is recorded. A project status label or written rule does not prove every feature received final approval."
+    },
+    "bots": {
+      "kind": "documented",
+      "title": "The game bots are a different system",
+      "summary": "The inspected game bots use a seeded behavior-tree provider and scripted chatter; no LLM inference call was found in those runtime paths. AI coding agents and game NPCs are different systems.",
+      "entries": [
+        {
+          "title": "Inspected runtime path",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/behaviorTree.ts",
+          "line": 32,
+          "type": "implementation",
+          "explanation": "Read instantiated provider, decide/sanitize/receiveInputs path, chatter imports/docs, server dependency manifest; searched bot and chatter paths for openai/anthropic/llm/fetch/http. Absence is bounded to inspected paths, not a universal proof.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Inspected runtime path",
+          "path": "warsaw-downtown-codex/packages/server/src/match/bots.ts",
+          "line": 110,
+          "type": "implementation",
+          "explanation": "Read instantiated provider, decide/sanitize/receiveInputs path, chatter imports/docs, server dependency manifest; searched bot and chatter paths for openai/anthropic/llm/fetch/http. Absence is bounded to inspected paths, not a universal proof.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Inspected runtime path",
+          "path": "warsaw-downtown-codex/packages/server/src/match/bots.ts",
+          "line": 244,
+          "type": "implementation",
+          "explanation": "Read instantiated provider, decide/sanitize/receiveInputs path, chatter imports/docs, server dependency manifest; searched bot and chatter paths for openai/anthropic/llm/fetch/http. Absence is bounded to inspected paths, not a universal proof.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Inspected runtime path",
+          "path": "warsaw-downtown-codex/packages/server/src/match/botChatter.ts",
+          "line": 8,
+          "type": "implementation",
+          "explanation": "Read instantiated provider, decide/sanitize/receiveInputs path, chatter imports/docs, server dependency manifest; searched bot and chatter paths for openai/anthropic/llm/fetch/http. Absence is bounded to inspected paths, not a universal proof.",
+          "excerpt": "",
+          "date": ""
+        }
+      ],
+      "limit": "This is a bounded conclusion about the inspected bot, chatter, and dependency paths. It does not claim to prove a universal absence across all future code."
+    },
+    "provenance": {
+      "kind": "documented",
+      "title": "An asset must match its source",
+      "summary": "Compatibility checks prevent stale or mismatched baked lighting from being treated as valid.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/bake/install_market_neon.py",
+          "line": 79,
+          "type": "implementation",
+          "explanation": "The Market neon bake installer validates dimensions, hashes, source fingerprints and manifest data, and refuses an installation outside the isolated linked branch. Runtime checks the map layout, scene hash and emitter records before enabling the bake; failed/late texture loads are disposed.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/bake/install_market_neon.py",
+          "line": 128,
+          "type": "implementation",
+          "explanation": "The Market neon bake installer validates dimensions, hashes, source fingerprints and manifest data, and refuses an installation outside the isolated linked branch. Runtime checks the map layout, scene hash and emitter records before enabling the bake; failed/late texture loads are disposed.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/client/src/render/marketNeonBake.ts",
+          "line": 26,
+          "type": "implementation",
+          "explanation": "The Market neon bake installer validates dimensions, hashes, source fingerprints and manifest data, and refuses an installation outside the isolated linked branch. Runtime checks the map layout, scene hash and emitter records before enabling the bake; failed/late texture loads are disposed.",
+          "excerpt": "",
+          "date": ""
+        }
+      ],
+      "limit": "An implemented gate and passing mock checks do not prove paid cloud execution. No successful Modal receipt was found; local CPU Cycles output and cloud preparation must be labeled separately. Mesh authoring/source compatibility is checked offline; runtime is not a complete proof of every scene detail."
+    },
+    "budget": {
+      "kind": "documented",
+      "title": "Quality within a resource budget",
+      "summary": "The project constrained geometry, draw batches, lights, and collision work while improving art.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 8,
+          "type": "plan",
+          "explanation": "The district pass limited added triangles per stall/container, reused one label atlas, merged detail by spatial chunk, and added no dynamic lights or gameplay colliders. Tests check deterministic stall coverage, visible labels, and opening preservation. Oct 5 debris used fixed pools and at most 96 physical sweeps.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/MARKET-DISTRICT-UPGRADE.md",
+          "line": 18,
+          "type": "historical report",
+          "explanation": "The district pass limited added triangles per stall/container, reused one label atlas, merged detail by spatial chunk, and added no dynamic lights or gameplay colliders. Tests check deterministic stall coverage, visible labels, and opening preservation. Oct 5 debris used fixed pools and at most 96 physical sweeps.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/client/src/render/marketStallProps.test.ts",
+          "line": 41,
+          "type": "implementation",
+          "explanation": "The district pass limited added triangles per stall/container, reused one label atlas, merged detail by spatial chunk, and added no dynamic lights or gameplay colliders. Tests check deterministic stall coverage, visible labels, and opening preservation. Oct 5 debris used fixed pools and at most 96 physical sweeps.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 8612,
+          "type": "assistant report",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "The new chips keep the debris effect at three rendering batches and retain the collision-work limit.",
+          "date": "2026-10-05T14:49:35.151Z"
+        }
+      ],
+      "limit": "Budgets limit cost; they do not automatically make the game fast or visually finished. Added district dressing increased assembled triangles and batches, and full combat performance remains unverified."
+    },
+    "scope": {
+      "kind": "documented",
+      "title": "What this audit actually inspected",
+      "summary": "Targeted local evidence review of Warsaw-related Claude Code and Codex engineering records, current code, and selected project artifacts.",
+      "entries": [
+        {
+          "title": "Codex engineering root",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 321,
+          "type": "sampled session",
+          "explanation": "Selected plans, reports, direct test outputs, and browser results were checked; helper metadata were indexed. Approval guardian copies were not counted as independent coding agents.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Claude project evidence",
+          "path": "warsaw-downtown/.claude/workflows/fresh-review.js",
+          "line": 15,
+          "type": "sampled implementation",
+          "explanation": "Workflow code, selected review reports, lane history, handoff protocol, and game architecture were inspected.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Claude main transcript discovery",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 1,
+          "type": "archive discovery",
+          "explanation": "Substantive Warsaw-linked history is under the broader workspace folder. The game-specific Windows transcript folder contains only empty or warmup stubs.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Claude targeted sampling",
+          "path": "Claude session archive/C--Users-kiran-myprojects/d39496e7-ccef-46c5-84d7-833ef2b5410f.jsonl",
+          "line": 31565,
+          "type": "sampled session",
+          "explanation": "Seven bounded episodes were sampled: fresh review, the gate correction, hosted settings, grass-depth correction, lane-reported network soak, human direction and handoff. Action/result/report classifications are retained.",
+          "excerpt": "",
+          "date": "2026-09-25T13:38:13.425Z to 2026-10-03T09:41:53.944Z"
+        }
+      ],
+      "limit": "This is a targeted, partial audit, not an exhaustive reading of every session. The game is actively edited. Historical checks are not a current certification. Monetary cost, measured speedup, and a complete acceptance-rate denominator are unknown."
+    },
+    "graph-model": {
+      "kind": "documented",
+      "title": "Several graphs, each serving a different question",
+      "date": "GRAPH SOURCE REVIEW / 6 OCT 2026",
+      "summary": "The inspected implementation contains explicit navigation nodes and links, TypeScript project references and a Three.js scene hierarchy. Review code branches and joins; asset validators encode dependency relationships. These are distinct representations.",
+      "entries": [
+        {
+          "title": "Standard graph definition",
+          "path": "https://xlinux.nist.gov/dads/HTML/graph.html",
+          "line": null,
+          "explanation": "NIST defines a graph using nodes and connections. This general definition supports the beginner explanation; it is not evidence about Warsaw.",
+          "type": "primary reference",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Navigation node and graph contracts",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/nav.ts",
+          "line": 12,
+          "explanation": "NavNode stores a position and neighbor links. NavGraph exposes route and path operations.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Review join",
+          "path": "warsaw-downtown/.claude/workflows/fresh-review.js",
+          "line": 143,
+          "explanation": "The workflow waits for parallel reviewers before combining findings and paying for verification.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Parent-child scene links",
+          "path": "warsaw-downtown-codex/packages/client/src/render/partnerView.ts",
+          "line": 364,
+          "explanation": "The shoulder contains upper arm, hand and blade; body and figure contain the larger hierarchy.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        }
+      ],
+      "limit": "This is a bounded inspection of selected implementations and prior audit records. “Graph engineering” is an explanatory umbrella here. The inspected material does not establish a unified knowledge graph or a graph framework governing all project work."
+    },
+    "graph-build": {
+      "kind": "documented",
+      "title": "Build prerequisites are declared in configuration",
+      "date": "GRAPH SOURCE REVIEW / 6 OCT 2026",
+      "summary": "The client references shared; the server references shared and client. With arrows meaning prerequisite to consumer, the diagram shows all three relationships. Typecheck uses TypeScript build mode.",
+      "entries": [
+        {
+          "title": "Client project reference",
+          "path": "warsaw-downtown-codex/packages/client/tsconfig.json",
+          "line": 11,
+          "explanation": "The references array names ../shared.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Server project references",
+          "path": "warsaw-downtown-codex/packages/server/tsconfig.json",
+          "line": 10,
+          "explanation": "The references array names ../shared and ../client.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Typecheck command",
+          "path": "warsaw-downtown-codex/package.json",
+          "line": 15,
+          "explanation": "The typecheck script invokes tsc -b.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Project-reference behavior",
+          "path": "https://www.typescriptlang.org/docs/handbook/project-references.html",
+          "line": null,
+          "explanation": "Official documentation explains project references and build mode. The local configuration establishes the Warsaw relationships.",
+          "type": "primary reference",
+          "date": "2026-10-06"
+        }
+      ],
+      "limit": "A build reference is not proof that the live server imports the entire client. No comparative build speedup was measured in this review, and the graph is not a complete map of runtime dependencies."
+    },
+    "graph-nav": {
+      "kind": "documented",
+      "title": "Bots search a navigation graph within a budget",
+      "date": "GRAPH SOURCE REVIEW / 6 OCT 2026",
+      "summary": "Sampled places become navigation nodes. Neighbor links are checked against the physics world. A* returns a route with an explicit completion flag and a default 4,000-expansion limit.",
+      "entries": [
+        {
+          "title": "Node and route interfaces",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/nav.ts",
+          "line": 12,
+          "explanation": "Nodes carry coordinates and neighbor indices. route returns points plus complete.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "A* search and expansion budget",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/nav.ts",
+          "line": 53,
+          "explanation": "The default cap is 4,000 expansions. findPath at line 117 prioritizes cost plus heuristic and can return a partial path.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Walkable neighbor connections",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/nav.ts",
+          "line": 308,
+          "explanation": "Neighbor links are added in both directions only after edge walkability checks. The initial wander pool uses the largest connected component.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Selected graph goal",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/nav.ts",
+          "line": 338,
+          "explanation": "World coordinates are mapped to suitable graph nodes; completion refers to reaching the chosen graph goal.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Local invalidation after prop changes",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/nav.ts",
+          "line": 431,
+          "explanation": "A per-world overlay rechecks touched nodes and edges. The wander pool is filtered from the original pool rather than recomputing the largest component on each invalidation.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Partial-route handling",
+          "path": "warsaw-downtown-codex/packages/server/src/bots/behaviorTree.ts",
+          "line": 535,
+          "explanation": "Steering distinguishes a partial route from arrival and can search again.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        }
+      ],
+      "limit": "The graph samples navigable positions and uses its own movement costs. It does not establish the shortest route through every possible real-world position. Partial results and search limits are explicit. No current gameplay tests were rerun for this source review."
+    },
+    "graph-scene": {
+      "kind": "documented",
+      "title": "A scene tree makes connected parts inherit movement",
+      "date": "GRAPH SOURCE REVIEW / 6 OCT 2026",
+      "summary": "The partner view creates nested Three.js groups. The shoulder owns arm, hand and blade; body owns shoulder; figure owns body; the outer group owns figure.",
+      "entries": [
+        {
+          "title": "Groups are created",
+          "path": "warsaw-downtown-codex/packages/client/src/render/partnerView.ts",
+          "line": 295,
+          "explanation": "The view constructs group, figure, body and shoulder objects.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Children are attached to parents",
+          "path": "warsaw-downtown-codex/packages/client/src/render/partnerView.ts",
+          "line": 364,
+          "explanation": "The add calls establish the nested scene hierarchy.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Shoulder animation",
+          "path": "warsaw-downtown-codex/packages/client/src/render/partnerView.ts",
+          "line": 477,
+          "explanation": "Shoulder rotation is changed by animation; descendants inherit the transform through their parent relationship.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Three.js Object3D",
+          "path": "https://threejs.org/docs/#api/en/core/Object3D",
+          "line": null,
+          "explanation": "Object3D documents parent and child transforms. The locally inspected add calls establish the specific Warsaw hierarchy.",
+          "type": "primary reference",
+          "date": "2026-10-06"
+        }
+      ],
+      "limit": "These are rendering relationships, separate from collision, navigation and server authority. The teaching diagram omits the outer group and upper arm to keep the hierarchy readable."
+    },
+    "graph-assets": {
+      "kind": "documented",
+      "title": "Changed inputs invalidate generated lighting",
+      "date": "GRAPH SOURCE REVIEW / 6 OCT 2026",
+      "summary": "The market neon installer checks source fingerprints, scene metadata and texture bytes. Runtime code checks layout and scene compatibility before accepting a lighting bake.",
+      "entries": [
+        {
+          "title": "Check source-file versions",
+          "path": "warsaw-downtown-codex/tools/bake/install_market_neon.py",
+          "line": 94,
+          "explanation": "Source files must exist inside the checkout and match their recorded fingerprints. Changed sources are rejected with instructions to re-export and rebake.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Check manifest and texture",
+          "path": "warsaw-downtown-codex/tools/bake/install_market_neon.py",
+          "line": 100,
+          "explanation": "Expected scene fields must agree; texture bytes are checked against the recorded fingerprint at line 123.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        },
+        {
+          "title": "Check runtime compatibility",
+          "path": "warsaw-downtown-codex/packages/client/src/render/marketNeonBake.ts",
+          "line": 34,
+          "explanation": "The current layout and calculated scene fingerprints must match the stored bake metadata.",
+          "type": "inspected implementation",
+          "date": "2026-10-06"
+        }
+      ],
+      "limit": "The relationships are encoded by contracts and fingerprints; this is not evidence of a dedicated knowledge-graph database. Matching versions do not prove visual quality or that a prepared cloud job successfully ran."
+    },
+    "graph-feedback": {
+      "kind": "observed",
+      "title": "The column correction and the documented repair cycle",
+      "date": "3–4 OCTOBER 2026",
+      "summary": "Sampled column records show observation, investigation, correction and checks. Separately, the handoff protocol documents another repair round when checks fail or serious findings remain.",
+      "card": "Hidden column detail prompted a correction, ray-based checks, and visual review.",
+      "entries": [
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/docs/ARCHITECTURE-PASS.md",
+          "line": 28,
+          "type": "historical report",
+          "explanation": "The first proposed Palace column grooves were behind flat panels and could not be seen. Review rejected them. A raycast test checks the raised face and recessed groove differ by more than seven centimetres; the recorded two-file run passed 23 checks.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/packages/client/src/render/palaceColumns.test.ts",
+          "line": 158,
+          "type": "implementation",
+          "explanation": "The first proposed Palace column grooves were behind flat panels and could not be seen. Review rejected them. A raycast test checks the raised face and recessed groove differ by more than seven centimetres; the recorded two-file run passed 23 checks.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Supporting project artifact",
+          "path": "warsaw-downtown-codex/tools/_codex-columns-final-tests.log",
+          "line": 5,
+          "type": "historical test output",
+          "explanation": "The first proposed Palace column grooves were behind flat panels and could not be seen. Review rejected them. A raycast test checks the raised face and recessed groove differ by more than seven centimetres; the recorded two-file run passed 23 checks.",
+          "excerpt": "",
+          "date": ""
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 2794,
+          "type": "assistant report",
+          "explanation": "A statement recorded in the session; corroborated with the project artifacts listed above.",
+          "excerpt": "I caught one detail that wouldn’t actually show up: the proposed column grooves were hidden behind flat panels.",
+          "date": "2026-10-03T23:36:58.710Z"
+        },
+        {
+          "title": "Recorded session event",
+          "path": "Codex session archive/2026/10/03/rollout-2026-10-03T22-03-15-01a1035d-19e2-70e2-8490-b8919cc30d62.jsonl",
+          "line": 2896,
+          "type": "observed tool result",
+          "explanation": "Direct recorded tool output. Its scope and environment still matter.",
+          "excerpt": "Test Files 2 passed (2); Tests 23 passed (23); Duration 19.46s",
+          "date": "2026-10-03T23:41:29.324Z"
+        },
+        {
+          "title": "Documented repair-cycle policy",
+          "path": "warsaw-downtown/tools/handoff/PROTOCOL.md",
+          "line": 21,
+          "type": "documented protocol",
+          "explanation": "A failed check or serious review finding leads to another round. This protocol is policy evidence, separate from the observed column correction.",
+          "excerpt": "",
+          "date": "2026-10-06"
+        }
+      ],
+      "limit": "The column event was sampled from historical records. The protocol documents the broader intended loop; its existence does not prove every round ran or guarantee convergence."
+    }
+  }
+}

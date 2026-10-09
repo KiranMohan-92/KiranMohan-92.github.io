@@ -1,0 +1,336 @@
+WEBVTT
+
+1
+00:00:00.000 --> 00:00:04.294
+Warsaw Downtown is our real game case study.
+A person sets the goal. Coding
+
+2
+00:00:04.344 --> 00:00:08.639
+agents make changes. Tests and fresh
+reviewers challenge the result. The
+
+3
+00:00:08.689 --> 00:00:13.033
+lesson is how evidence makes
+ambitious work safer.
+
+4
+00:00:13.033 --> 00:00:17.494
+Start even simpler than agents. A model is
+software that learns patterns from
+
+5
+00:00:17.544 --> 00:00:22.006
+examples. A language model generates text
+and can suggest code from the
+
+6
+00:00:22.056 --> 00:00:26.567
+context it receives. Tools around it
+provide file access and checks.
+
+7
+00:00:26.567 --> 00:00:31.128
+An agent is a loop around a model, aimed
+toward a goal. It reads context,
+
+8
+00:00:31.178 --> 00:00:35.739
+chooses an action, uses a tool, observes
+what happened, and then tries the
+
+9
+00:00:35.789 --> 00:00:40.400
+next step. The loop matters because real
+engineering needs feedback.
+
+10
+00:00:40.400 --> 00:00:43.994
+In this project, the agents were development
+assistants. They worked on code
+
+11
+00:00:44.044 --> 00:00:47.639
+and evidence under human direction. The game
+characters running inside Warsaw
+
+12
+00:00:47.689 --> 00:00:51.333
+Downtown are a different system.
+
+13
+00:00:51.333 --> 00:00:55.828
+The first principle is context. Before
+changing files, an agent needs the
+
+14
+00:00:55.878 --> 00:01:00.372
+project rules, the current code, the visual
+target, and Kiran's constraints.
+
+15
+00:01:00.422 --> 00:01:04.967
+Without that map, fluent code can
+still be wrong code.
+
+16
+00:01:04.967 --> 00:01:09.028
+The second principle is tool use. A useful
+coding agent does not just talk. It
+
+17
+00:01:09.078 --> 00:01:13.139
+searches files, runs checks, opens browser
+probes, compares screenshots, and
+
+18
+00:01:13.189 --> 00:01:17.300
+records what it saw.
+
+19
+00:01:17.300 --> 00:01:21.772
+The project split work into bounded jobs and
+separate working copies. One lane
+
+20
+00:01:21.822 --> 00:01:26.294
+could inspect market stalls. Another could
+polish columns. Another could
+
+21
+00:01:26.344 --> 00:01:30.867
+review multiplayer rules. Smaller
+lanes made ownership clearer.
+
+22
+00:01:30.867 --> 00:01:34.339
+A handoff protocol said what an agent could
+edit, what it must leave alone,
+
+23
+00:01:34.389 --> 00:01:37.861
+and what proof it had to bring back. That
+kind of boring contract is what lets
+
+24
+00:01:37.911 --> 00:01:41.433
+dramatic-looking work stay controlled.
+
+25
+00:01:41.433 --> 00:01:45.028
+Reviewers were meant to see the changed
+code, the project rules, and the
+
+26
+00:01:45.078 --> 00:01:48.672
+review rubric with fresh context. They did
+not have to trust the builder's
+
+27
+00:01:48.722 --> 00:01:52.367
+private story about why the
+change was probably fine.
+
+28
+00:01:52.367 --> 00:01:56.539
+The review used lenses: correctness,
+multiplayer safety, rendering cost,
+
+29
+00:01:56.589 --> 00:02:00.761
+tests, conventions, assets, and visual
+quality. Each lens asked a different
+
+30
+00:02:00.811 --> 00:02:05.033
+question, because one big yes can
+hide many small noes.
+
+31
+00:02:05.033 --> 00:02:09.072
+When a serious problem was reported,
+skeptic agents tried to challenge the
+
+32
+00:02:09.122 --> 00:02:13.161
+failure scenario. Confirmed serious
+problems blocked progress. Uncertain
+
+33
+00:02:13.211 --> 00:02:17.300
+findings stayed uncertain instead of
+being dressed up as proof.
+
+34
+00:02:17.300 --> 00:02:21.006
+One gate lesson was especially important. If
+a required reviewer failed, or a
+
+35
+00:02:21.056 --> 00:02:24.761
+serious verification was incomplete, the
+gate had to stop. Incomplete review
+
+36
+00:02:24.811 --> 00:02:28.567
+is not proof of safety.
+
+37
+00:02:28.567 --> 00:02:32.828
+Here is a real visual lesson. A column
+improvement could look reasonable in
+
+38
+00:02:32.878 --> 00:02:37.139
+code while the decorative grooves ended up
+hidden behind flat front panels.
+
+39
+00:02:37.189 --> 00:02:41.500
+The fix needed geometry checks and browser
+views, not just confident text.
+
+40
+00:02:41.500 --> 00:02:44.683
+A later fourth of October column comparison
+shows a refinement in an isolated
+
+41
+00:02:44.733 --> 00:02:47.917
+branch. The images help explain the
+direction of the work. Version
+
+42
+00:02:47.967 --> 00:02:51.150
+fingerprints identify what was inspected;
+they do not prove beauty by
+
+43
+00:02:51.200 --> 00:02:54.433
+themselves.
+
+44
+00:02:54.433 --> 00:02:58.617
+The market work added richer stalls,
+containers, lighting, and gameplay
+
+45
+00:02:58.667 --> 00:03:02.850
+footage. The video capture is real browser
+capture. Its encoded frame rate is
+
+46
+00:03:02.900 --> 00:03:07.133
+not the same thing as a universal
+game performance claim.
+
+47
+00:03:07.133 --> 00:03:11.594
+Performance evidence was treated carefully.
+Browser timing, graphics processor
+
+48
+00:03:11.644 --> 00:03:16.106
+identity, graphics work time, and how
+smooth the game feels are related
+
+49
+00:03:16.156 --> 00:03:20.667
+signals, not the same signal. A
+bad sample was rejected.
+
+50
+00:03:20.667 --> 00:03:25.172
+Tests ask whether logic works. Browser
+probes ask whether the game loads and
+
+51
+00:03:25.222 --> 00:03:29.728
+responds. Screenshots ask whether it looks
+right. Performance probes ask
+
+52
+00:03:29.778 --> 00:03:34.333
+whether the timing evidence is valid.
+None replaces the others.
+
+53
+00:03:34.333 --> 00:03:38.094
+The human role did not disappear. Kiran set
+taste, scope, risk tolerance, and
+
+54
+00:03:38.144 --> 00:03:41.906
+the bar for realism. The agents supplied
+drafts, checks, and repairs inside
+
+55
+00:03:41.956 --> 00:03:45.767
+that direction.
+
+56
+00:03:45.767 --> 00:03:49.817
+Current inspected game bots use behavior
+trees and game input logic. They are
+
+57
+00:03:49.867 --> 00:03:53.917
+game characters. Development agents helped
+build the project. They may share
+
+58
+00:03:53.967 --> 00:03:58.067
+the word agent, but they are
+different systems.
+
+59
+00:03:58.067 --> 00:04:02.317
+Kiran's next planned experiment is agentic
+game bots. The experiment could let
+
+60
+00:04:02.367 --> 00:04:06.617
+models choose actions under shared game
+rules. That is future work, and it
+
+61
+00:04:06.667 --> 00:04:10.967
+would need fairness, latency, and cost
+checks before acceptance.
+
+62
+00:04:10.967 --> 00:04:14.528
+The pattern is simple: define the job,
+isolate the working copy, make the
+
+63
+00:04:14.578 --> 00:04:18.139
+smallest useful change, test it, review it
+cold, challenge the review, and
+
+64
+00:04:18.189 --> 00:04:21.800
+keep the evidence.
+
+65
+00:04:21.800 --> 00:04:26.000
+That is agentic engineering at its best:
+not full autonomy, not instant
+
+66
+00:04:26.050 --> 00:04:30.300
+perfection, but uncertainty made visible
+and work forced through evidence.
+
+67
+00:04:30.300 --> 00:04:34.583
+The website opens the same story as an
+interactive city: principles, examples,
+
+68
+00:04:34.633 --> 00:04:38.967
+sources, and the checks that made the
+Warsaw workflow more trustworthy.
+
+
