@@ -1,0 +1,126 @@
+{
+  "title": "The City the Agents Built",
+  "subtitle": "Agentic engineering and graph engineering, explained through one game built in nine days.",
+  "basics": [
+    {
+      "id": "model",
+      "shot": "S02",
+      "name": "A model",
+      "line": "A prediction machine. Words in, likely words out.",
+      "more": "A language model has read enough text to guess what comes next, very well. Ask for an email, a summary or code and it writes one. On its own it cannot open a file, run anything or check its own work. It only talks."
+    },
+    {
+      "id": "agent",
+      "shot": "S03",
+      "name": "An agent",
+      "line": "A model + tools + a loop.",
+      "more": "Give the model tools (read, edit, run, look) and let it repeat: think, act, observe, decide. Now it can try something, see what happened, and try again. Less like a chatbot, more like a new teammate."
+    },
+    {
+      "id": "graph",
+      "shot": "S04",
+      "name": "A graph",
+      "line": "Dots and lines, where every line means one thing.",
+      "more": "Nodes are things: places, tasks, people. Edges are relationships: can walk to, must finish before, is part of. Graphs are how you organize many agents, and even how the game's bots find their way."
+    }
+  ],
+  "ideas": {
+    "agentic": "Agentic engineering is designing the loop: what an agent knows, what it may touch, and how it checks itself.",
+    "graph": "Graph engineering is designing the connections: who hands work to whom, what waits for what, and where the final yes or no is made."
+  },
+  "metrics": [
+    {"value": "9", "unit": "days", "label": "from first commit to last main-line merge", "note": "25 Sep → 3 Oct 2026, git history"},
+    {"value": "~85", "unit": "hours", "label": "of active agent session time", "note": "estimated from session timestamps, gaps over 30 min removed"},
+    {"value": "600+", "unit": "agent sessions", "label": "1 lead + 242 Claude helpers + 370 Codex sessions", "note": "Claude Code subagent transcripts; Codex rollouts for the project"},
+    {"value": "6.5B+", "unit": "tokens processed", "label": "96% of them re-reading notes and context", "note": "cache reads; only ~0.28B were fresh tokens. Codex figures are lower bounds"},
+    {"value": "16,700", "unit": "tool calls", "label": "reads, edits, commands and checks by agents", "note": "Claude Code transcripts"},
+    {"value": "~140", "unit": "human messages", "label": "Kiran's direction to the lead agent", "note": "heuristic count of human-typed prompts, plus 30 multiple-choice answers"},
+    {"value": "316", "unit": "commits", "label": "saved checkpoints on the main line (371 across all branches)", "note": "git rev-list"},
+    {"value": "105k", "unit": "lines of code", "label": "TypeScript, Python and scripts", "note": "tracked files; ~30% of TypeScript is tests"},
+    {"value": "1,584", "unit": "tests", "label": "passed in a single full run", "note": "recorded test run, 3 Oct 2026"},
+    {"value": "67", "unit": "review reports", "label": "independent reviews kept on disk", "note": "18 Claude fresh reviews + 49 Codex review logs"},
+    {"value": "46", "unit": "failures logged", "label": "mistakes written down so no agent repeats them", "note": "loops/FAILURES.md"},
+    {"value": "60", "unit": "fps", "label": "locked on the test laptop's dedicated GPU", "note": "dated measurement 29–30 Sep, 1280×720; not a universal performance claim"}
+  ],
+  "principles": [
+    {
+      "n": "01", "id": "done", "shot": "S07",
+      "title": "Define done before you start",
+      "idea": "Agents don't know when to stop. Give every job a finish line a machine can check.",
+      "warsaw": "Each job came with checkable conditions: 60 frames per second on the test laptop, original work left untouched, every test passing. Work wasn't 'done' until those were true.",
+      "anyjob": "A support agent's ticket is done when the customer's issue is reproduced, answered and the reply passes a policy check, not when the reply 'sounds good'.",
+      "try": "Before delegating anything, write three bullet points that would prove it's finished."
+    },
+    {
+      "n": "02", "id": "context", "shot": "S08",
+      "title": "Context is the map",
+      "idea": "Every agent starts with no memory. Written rules and decisions are what it navigates by.",
+      "warsaw": "Project rules, decisions and open checks lived in written files that every new agent read first. That's why 96% of all tokens were re-reading: the map was consulted before every move.",
+      "anyjob": "A finance assistant that reads the team's close checklist, last month's exceptions and approval limits before touching a ledger makes far fewer confident mistakes.",
+      "try": "Keep one living 'rules and decisions' page for the work. Point every agent, and every new person, at it first."
+    },
+    {
+      "n": "03", "id": "split", "shot": "S09",
+      "title": "Split work where it naturally separates",
+      "idea": "Parallel lanes are fast, but only with clear boundaries and a contract.",
+      "warsaw": "Rendering, rain, weapons and the market each ran as its own lane with its own copy of the project and a contract: what you may change, what you must not touch, what proof to bring back. Up to seven ran at once, until the laptop ran out of memory. Where two lanes touched the same file, things broke and needed repair.",
+      "anyjob": "A marketing launch can split into copy, design and analytics lanes, each with an owner and a hand-back checklist, as long as someone owns the shared pieces like the brand guide.",
+      "try": "For each parallel task, write: may change / must not touch / proof to bring back."
+    },
+    {
+      "n": "04", "id": "prereq", "shot": "S10",
+      "title": "Put prerequisites first",
+      "idea": "Draw the arrows: what must exist before what. Order and impact fall out of the drawing.",
+      "warsaw": "The shared game rules feed both the player's app and the server, and the server also depends on the app. Those arrows decide build order, and show what a change can break.",
+      "anyjob": "In hiring, the job description feeds the posting, the interview plan and the scorecard. Change the description and you instantly know three things to update.",
+      "try": "Sketch your work as boxes and 'must exist first' arrows. Check for circles."
+    },
+    {
+      "n": "05", "id": "review", "shot": "S11",
+      "title": "Never let the builder grade their own work",
+      "idea": "Fan out to fresh reviewers, join their findings, challenge them, then let a gate decide.",
+      "warsaw": "Every change went to reviewers who never saw the builder's reasoning: five specialist lenses (correctness, security, performance, tests, conventions) plus a visual check, in parallel. Findings were joined, skeptic agents tried to disprove each one, and a gate decided. Of 16 recorded reviews, 8 ended in 'blocked'.",
+      "anyjob": "A contract draft goes to legal, finance and the account owner separately; their notes are merged, someone argues against each objection, and only then does it get signed.",
+      "try": "Ask for review from someone, or some agent, that hasn't seen your reasoning. Then challenge their findings before acting."
+    },
+    {
+      "n": "06", "id": "missing", "shot": "S12",
+      "title": "A missing check is not a pass",
+      "idea": "Silence is not approval. Make gates fail loudly when evidence is missing.",
+      "warsaw": "The review system once treated a reviewer that crashed as one that found nothing. And while the second AI reviewer was offline for three days, 23 defects slipped past a test suite that stayed green. The gate was changed: a missing required check is now an error.",
+      "anyjob": "An expense approval workflow where 'no response from the manager in 48 hours' means 'approved' is the same bug. Make it 'escalate' instead.",
+      "try": "List the checks your process requires. Decide what happens when one of them simply doesn't report back."
+    },
+    {
+      "n": "07", "id": "measure", "shot": "S13",
+      "title": "Measure what you actually mean",
+      "idea": "Every number answers one question. Make sure it's your question.",
+      "warsaw": "A speed test that looked smooth was thrown out: it was only fourteen one-second samples. A network test under lag counted just 91.3% of shots; after a fix, 99.2%. Tests checked rules, screenshots checked looks, timings checked speed, and a human playing checked fun.",
+      "anyjob": "'Tickets closed per day' can rise while customers get angrier. Pair it with re-open rate and a satisfaction read.",
+      "try": "For each metric you use, write the one question it answers, and the question it can't."
+    },
+    {
+      "n": "08", "id": "loop", "shot": "S14",
+      "title": "Close the loop, with your eyes",
+      "idea": "Look at the real result, not the report of it. Then diagnose, fix, check again, and write it down.",
+      "warsaw": "The Palace columns were meant to have carved grooves. The code said they did. On screen they were flat, hidden behind panels. Only looking at the real result caught it. The project logged 46 failures so no agent would repeat them.",
+      "anyjob": "A sales report says every lead was followed up. Open five at random and read what was actually sent.",
+      "try": "Spot-check the real output weekly, and keep a short failures log that agents and people read."
+    }
+  ],
+  "human": "Kiran sat at the top of every graph: setting taste, scope, the quality bar and the budget in around 140 messages, and deciding when the evidence was enough. Agents multiplied the work. The human decided what it was for.",
+  "pattern": ["A goal", "A map", "Lanes with owners", "Arrows for order", "Checks: joined, challenged, gated", "A loop back to the start"],
+  "reuse": [
+    {"job": "Customer support", "goal": "Issue resolved + policy check", "lanes": "triage · research · reply", "gate": "QA review before send"},
+    {"job": "Research pipeline", "goal": "Answer with cited sources", "lanes": "search · read · synthesize", "gate": "citation and contradiction check"},
+    {"job": "Back office / finance", "goal": "Books closed, exceptions explained", "lanes": "reconcile · flag · draft", "gate": "approval limits + human sign-off"},
+    {"job": "Software / games", "goal": "Tests, fps, visual bar", "lanes": "rendering · gameplay · netcode", "gate": "fresh review + skeptics + gate"}
+  ],
+  "honest": [
+    "Things broke. Reviews missed things. Some numbers misled.",
+    "The structure didn't prevent mistakes; it caught them.",
+    "No cost or speed-up figures are claimed: a fair comparison wasn't measured.",
+    "The game's current bots follow hand-written rules (behaviour trees + A* route search). They are not AI."
+  ],
+  "next": "Next, Kiran wants to put agents inside the game itself: bots that reason instead of following scripts. That is future work, not a shipped feature."
+}

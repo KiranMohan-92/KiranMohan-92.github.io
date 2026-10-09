@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#060c15">
+  <meta name="description" content="A live-talk presentation: The City the Agents Built. Agentic engineering and graph engineering, explained through one game built in nine days.">
+  <title>The City the Agents Built — presentation</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23060c15'/%3E%3Cpath d='M10 30V18h5V12h3V5h4v7h3v6h5v12' stroke='%2399dcff' stroke-width='2' fill='none'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="present.css">
+  <script>document.documentElement.classList.add('js');</script>
+  <script src="present.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#hero">Skip to the presentation</a>
+  <div class="bg-grid" aria-hidden="true"></div>
+  <div class="bg-grain" aria-hidden="true"></div>
+
+  <header class="chrome" id="chrome">
+    <a class="brand" href="#hero" aria-label="The City the Agents Built, back to start">
+      <svg viewBox="0 0 28 36" aria-hidden="true"><path d="M2 34V17h6v-6h4V2h4v9h4v6h6v17M8 17v17m12-17v17M12 11v23m4-23v23"/></svg>
+      <span>The City the Agents Built</span>
+    </a>
+    <nav aria-label="Sections">
+      <a href="#game">Game</a><a href="#gameplay">Gameplay</a><a href="#film">Film</a><a href="#numbers">Numbers</a><a href="#basics">Basics</a><a href="#principles">Principles</a><a href="#pattern">Pattern</a><a href="#sources">Sources</a>
+    </nav>
+    <button class="chrome-btn" id="present-toggle" type="button" aria-pressed="false" title="Presenter mode (P)">Presenter mode <kbd>P</kbd></button>
+  </header>
+
+  <div class="progress" id="progress" aria-hidden="true"><i></i></div>
+  <div class="counter" id="counter" aria-hidden="true"><b>01</b> / <span>00</span></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <main id="main">
+    <noscript><p class="noscript">This presentation needs JavaScript to load its content. The trailer and gameplay need JavaScript to play.</p></noscript>
+
+    <!-- 1. HERO -->
+    <section class="slide hero" id="hero" data-title="Title" aria-labelledby="hero-title">
+      <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+      <video class="hero-video" id="hero-video" muted loop playsinline preload="none" aria-hidden="true" tabindex="-1"></video>
+      <div class="hero-shade" aria-hidden="true"></div>
+      <div class="inner hero-inner">
+        <p class="kicker reveal"><span class="pulse"></span> Warsaw Downtown &middot; a browser game built in nine days</p>
+        <h1 id="hero-title" class="reveal">The City<br>the <em>Agents</em> Built</h1>
+        <p class="subtitle reveal" id="hero-sub"></p>
+        <div class="hero-actions reveal">
+          <a class="btn primary" href="#game" id="watch-film"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5v13l11-6.5z"/></svg> Start with the game</a>
+          <span class="hint"><kbd>&rarr;</kbd> next slide &nbsp; <kbd>P</kbd> presenter &nbsp; <kbd>F</kbd> fullscreen</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. THE GAME: TRAILER -->
+    <section class="slide game" id="game" data-title="The game" aria-labelledby="game-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">01 &middot; The game &middot; trailer</p>
+          <h2 id="game-title">First, meet <em>the city.</em></h2>
+          <p class="lede" id="game-lede"></p>
+        </header>
+        <div class="game-layout reveal">
+          <div class="panel game-stage">
+            <div class="video-frame">
+              <video id="game-video" controls muted playsinline preload="none" poster="media/gameplay-poster.jpg" data-autoplay data-src="media/gameplay.mp4" aria-label="Warsaw Downtown gameplay trailer"></video>
+            </div>
+          </div>
+          <ul class="strip" aria-label="Game stills">
+            <li><button type="button" data-still="media/stills/crane.webp" data-alt="Game capture: a crane shot above the market at dusk"><img src="media/stills/crane.webp" alt="Game capture: a crane shot above the market at dusk" loading="lazy" decoding="async"></button></li>
+            <li><button type="button" data-still="media/stills/hero.webp" data-alt="Game capture: a hero shot of a soldier at dusk"><img src="media/stills/hero.webp" alt="Game capture: a hero shot of a soldier at dusk" loading="lazy" decoding="async"></button></li>
+            <li><button type="button" data-still="media/stills/fire.webp" data-alt="Game capture: firing the AR-7 rifle at dusk"><img src="media/stills/fire.webp" alt="Game capture: firing the AR-7 rifle at dusk" loading="lazy" decoding="async"></button></li>
+            <li><button type="button" data-still="media/stills/killcam.webp" data-alt="Game capture: a kill-cam replay at dusk"><img src="media/stills/killcam.webp" alt="Game capture: a kill-cam replay at dusk" loading="lazy" decoding="async"></button></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. REAL GAMEPLAY -->
+    <section class="slide game gameplay" id="gameplay" data-title="Real gameplay" aria-labelledby="gameplay-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">02 &middot; Real gameplay</p>
+          <h2 id="gameplay-title">One take, <em>in a browser tab.</em></h2>
+          <p class="lede">Unscripted play through the Market district beside the Palace of Culture, captured straight from the game. This is what the agents built.</p>
+        </header>
+        <div class="game-layout reveal">
+          <div class="panel game-stage">
+            <div class="video-frame">
+              <video id="gameplay-video" controls muted playsinline preload="none" poster="media/gameplay-raw-poster.jpg" data-autoplay data-src="media/gameplay-raw.mp4" aria-label="Warsaw Downtown, unedited gameplay capture"></video>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. FILM -->
+    <section class="slide film" id="film" data-title="The film" aria-labelledby="film-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">03 &middot; The film &middot; <span id="film-runtime">about 7 minutes</span></p>
+          <h2 id="film-title">Now: <em>how it was built.</em></h2>
+        </header>
+        <div class="film-layout reveal">
+          <div class="film-stage panel">
+            <div class="video-frame">
+              <video id="film-video" controls playsinline preload="none" poster="media/film-poster.jpg" aria-label="The City the Agents Built, a Blender-rendered explainer film"></video>
+              <div class="film-embed" id="film-embed" hidden></div>
+              <div class="film-pending" id="film-pending" hidden>
+                <span class="spinner" aria-hidden="true"></span>
+                <strong>Film link coming soon</strong>
+                <span>The film is hosted separately and will play here once its link is added.</span>
+              </div>
+            </div>
+            <details class="transcript" id="transcript">
+              <summary>Read the transcript</summary>
+              <div class="transcript-body" id="transcript-body"></div>
+            </details>
+          </div>
+          <aside class="chapters panel" aria-label="Film chapters">
+            <h3 class="eyebrow">Chapters</h3>
+            <ol id="chapter-list"></ol>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. NUMBERS -->
+    <section class="slide numbers" id="numbers" data-title="By the numbers" aria-labelledby="numbers-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">By the numbers</p>
+          <h2 id="numbers-title">What nine days <em>looked like.</em></h2>
+        </header>
+        <div class="metrics" id="metrics" role="list"></div>
+      </div>
+    </section>
+
+    <!-- 5. BASICS -->
+    <section class="slide basics" id="basics" data-title="The basics" aria-labelledby="basics-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">The basics &middot; three words</p>
+          <h2 id="basics-title">A model. An agent. <em>A graph.</em></h2>
+        </header>
+        <div class="basics-grid" id="basics-grid"></div>
+      </div>
+    </section>
+
+    <!-- 6. TWO BIG IDEAS -->
+    <section class="slide ideas" id="ideas" data-title="Two big ideas" aria-labelledby="ideas-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">Two big ideas</p>
+          <h2 id="ideas-title">Design the loop. <em>Design the connections.</em></h2>
+        </header>
+        <div class="ideas-grid" id="ideas-grid"></div>
+      </div>
+    </section>
+
+    <!-- 7. PRINCIPLES (intro + 8 generated slides) -->
+    <section class="slide principles-intro" id="principles" data-title="The 8 principles" aria-labelledby="principles-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">The principles</p>
+          <h2 id="principles-title">Eight principles that made it work. <em>None of them are about games.</em></h2>
+        </header>
+        <ol class="principle-index reveal" id="principle-index"></ol>
+      </div>
+    </section>
+    <div id="principle-slides" class="slide-group"></div>
+
+    <!-- 8. THE HUMAN -->
+    <section class="slide human" id="human" data-title="The human at the top" aria-labelledby="human-title">
+      <div class="inner human-inner">
+        <div class="human-copy">
+          <p class="eyebrow amber reveal">The human at the top</p>
+          <h2 id="human-title" class="reveal"></h2>
+          <p class="human-rest reveal" id="human-rest"></p>
+        </div>
+        <svg class="human-art reveal" viewBox="0 0 420 460" role="img" aria-label="A single amber node at the top of a tree of many ice-blue nodes">
+          <g class="edges"></g><g class="nodes"></g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 9. THE PATTERN -->
+    <section class="slide pattern" id="pattern" data-title="The pattern" aria-labelledby="pattern-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">The pattern</p>
+          <h2 id="pattern-title">Six steps. <em>Any job.</em></h2>
+        </header>
+        <div class="pattern-diagram reveal" id="pattern-diagram"></div>
+        <div class="reuse reveal">
+          <table class="reuse-table" id="reuse-table">
+            <caption class="sr-only">The same pattern applied to four kinds of work</caption>
+            <thead><tr><th scope="col">Job</th><th scope="col">Goal</th><th scope="col">Lanes</th><th scope="col">Gate</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10. HONEST -->
+    <section class="slide honest" id="honest" data-title="Honest notes" aria-labelledby="honest-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow coral">Honest notes</p>
+          <h2 id="honest-title">What <em>didn&rsquo;t</em> go right, and what we don&rsquo;t claim.</h2>
+        </header>
+        <ol class="honest-list" id="honest-list"></ol>
+      </div>
+    </section>
+
+    <!-- 11. NEXT -->
+    <section class="slide next" id="next" data-title="What's next" aria-labelledby="next-title">
+      <div class="inner next-inner">
+        <p class="eyebrow reveal">What&rsquo;s next</p>
+        <h2 id="next-title" class="reveal"></h2>
+        <p class="next-note reveal" id="next-note"></p>
+        <svg class="next-art reveal" viewBox="0 0 720 120" role="img" aria-label="Today: a bot follows a script. Next: a bot observes, decides, acts, and loops.">
+          <g class="edges"></g><g class="nodes"></g>
+        </svg>
+      </div>
+    </section>
+
+    <!-- 12. SOURCES -->
+    <section class="slide sources" id="sources" data-title="Sources and method" aria-labelledby="sources-title">
+      <div class="inner">
+        <header class="slide-head reveal">
+          <p class="eyebrow">Sources &amp; method</p>
+          <h2 id="sources-title">Where the numbers <em>come from.</em></h2>
+        </header>
+        <div class="sources-grid reveal">
+          <article class="panel">
+            <h3>Read the audit</h3>
+            <p>The public audit report and the method behind it, including what the evidence does and does not establish.</p>
+            <p class="links"><a class="btn" href="data/audit-report.md" target="_blank" rel="noopener">Audit report</a><a class="btn" href="data/methodology.md" target="_blank" rel="noopener">Methodology</a></p>
+          </article>
+          <article class="panel">
+            <h3>Where the figures came from</h3>
+            <p>The figures on the &ldquo;By the numbers&rdquo; slide were mined from the project&rsquo;s git history and from Claude Code and Codex session transcripts. The working notes, with confidence levels, are in <code>film-v3/data/metrics.md</code>. Each tile carries its own source note.</p>
+          </article>
+          <article class="panel">
+            <h3>Go deeper</h3>
+            <p>Every principle slide pairs its clip from the film with what happened in Warsaw, the same idea in any job, and one thing to try tomorrow.</p>
+            <p class="links"><a class="btn" href="#principles">Back to the principles</a></p>
+          </article>
+        </div>
+        <p class="colophon reveal">Film rendered in Blender from the game&rsquo;s own map data. Game footage is captured from Warsaw Downtown.</p>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="lightbox" id="lightbox" aria-label="Game still">
+    <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close image">&times;</button>
+    <img id="lightbox-img" alt="">
+  </dialog>
+</body>
+</html>

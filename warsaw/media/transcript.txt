@@ -1,0 +1,105 @@
+The City the Agents Built - transcript
+
+## Cold open
+
+[0:04] Nine days. One person. And more than six hundred A.I. agent sessions.
+[0:09] This is Warsaw Downtown: a multiplayer shooter that runs in a web browser, built on the real streets around Warsaw's Palace of Culture. Kiran directed the A.I. agents that wrote the code.
+[0:21] But this isn't a story about how smart the agents were. It's about the structure that kept them honest. And that structure works for anything you want to build.
+
+## A model
+
+[0:33] First, three quick ideas.
+[0:36] A language model is a prediction machine. Give it words, and it predicts the words that come next. Ask for code, and it writes code.
+[0:44] But on its own, it's a brain in a jar. It can't open a file, run a program, or see what it made.
+
+## An agent
+
+[0:51] Give it tools: read, edit, run, look. Then put it in a loop. Think. Act. Observe. Decide what's next.
+[1:00] That loop is an agent. Not a chatbot. A teammate that can try something, check it, and try again.
+
+## Graphs
+
+[1:08] One agent can fix a bug. A game takes hundreds. And hundreds of anything need organizing. That's what graphs are for.
+[1:16] A graph is dots and lines. Dots, called nodes, are things: places, tasks, people. Lines, called edges, are relationships. Can walk to. Must finish before. Is part of.
+[1:28] Even the game's bots think in graphs. To reach you, a bot searches a web of walkable points for the cheapest route.
+
+## Two big ideas
+
+[1:36] So, two big ideas. Agentic engineering is designing the loop: what an agent knows, what it may touch, and how it checks itself.
+[1:45] Graph engineering is designing the connections: who hands work to whom, what waits for what, and where the final yes or no gets made.
+
+## Scale
+
+[1:55] Here's what that looked like at scale.
+[1:57] Three hundred and sixteen saved checkpoints. A hundred and five thousand lines of code. Fifteen hundred automated tests.
+[2:05] One lead agent and two hundred and forty-two helpers, plus three hundred and seventy sessions of a second A.I., Codex.
+[2:13] Over six billion tokens processed. And ninety-six percent of it was re-reading: agents going back over their notes before every single move.
+[2:23] But volume isn't the point. A thousand agents in a bad structure make a thousand messes, faster. Here are eight principles that made it work. None of them are about games.
+
+## 01 Define done
+
+[2:36] One. Define done before you start.
+[2:39] An agent will work forever, or stop at the first thing that looks finished. So every job had a finish line a machine could check. Sixty frames per second. Original work untouched. Every test passing.
+[2:53] Write the finish line down. Make it checkable.
+
+## 02 Context
+
+[2:57] Two. Context is the map.
+[2:59] Every agent wakes up with no memory. That's all that re-reading. So the project kept written rules, decisions, and open checks, and every new agent read them first.
+[3:10] Without that map, a brilliant agent confidently builds the wrong thing.
+
+## 03 Split
+
+[3:16] Three. Split the work where it naturally separates.
+[3:20] Rendering, rain, weapons, the market. Each became its own lane, with its own copy of the project, and a contract. What you may change. What you must not touch. What proof to bring back.
+[3:33] Up to seven lanes ran at once, until the laptop ran out of memory. And where two lanes touched the same file, things broke. Parallel work is powerful. Boundaries are its price.
+
+## 04 Prerequisites
+
+[3:47] Four. Put prerequisites first.
+[3:50] Some work can't start until other work exists. Warsaw's shared game rules feed both the player's app and the server. Draw those arrows, and you know what to build first, and what breaks when something changes.
+
+## 05 Fresh review
+
+[4:05] Five. Never let the builder grade their own work.
+[4:09] Every change went to fresh reviewers who had never seen the builder's reasoning. Five specialists, plus a visual check, side by side.
+[4:18] Their findings join. Skeptics try to disprove each one. Then a gate decides. Fan out. Join. Challenge. Decide.
+[4:28] Of sixteen recorded reviews, half ended in: blocked. That's not failure. That's the system working.
+
+## 06 Missing checks
+
+[4:36] Six. And this one bit the project itself.
+[4:40] The review system once read a crashed reviewer as a reviewer that found nothing. Silence counted as approval.
+[4:47] And while the second reviewer was offline for three days, twenty-three defects slipped past a test suite that stayed green.
+[4:54] Now, a missing check is an error. Never a pass.
+
+## 07 Measure
+
+[5:00] Seven. Measure what you actually mean.
+[5:03] One speed test looked smooth, but it was only fourteen one-second samples. Thrown out. A network test under lag counted just ninety-one percent of shots. After a fix: ninety-nine point two.
+[5:17] Tests check rules. Screenshots check looks. Timings check speed. A human playing checks fun. No single number tells the whole truth.
+
+## 08 Close the loop
+
+[5:27] Eight. Close the loop, with your eyes.
+[5:30] The Palace columns were meant to have carved grooves. The code said they did. On screen, they were flat, hidden behind panels.
+[5:38] Only looking at the real result caught it. Diagnose, fix, check again. And log every failure. This project logged forty-six, so no agent repeats them.
+
+## The human
+
+[5:51] Now notice who sits at the top of every one of these graphs. Not an agent. A person.
+[5:57] Kiran set the taste, the scope, the quality bar, and the budget, in around a hundred and forty messages, and decided when the evidence was enough. Agents multiplied the work. The human decided what it was for.
+
+## The pattern
+
+[6:12] Put it together, and you get one shape. A goal. A map. Lanes with owners. Arrows for order. Checks that are joined, challenged, and gated. And a loop back to the start.
+[6:24] That shape built a city. It can run a support team, a research pipeline, a back office. Agents do the work. Graphs make the work trustworthy.
+
+## Honest + next
+
+[6:35] Was it perfect? No. Things broke. Reviews missed things. Numbers lied. The structure is what caught them.
+[6:43] Next, Kiran wants agents inside the game itself: bots that reason, instead of following scripts.
+
+## End
+
+[6:51] Connect with purpose. Check with evidence.
