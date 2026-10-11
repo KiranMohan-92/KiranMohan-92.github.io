@@ -387,8 +387,16 @@
   }
 
   /* ---------- metrics ---------- */
+  let dashboardOn = false;
   function initMetrics() {
     const wrap = $('#metrics');
+    // sourced dashboard; if its data is incomplete, mount() returns false and the tiles below are used
+    if (window.WarsawDashboard && content.dashboard && window.WarsawDashboard.mount(wrap, content.dashboard)) {
+      dashboardOn = true;
+      wrap.removeAttribute('role');
+      wrap.classList.replace('metrics', 'metrics-dash');   // keep the classes mount() added
+      return;
+    }
     content.metrics.forEach((m, i) => {
       const parsed = /^(~?)([\d,]+(?:\.\d+)?)(.*)$/.exec(m.value) || ['', '', m.value, ''];
       const tile = el('div', { class: 'tile reveal', role: 'listitem', style: `--d:${i * 55}ms` });
@@ -676,7 +684,7 @@
       $$('video[data-loop], video[data-autoplay], .hero-video', slide).forEach(v => { if (v.src || v.currentSrc) playSafe(v); });
     }
     $$('.clip', slide).forEach(resolveClip);
-    if (slide.id === 'numbers') countUp();
+    if (slide.id === 'numbers') { if (dashboardOn) window.WarsawDashboard.play(); else countUp(); }
   }
 
   function leave(slide) {
@@ -747,6 +755,7 @@
   function onKey(e) {
     if (e.ctrlKey || e.altKey || e.metaKey) return;
     if ($('#lightbox').open) return;
+    if (window.WarsawDashboard?.isOpen()) return;   // the source panel owns the keyboard while it is open
     const t = e.target;
     const typing = t.closest && t.closest('input, textarea, select, [contenteditable="true"]');
     if (typing) return;
