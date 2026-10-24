@@ -87,7 +87,7 @@
       "value": "67",
       "unit": "review reports",
       "label": "independent reviews kept on disk",
-      "note": "18 Claude fresh reviews + 49 Codex review logs"
+      "note": "13 Claude fresh reviews + 54 Codex review logs"
     },
     {
       "value": "46",
@@ -454,13 +454,13 @@
     "gate": {
       "block": 8,
       "pass": 5,
-      "error": 3,
+      "error": 0,
       "p1": 0,
       "p2": 20,
       "p3": 36,
       "src": {
         "counts": "Verdicts of the fresh-review gate: reviewers who never saw the builder's reasoning, then skeptics, then a decision.",
-        "method": "Gate lines in the 18 saved fresh-review reports; 16 recorded a verdict. Findings counted from their P1/P2/P3 headings. Blocks show the gate stopping work, not how many defects were caught.",
+        "method": "Gate lines in the 13 saved Claude fresh-review reports; all 13 recorded a verdict. Corrected 24 Oct 2026: an earlier count (18 reports, 16 verdicts, 3 errors) wrongly included Codex logs, where the three ERROR lines were quoted code. Findings counted from their P1/P2/P3 headings. Blocks show the gate stopping work, not how many defects were caught.",
         "source": "warsaw-downtown/.review"
       },
       "conf": "M"

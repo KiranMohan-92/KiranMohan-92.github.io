@@ -332,7 +332,7 @@
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
         </button>
       </div>
-      <p class="hero-sub mo" style="animation-delay:.5s">We climbed from prompts to systems that prompt for us. This is the whole ladder — and an honest audit of where my own loops match the discipline, where they exceed it, and where they still fall short.</p>
+      <p class="hero-sub mo" style="animation-delay:.5s">We climbed from prompts to systems that prompt for us. This is the whole ladder — and an honest audit of where my own loops match the discipline and where they still fall short.</p>
       <a class="gbtn liquid-glass mo" style="animation-delay:.65s;margin-top:26px" href="#" onclick="location.hash='#/3';return false">The Manifesto</a>
     </div>
     <span class="slide-number" data-current="1" data-total="15"></span>
@@ -457,7 +457,7 @@
         </div>
         <div class="mo-r" style="animation-delay:.3s">
           <p class="label">The cycle every phase runs</p>
-          <p class="dim" style="font-size:16.5px">Plan → execute → <b style="color:#fff">verify</b> → <b style="color:#fff">referee</b> → advance. The verify step is executable — dimensional checks, limiting cases, conservation laws, a 104-class error taxonomy that makes failures diagnosable instead of mysterious.</p>
+          <p class="dim" style="font-size:16.5px">Plan → execute → <b style="color:#fff">verify</b> → <b style="color:#fff">referee</b> → advance. The verify step is executable — dimensional checks, limiting cases, conservation laws, and a 104-class error taxonomy that makes failures diagnosable instead of mysterious. (The taxonomy and the referee come from the open-source GPD framework, which I applied.)</p>
           <div class="divider"></div>
           <p class="label">The checker is never the maker</p>
           <p class="dim" style="font-size:16.5px">A separate referee agent — fresh context, no authorship pride — reviews each phase against its goal before the loop may advance. Banks have run this control on money for a century; the AI industry rediscovered it and called it maker/checker.</p>
@@ -465,27 +465,27 @@
       </div>
     </div>
     <span class="slide-number" data-current="6" data-total="15"></span>
-    <div class="notes">Inside every phase, the same cycle: plan, execute, verify, referee, advance. Two beats carry all the safety. Verify is executable — dimensional analysis, limiting cases, conservation checks, backed by a 104-class error taxonomy, so a failure is a diagnosis, not a mystery. And the referee: a separate agent with fresh context and no authorship pride reviews the phase before the loop advances. If that sounds familiar, it should — four-eyes on money is a century old. The AI industry rediscovered the same control and called it maker/checker.</div>
+    <div class="notes">Inside every phase, the same cycle: plan, execute, verify, referee, advance. Two beats carry all the safety. Verify is executable — dimensional analysis, limiting cases, conservation checks, backed by a 104-class error taxonomy from the open-source GPD framework, so a failure is a diagnosis, not a mystery. And the referee: a separate agent with fresh context and no authorship pride reviews the phase before the loop advances. If that sounds familiar, it should — four-eyes on money is a century old. The AI industry rediscovered the same control and called it maker/checker.</div>
   </section>
 
   <!-- 7. RESULTS — plain language -->
   <section class="slide" data-title="Results" data-screen-label="07 Results">
     <div class="radial-mid"></div>
     <div class="inner">
-      <p class="label mo-s">What the loop produced — and what it admitted</p>
-      <h2 class="h2 mo" style="animation-delay:.1s">The numbers, <em>including the honest ones.</em></h2>
+      <p class="label mo-s">What the loop produced — and what a later audit withdrew</p>
+      <h2 class="h2 mo" style="animation-delay:.1s">The numbers, <em>after the audit.</em></h2>
       <div class="grid g4 mt-l stagger">
-        <div class="gcard liquid-glass kpi"><div class="v">88.7%</div><div class="l">score in the lab — practice data, nearly nothing slipped past it</div></div>
-        <div class="gcard liquid-glass kpi"><div class="v">7 / 8</div><div class="l">attack styles caught every single time — the eighth written up, not hidden</div></div>
-        <div class="gcard liquid-glass kpi"><div class="v">42.8%</div><div class="l">score on real transactions — the real world is messier, and the loop said so</div></div>
-        <div class="gcard liquid-glass kpi"><div class="v">56.1%</div><div class="l">after fixing wrongly-tagged records — and it reported exactly what was fixed</div></div>
+        <div class="gcard liquid-glass kpi"><div class="v">Jul '26</div><div class="l">my own integrity review withdrew the Stage 1 detector claim</div></div>
+        <div class="gcard liquid-glass kpi"><div class="v">0.51</div><div class="l">reproduced ROC-AUC on the real-address task — about chance</div></div>
+        <div class="gcard liquid-glass kpi"><div class="v">0</div><div class="l">experiments in the study that estimate real-world agent-fraud detection performance</div></div>
+        <div class="gcard liquid-glass kpi"><div class="v">1 ledger</div><div class="l">now caps the wording any paper or talk may use</div></div>
       </div>
       <div class="gcard liquid-glass mt-l mo" style="animation-delay:.7s">
-        <p class="dim" style="font-size:15px"><b style="color:#fff">The drop is the best number on this slide.</b> This loop writes every result down, so it cannot quietly forget a bad one. A lab score falling on contact with reality — dated, explained, preserved — is what trustworthy automation looks like. Results that only go up are hiding a slide like this.</p>
+        <p class="dim" style="font-size:15px"><b style="color:#fff">The audit is the best result on this slide.</b> Because the loop kept its state, results and decisions on disk, a later review could check them, and it also found what was missing: the synthetic generator and rows behind the lab score are not preserved in the repository, so the score can't be reproduced from it. The "real" task turned out to measure registry association, not fraud. I withdrew the claim, and I now publish only what the claim ledger allows. An earlier version of this page showed the withdrawn numbers; this is the corrected one.</p>
       </div>
     </div>
     <span class="slide-number" data-current="7" data-total="15"></span>
-    <div class="notes">The results — including the ones a demo would hide, and in plain words. In the lab, on practice data, it scored 88.7 percent and almost nothing slipped past it. Seven of eight attack styles were caught every single time; the eighth was written up as a gap rather than buried. Then reality: on eighty-two thousand real transactions the score fell to 42.8 — the real world is messier and some records were tagged wrong — recovering to 56.1 after the mislabeled records were fixed, with the fix itself documented. I want to sell you on the drop being the best number here: a loop that writes everything down cannot quietly forget a bad result. That's what trustworthy automation looks like — and it's the property a regulated industry should demand first.</div>
+    <div class="notes">The results, after the audit. The loop kept its state, results and decisions on disk, and that is what let my own July integrity review check it. The review also found what was missing: the synthetic generator and rows behind the lab score are not preserved in the repository, so the score can't be reproduced from it, and that the task on real blockchain addresses measured whether an address was registry-associated, not whether it was committing fraud. On that task the reproduced score was about chance. So I withdrew the detector claim and wrote a claim ledger that caps what any paper or talk may say. No experiment in the study estimates real-world agent-fraud detection performance. That correction, dated and preserved, is the property a regulated industry should demand first.</div>
   </section>
 
   <!-- 8. MEMORY / RECEIPTS -->
@@ -496,24 +496,24 @@
       <div class="grid g2 mt-l" style="align-items:center">
         <div class="mo-l" style="animation-delay:.25s">
           <p class="dim" style="font-size:16.5px">Good loop state answers three questions: <b style="color:#fff">what are we working on, what was tried, what waits for a human.</b> Those are literally the section headers of this loop's state file.</p>
-          <p class="dim mt-m" style="font-size:16.5px">And memory on disk does something a chat window never can: it gets <b style="color:#fff">audited and corrected</b>. On the right — the state file catching its own mislabeled metric, months later, with the explanation preserved.</p>
+          <p class="dim mt-m" style="font-size:16.5px">And memory on disk does something a chat window never can: it gets <b style="color:#fff">audited and corrected</b>. On the right — the status file recording the audit that withdrew a claim, dated, with the reasons preserved.</p>
           <p class="dim2 mt-m" style="font-size:13.5px">For a bank: an audit trail arising by construction, not by policy.</p>
         </div>
         <div class="terminal liquid-glass mo-r" style="animation-delay:.4s">
           <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
-          <pre><span class="cm"># STATE.md — Note (2026-04-02):</span>
-<span class="hl">"Precision label corrected. Previously
- listed as 96.23%, which was actually
- the recall. The F1 of 88.71% was always
- correct."</span>
-<span class="cm"># dated · explained · preserved —</span>
-<span class="cm"># the memory corrected itself and</span>
-<span class="cm"># kept the evidence.</span></pre>
+          <pre><span class="cm"># analysis/STATUS.md — effective 2026-07-10:</span>
+<span class="hl">"Stage 2 is a registry-associated-
+ address proxy task, not real fraud
+ detection."</span>
+<span class="cm"># an April note had already fixed a</span>
+<span class="cm"># mislabeled precision figure; July's</span>
+<span class="cm"># audit then withdrew the claim itself —</span>
+<span class="cm"># dated · explained · preserved.</span></pre>
         </div>
       </div>
     </div>
     <span class="slide-number" data-current="8" data-total="15"></span>
-    <div class="notes">The sixth part of the anatomy — the memory — deserves its own slide because it's the least glamorous and the most load-bearing. Good state answers three questions: what now, what was tried, what waits for a human. Those are literally my state files' section headers. And disk memory does something chat context never can: it gets audited and corrected. Here's the receipt — a dated note where the state file caught that a precision figure had been mislabeled months earlier, corrected it, and kept the explanation. For this audience: that is an audit trail arising by construction, not by policy. It's the single property that makes this pattern viable in our industry.</div>
+    <div class="notes">The sixth part of the anatomy — the memory — deserves its own slide because it's the least glamorous and the most load-bearing. Good state answers three questions: what now, what was tried, what waits for a human. Those are literally my state files' section headers. And disk memory does something chat context never can: it gets audited and corrected. Here's the receipt. In April a dated note caught that a precision figure had been mislabeled and corrected it. In July a fuller audit went further and withdrew the detector claim itself; the status file on the right is that correction, dated and preserved. For this audience: that is an audit trail arising by construction, not by policy. It's the single property that makes this pattern viable in our industry.</div>
   </section>
 
   <!-- 9. AUDIT SCORECARD -->
@@ -521,20 +521,20 @@
     <div class="radial-top"></div>
     <div class="inner">
       <p class="label mo-s">The audit — my loops vs the discipline</p>
-      <h2 class="h2 mo" style="animation-delay:.1s">Where I match, where I exceed —<br><em>and where I honestly don't.</em></h2>
+      <h2 class="h2 mo" style="animation-delay:.1s">Where I match —<br><em>and where I honestly don't.</em></h2>
       <div class="gcard liquid-glass mt-l mo" style="animation-delay:.3s">
         <table class="map">
           <tr><td>Parallel isolation</td><td>routine — one build ran 5 dependency-ordered streams in 3 waves; the real ceiling was my review bandwidth, not the tooling</td><td><span class="verdict v-match">match</span></td></tr>
           <tr><td>Externalized knowledge</td><td>a large hand-authored skill estate — but loops read knowledge, they don't write it back yet; runs learn things that die with the run</td><td><span class="verdict v-partial">partial</span></td></tr>
-          <tr><td>Connectors</td><td>the research loop pulled 81,904 real transactions through a data connector, in-loop — claims tested against the world, not a simulation</td><td><span class="verdict v-match">match</span></td></tr>
-          <tr><td>Maker / checker</td><td>referees everywhere — then production taught the sequel: the checker itself drifted 2.9 points and had to be replaced by a hostile external judge</td><td><span class="verdict v-exceeds">exceeds</span></td></tr>
+          <tr><td>Connectors</td><td>the research loop pulled public on-chain data through a data connector, in-loop — but a later audit showed the task measured registry association, not fraud. A connector doesn't make a claim true.</td><td><span class="verdict v-partial">partial</span></td></tr>
+          <tr><td>Maker / checker</td><td>referees everywhere — then an external fact-check scored two articles well below my internal editor (gaps of up to 2.9 points), so I added a hostile judge from another vendor. Calibrating that judge is still open.</td><td><span class="verdict v-match">match</span></td></tr>
           <tr><td>Memory / state</td><td>state files with self-correction receipts; the three state questions are my file headers</td><td><span class="verdict v-match">match</span></td></tr>
           <tr><td>The heartbeat</td><td>three discovery loops chartered — cadence, budget caps, human gates — but <b style="color:#fff">not yet proven in operation</b>. Designed ≠ tested.</td><td><span class="verdict v-next">next step</span></td></tr>
         </table>
       </div>
     </div>
     <span class="slide-number" data-current="9" data-total="15"></span>
-    <div class="notes">The scorecard — six parts, six verdicts, no grade inflation. Parallel isolation: match, with the honest caveat that my review bandwidth was the ceiling, never the tooling. Externalized knowledge: partial — a large skill estate, all hand-authored; my loops consume knowledge but don't yet produce it. Connectors: match, with a research-grade exhibit. Maker/checker: the one place I'd claim to exceed the discipline, because production taught me the sequel question — what happens when the checker drifts. Memory: match, with receipts. And the heartbeat — scheduled discovery: I've chartered three loops with budget caps and human gates, but they have not yet run long enough to prove anything. Designed is not tested. That row stays honest until the data exists.</div>
+    <div class="notes">The scorecard — six parts, six verdicts, no grade inflation. Parallel isolation: match, with the honest caveat that my review bandwidth was the ceiling, never the tooling. Externalized knowledge: partial — a large skill estate, all hand-authored; my loops consume knowledge but don't yet produce it. Connectors: partial — the loop pulled public data in through a connector, but a later audit showed the task measured registry association, not fraud; a connector doesn't make a claim true. Maker/checker: match — an external fact-check scored two articles up to 2.9 points below my internal editor, so I added a hostile judge from another vendor; calibrating that judge is still open. Memory: match, with receipts. And the heartbeat — scheduled discovery: I've chartered three loops with budget caps and human gates, but they have not yet run long enough to prove anything. Designed is not tested. That row stays honest until the data exists.</div>
   </section>
 
 
