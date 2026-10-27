@@ -80,12 +80,12 @@ img { max-width: 100%; display: block; }
 
 /* ---------- hero ---------- */
 .hero { padding: clamp(40px, 7vw, 88px) 0 clamp(48px, 7vw, 96px); }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: start; }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: end; }
 .name {
-  margin: 0 0 22px;
+  margin: 0;
   font-weight: 800;
   font-variation-settings: "wdth" 125;
-  font-size: clamp(3.1rem, 9.2vw, 6.6rem);
+  font-size: clamp(3.1rem, 8.4vw, 7.4rem);
   line-height: 0.92;
   letter-spacing: -0.01em;
 }
@@ -99,39 +99,7 @@ img { max-width: 100%; display: block; }
 }
 .btn.primary { background: var(--ink); color: var(--paper); }
 .btn:hover { text-decoration: underline; }
-.place { margin-top: 22px; font-size: 0.95rem; color: var(--ink-soft); }
-
-/* ---------- control log ---------- */
-.log { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 22px 22px 8px; overflow: hidden; }
-.log h2 { margin: 0 0 4px; font-size: 1.05rem; font-weight: 700; }
-.log .note { margin: 0 0 14px; font-size: 0.92rem; color: var(--ink-soft); }
-.log ol { list-style: none; margin: 0; padding: 0; }
-.entry {
-  display: grid; grid-template-columns: 5.6rem minmax(0, 1fr) auto; gap: 4px 14px; align-items: start;
-  padding: 14px 0; border-top: 1px solid var(--rule);
-}
-.entry time { font-family: var(--mono); font-size: 0.8rem; color: var(--ink-soft); padding-top: 3px; }
-.entry b { display: block; font-family: var(--mono); font-weight: 500; font-size: 0.86rem; }
-.entry p { margin: 2px 0 0; font-size: 0.92rem; line-height: 1.45; }
-.stamp {
-  font-family: var(--mono); font-weight: 500; font-size: 0.78rem; padding: 3px 8px; border: 1.5px solid currentColor;
-  border-radius: 3px; transform: rotate(-4deg); white-space: nowrap; margin-top: 2px;
-}
-.stamp.pass { color: var(--pass); }
-.stamp.reject { color: var(--reject); }
-.stamp.measure { color: var(--measure); }
-@media (prefers-reduced-motion: no-preference) {
-  .stamp { animation: stamp 0.42s cubic-bezier(.2,.9,.3,1.4) both; }
-  .entry:nth-child(1) .stamp { animation-delay: 0.35s; }
-  .entry:nth-child(2) .stamp { animation-delay: 0.6s; }
-  .entry:nth-child(3) .stamp { animation-delay: 0.85s; }
-  .entry:nth-child(4) .stamp { animation-delay: 1.1s; }
-  .entry:nth-child(5) .stamp { animation-delay: 1.35s; }
-  @keyframes stamp {
-    from { opacity: 0; transform: rotate(-4deg) scale(1.9); }
-    to { opacity: 1; transform: rotate(-4deg) scale(1); }
-  }
-}
+.place { margin: 22px 0 0; font-size: 0.95rem; color: var(--ink-soft); }
 
 /* ---------- sections ---------- */
 section.block { padding: clamp(56px, 8vw, 104px) 0; border-top: 1px solid var(--rule); }
@@ -169,10 +137,9 @@ h3 { font-size: 1.2rem; line-height: 1.3; margin: 0 0 8px; font-weight: 700; }
 .bar .fill { height: 100%; border-radius: 2px; background: var(--ink); }
 .bar.base .fill { background: var(--ink-soft); }
 .chart .caveat { margin: 18px 0 0; font-size: 0.88rem; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 14px; }
-.projects { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 48px); }
+.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 48px); }
 .projects article p { margin: 0 0 12px; color: var(--ink-soft); }
 .projects .facts { font-size: 0.92rem; color: var(--ink); }
-.private { font-size: 0.92rem; color: var(--ink-soft); font-style: italic; }
 .more { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule); }
 .more h3 { font-size: 1.05rem; }
 .more ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 40px; }
@@ -219,11 +186,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .contact .wrap { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 560px) {
-  .entry { grid-template-columns: minmax(0, 1fr) auto; }
-  .entry time { grid-column: 1 / -1; padding-top: 0; }
   .job { grid-template-columns: minmax(0, 1fr); }
   .site-head nav ul { gap: 14px; }
-  .log { padding: 18px 16px 4px; }
 }
 </style>
 </head>
@@ -248,8 +212,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 <main id="main">
   <section class="hero" id="top">
     <div class="wrap">
-      <div>
-        <h1 class="name"><span>Kiran</span><span>Mohan</span></h1>
+      <h1 class="name"><span>Kiran</span><span>Mohan</span></h1>
+      <div class="intro-col">
         <p class="role">Agentic systems designer and regulated-process translator.</p>
         <p class="lede">I design agent workflows the way banks run maker–checker controls: one agent makes, a different model checks, and code decides what passes. Coding agents implement to my specification; tests, independent review and the evidence each check produces decide what ships.</p>
         <p class="lede">Before agents, eight years in financial-crime prevention at Citi, MoneyGram and ING, where I still work today.</p>
@@ -260,38 +224,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
         </div>
         <p class="place">Warsaw, Poland</p>
       </div>
-
-      <aside class="log" aria-labelledby="log-title">
-        <h2 id="log-title">From my control log</h2>
-        <p class="note">By default, nothing ships until an independent check has looked at it. Five entries, all from public work.</p>
-        <ol>
-          <li class="entry">
-            <time datetime="2026-10-27">27 Oct 2026</time>
-            <div><b>codex-delegate 0.10.1</b><p>A job that finished mid-check could be reported as killed. Fixed, with regression tests.</p></div>
-            <span class="stamp pass">Shipped</span>
-          </li>
-          <li class="entry">
-            <time datetime="2026-10-26">26 Oct 2026</time>
-            <div><b>warsaw-downtown-game</b><p>Released as a one-commit snapshot, after a scan for private data that blocks the release if it can't prove the export is clean.</p></div>
-            <span class="stamp pass">Passed</span>
-          </li>
-          <li class="entry">
-            <time datetime="2026-10-25">25 Oct 2026</time>
-            <div><b>claude-skills evals</b><p>0.85 with the skills vs 0.60 without, on 25 cases. No false triggers in 36 near-miss runs.</p></div>
-            <span class="stamp measure">Measured</span>
-          </li>
-          <li class="entry">
-            <time datetime="2026-10-25">25 Oct 2026</time>
-            <div><b>two new skills, first draft</b><p>Independent review found 11 serious problems, 10 of them safety checks that failed open.</p></div>
-            <span class="stamp reject">Rejected</span>
-          </li>
-          <li class="entry">
-            <time datetime="2026-07">Jul 2026</time>
-            <div><b>agent-economy-fraud</b><p>My own integrity review found the first detector claim wasn't supported. Withdrawn publicly; the README says what still stands.</p></div>
-            <span class="stamp reject">Withdrawn</span>
-          </li>
-        </ol>
-      </aside>
     </div>
   </section>
 
@@ -371,11 +303,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
             <a href="https://github.com/KiranMohan-92/content-factory" target="_blank" rel="noopener">Repository</a>
             <a href="loop-engineering/">Loop engineering</a>
           </div>
-        </article>
-        <article>
-          <h3>Domain skills with an eval suite</h3>
-          <p>Three skills over a deterministic tool layer, checked against an independent implementation (pvlib) over 8,760 hourly samples, with closed-form and invariant tests, documented mutation exercises, and CI that fails if tests were skipped.</p>
-          <p class="private">Private repository; I can walk through it on a call.</p>
         </article>
       </div>
 
