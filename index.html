@@ -2,416 +2,345 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Kiran Mohan · Agentic systems designer</title>
-<meta name="description" content="Kiran Mohan designs Claude Code agent workflows around independent checks, drawing on eight years in financial-crime prevention at Citi, MoneyGram and ING. Based in Warsaw.">
-<meta property="og:title" content="Kiran Mohan, agentic systems designer">
-<meta property="og:description" content="Agent workflows built like bank controls: one agent makes, a different model checks, and code decides what passes.">
-<meta property="og:url" content="https://kiranmohan-92.github.io/">
-<meta property="og:type" content="profile">
-<meta name="theme-color" content="#EEF1EC" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#0E1626" media="(prefers-color-scheme: dark)">
+<meta name="description" content="Kiran Mohan designs Claude Code agent workflows built like bank controls: one agent makes, a different model checks, and code decides what passes. Eight years in financial-crime prevention at Citi, MoneyGram and ING. Warsaw.">
+<meta name="theme-color" content="#060c15">
 <link rel="canonical" href="https://kiranmohan-92.github.io/">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%2315233B'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='700' font-size='26' fill='%23EEF1EC' text-anchor='middle'%3EKM%3C/text%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Archivo:ital,wdth,wght@0,62..125,100..900;1,62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --paper: #EEF1EC;
-  --panel: #E2E8E0;
-  --ink: #15233B;
-  --ink-soft: #4C5A6D;
-  --rule: #C6CFC4;
-  --link: #1D4F9C;
-  --pass: #2E6A4F;
-  --reject: #A8322B;
-  --measure: #6B4E16;
-  --focus: #1D4F9C;
-  --sans: "Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
-  --wrap: 1160px;
-  --gutter: clamp(16px, 4vw, 40px);
-  color-scheme: light;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --paper: #0E1626;
-    --panel: #16213A;
-    --ink: #E5EAF1;
-    --ink-soft: #A7B2C3;
-    --rule: #2A3752;
-    --link: #8DB4F5;
-    --pass: #6FC29A;
-    --reject: #F08A80;
-    --measure: #E3BE6E;
-    --focus: #8DB4F5;
-    color-scheme: dark;
-  }
-}
-*, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; }
-@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
-body {
-  margin: 0;
-  background: var(--paper);
-  color: var(--ink);
-  font-family: var(--sans);
-  font-size: 1.0625rem;
-  line-height: 1.6;
-  font-variation-settings: "wdth" 100;
-  overflow-x: hidden;
-}
-a { color: var(--link); text-underline-offset: 0.18em; text-decoration-thickness: 1px; }
-a:hover { text-decoration-thickness: 2px; }
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 2px; }
-img { max-width: 100%; display: block; }
-.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
-.skip { position: absolute; left: -9999px; top: 0; }
-.skip:focus { left: var(--gutter); top: 12px; background: var(--ink); color: var(--paper); padding: 8px 14px; z-index: 10; }
-
-/* ---------- header ---------- */
-.site-head { border-bottom: 1px solid var(--rule); }
-.site-head .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; min-height: 64px; flex-wrap: wrap; }
-.mark { font-weight: 800; font-variation-settings: "wdth" 125; letter-spacing: 0.02em; color: var(--ink); text-decoration: none; font-size: 1.05rem; }
-.site-head nav ul { list-style: none; display: flex; gap: clamp(12px, 2.4vw, 28px); margin: 0; padding: 0; flex-wrap: wrap; }
-.site-head nav a { color: var(--ink-soft); text-decoration: none; font-size: 0.95rem; }
-.site-head nav a:hover { color: var(--ink); text-decoration: underline; }
-
-/* ---------- hero ---------- */
-.hero { padding: clamp(40px, 7vw, 88px) 0 clamp(48px, 7vw, 96px); }
-.hero .wrap { display: grid; grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); align-items: end; }
-.name {
-  margin: 0;
-  font-weight: 800;
-  font-variation-settings: "wdth" 125;
-  font-size: clamp(3.1rem, 8.4vw, 7.4rem);
-  line-height: 0.92;
-  letter-spacing: -0.01em;
-}
-.name span { display: block; }
-.role { margin: 0 0 18px; font-size: clamp(1.25rem, 2.2vw, 1.6rem); line-height: 1.3; font-weight: 600; max-width: 30ch; }
-.lede { margin: 0 0 14px; color: var(--ink-soft); max-width: 58ch; }
-.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
-.btn {
-  display: inline-block; padding: 12px 20px; border-radius: 4px; font-weight: 600; text-decoration: none;
-  border: 1.5px solid var(--ink); color: var(--ink); line-height: 1.2;
-}
-.btn.primary { background: var(--ink); color: var(--paper); }
-.btn:hover { text-decoration: underline; }
-.place { margin: 22px 0 0; font-size: 0.95rem; color: var(--ink-soft); }
-
-/* ---------- sections ---------- */
-section.block { padding: clamp(56px, 8vw, 104px) 0; border-top: 1px solid var(--rule); }
-.block h2 {
-  margin: 0 0 14px; font-weight: 800; font-variation-settings: "wdth" 112;
-  font-size: clamp(1.9rem, 4vw, 2.9rem); line-height: 1.08; letter-spacing: -0.01em; max-width: 22ch;
-}
-.block .intro { margin: 0 0 40px; color: var(--ink-soft); max-width: 62ch; }
-h3 { font-size: 1.2rem; line-height: 1.3; margin: 0 0 8px; font-weight: 700; }
-
-/* method */
-.flow { list-style: none; margin: 0 0 48px; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; }
-.flow li { position: relative; padding: 16px 18px 16px 0; border-top: 3px solid var(--ink); }
-.flow li + li { padding-left: 18px; border-left: 1px solid var(--rule); }
-.flow li.check { border-top-color: var(--pass); }
-.flow strong { display: block; font-variation-settings: "wdth" 112; font-size: 1.05rem; }
-.flow span { display: block; font-size: 0.92rem; color: var(--ink-soft); line-height: 1.45; margin-top: 4px; }
-.flow-note { margin: -32px 0 48px; font-size: 0.95rem; font-weight: 600; color: var(--ink); }
-.rules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(24px, 4vw, 48px); }
-.rules p { margin: 0; color: var(--ink-soft); }
-
-/* work */
-.feature { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: clamp(28px, 5vw, 64px); padding-bottom: 48px; margin-bottom: 48px; border-bottom: 1px solid var(--rule); }
-.feature h3 { font-size: clamp(1.4rem, 2.4vw, 1.75rem); font-variation-settings: "wdth" 112; font-weight: 800; }
-.feature ul { margin: 14px 0 18px; padding-left: 1.1em; }
-.feature li { margin-bottom: 6px; }
-.links { display: flex; flex-wrap: wrap; gap: 8px 20px; font-weight: 600; font-size: 0.97rem; }
-.chart { background: var(--panel); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; align-self: start; }
-.chart h4 { margin: 0 0 4px; font-size: 1rem; }
-.chart .sub { margin: 0 0 20px; font-size: 0.9rem; color: var(--ink-soft); }
-.bar { margin-bottom: 16px; }
-.bar .label { display: flex; justify-content: space-between; font-size: 0.92rem; margin-bottom: 6px; }
-.bar .label b { font-family: var(--mono); font-weight: 500; }
-.bar .track { height: 14px; background: color-mix(in srgb, var(--ink) 10%, transparent); border-radius: 2px; }
-.bar .fill { height: 100%; border-radius: 2px; background: var(--ink); }
-.bar.base .fill { background: var(--ink-soft); }
-.chart .caveat { margin: 18px 0 0; font-size: 0.88rem; color: var(--ink-soft); border-top: 1px solid var(--rule); padding-top: 14px; }
-.projects { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: clamp(24px, 4vw, 48px); }
-.projects article p { margin: 0 0 12px; color: var(--ink-soft); }
-.projects .facts { font-size: 0.92rem; color: var(--ink); }
-.more { margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule); }
-.more h3 { font-size: 1.05rem; }
-.more ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px 40px; }
-.more li { font-size: 0.95rem; color: var(--ink-soft); }
-.more li a { font-weight: 600; }
-
-/* experience */
-.timeline { list-style: none; margin: 0; padding: 0; }
-.job { display: grid; grid-template-columns: 11rem minmax(0, 1fr); gap: 6px 32px; padding: 22px 0; border-top: 1px solid var(--rule); }
-.job:first-child { border-top: 0; padding-top: 0; }
-.job .when { font-family: var(--mono); font-size: 0.85rem; color: var(--ink-soft); padding-top: 4px; }
-.job h3 { margin: 0; }
-.job .org { margin: 2px 0 8px; color: var(--ink-soft); font-size: 0.97rem; }
-.job p { margin: 0; max-width: 66ch; }
-.creds { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px 40px; margin-top: 48px; padding-top: 28px; border-top: 1px solid var(--rule); }
-.creds h3 { font-size: 1rem; }
-.creds p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; }
-
-/* writing */
-.videos { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: clamp(20px, 3vw, 36px); margin-bottom: 48px; }
-.videos a { text-decoration: none; color: var(--ink); }
-.videos img { aspect-ratio: 16 / 9; object-fit: cover; width: 100%; border-radius: 4px; border: 1px solid var(--rule); background: var(--panel); }
-.videos span { display: block; margin-top: 10px; font-weight: 600; line-height: 1.35; }
-.videos a:hover span { text-decoration: underline; }
-.pubs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 48px; }
-.pubs p { margin: 0; color: var(--ink-soft); }
-
-/* contact */
-.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
-.email { font-size: clamp(1.15rem, 3vw, 1.75rem); font-weight: 700; font-variation-settings: "wdth" 112; word-break: break-word; }
-footer { border-top: 1px solid var(--rule); padding: 28px 0 40px; font-size: 0.9rem; color: var(--ink-soft); }
-footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
-
-/* ---------- responsive ---------- */
-@media (max-width: 960px) {
-  .hero .wrap, .feature { grid-template-columns: minmax(0, 1fr); }
-  .flow { grid-template-columns: minmax(0, 1fr); }
-  .flow li, .flow li + li { padding: 14px 0 14px 18px; border-top: 0; border-left: 3px solid var(--ink); }
-  .flow li.check { border-left-color: var(--pass); }
-  .flow-note { margin-top: -32px; }
-  .rules, .projects, .videos, .creds { grid-template-columns: minmax(0, 1fr); }
-  .more ul, .pubs { grid-template-columns: minmax(0, 1fr); }
-}
-@media (max-width: 560px) {
-  .job { grid-template-columns: minmax(0, 1fr); }
-  .site-head nav ul { gap: 14px; }
-}
-</style>
+<meta property="og:type" content="profile">
+<meta property="og:url" content="https://kiranmohan-92.github.io/">
+<meta property="og:title" content="Kiran Mohan · Agent systems, built like bank controls">
+<meta property="og:description" content="Claude Code workflows where one agent makes, a different model checks, and code decides what passes.">
+<meta property="og:image" content="https://kiranmohan-92.github.io/assets/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='10' fill='%23060c15'/%3E%3Ccircle cx='10' cy='20' r='3' fill='%2399dcff'/%3E%3Ccircle cx='20' cy='13' r='3' fill='%2399dcff'/%3E%3Ccircle cx='30' cy='20' r='3' fill='%238fe3b4'/%3E%3Cpath d='M10 20L20 13L30 20' stroke='%2399dcff' stroke-width='1.5' fill='none'/%3E%3Cpath d='M30 22Q20 34 11 22' stroke='%23ff8f76' stroke-width='1.5' stroke-dasharray='2 3' fill='none'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="assets/landing.css">
+<script>document.documentElement.classList.add('js');</script>
+<script src="assets/landing.js" defer></script>
 </head>
 <body>
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip-link" href="#main">Skip to content</a>
+<div class="bg-grid" aria-hidden="true"></div>
+<div class="progress" aria-hidden="true"><i></i></div>
 
-<header class="site-head">
-  <div class="wrap">
-    <a class="mark" href="#top" aria-label="Kiran Mohan, home">KM</a>
-    <nav aria-label="Sections">
-      <ul>
-        <li><a href="#method">Method</a></li>
-        <li><a href="#work">Work</a></li>
-        <li><a href="#experience">Experience</a></li>
-        <li><a href="#writing">Writing</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-  </div>
+<header class="chrome" id="chrome">
+  <a class="brand" href="#top" aria-label="Kiran Mohan, back to top"><span class="brand-mark">KM</span><span>Kiran Mohan</span></a>
+  <nav aria-label="Sections">
+    <a href="#method">Method</a><a href="#numbers">Numbers</a><a href="#work">Work</a><a href="#career">Career</a><a href="#writing">Writing</a>
+  </nav>
+  <a class="chip-btn" href="mailto:kiranmohanengineer@gmail.com">Email me</a>
 </header>
 
 <main id="main">
-  <section class="hero" id="top">
-    <div class="wrap">
-      <h1 class="name"><span>Kiran</span><span>Mohan</span></h1>
-      <div class="intro-col">
-        <p class="role">Agentic systems designer and regulated-process translator.</p>
-        <p class="lede">I design agent workflows the way banks run maker–checker controls: one agent makes, a different model checks, and code decides what passes. Coding agents implement to my specification; tests, independent review and the evidence each check produces decide what ships.</p>
-        <p class="lede">Before agents, eight years in financial-crime prevention at Citi, MoneyGram and ING, where I still work today.</p>
-        <div class="actions">
-          <a class="btn primary" href="mailto:kiranmohanengineer@gmail.com">Email me</a>
-          <a class="btn" href="https://github.com/KiranMohan-92/claude-skills" target="_blank" rel="noopener">See the skills plugin</a>
-          <a class="btn" href="https://www.linkedin.com/in/kiran-mohan-38238a164/" target="_blank" rel="noopener">LinkedIn</a>
-        </div>
-        <p class="place">Warsaw, Poland</p>
+  <!-- HERO -->
+  <section class="hero" id="top" aria-labelledby="hero-title">
+    <canvas class="hero-canvas" id="hero-canvas" aria-hidden="true"></canvas>
+    <div class="hero-shade" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <p class="kicker reveal"><span class="pulse" aria-hidden="true"></span> Kiran Mohan &middot; agentic systems designer &middot; Warsaw</p>
+      <h1 id="hero-title" class="reveal">Agent systems, built like <em>bank controls.</em></h1>
+      <p class="subtitle reveal">I design Claude Code workflows where one agent makes, a different model checks, and code decides what passes. Eight years in financial-crime prevention at Citi, MoneyGram and ING taught me the pattern.</p>
+      <div class="hero-actions reveal">
+        <a class="btn primary" href="#work"><svg viewBox="0 0 20 20" aria-hidden="true"><path d="M5 3.5v13l11-6.5z"/></svg> See the work</a>
+        <a class="btn ghost" href="https://github.com/KiranMohan-92/claude-skills" target="_blank" rel="noopener">The skills plugin</a>
+        <span class="hero-links"><a href="https://www.linkedin.com/in/kiran-mohan-38238a164/" target="_blank" rel="noopener">LinkedIn</a><a href="https://github.com/KiranMohan-92" target="_blank" rel="noopener">GitHub</a></span>
       </div>
     </div>
+    <p class="legend-float" aria-hidden="true">Illustration of the method, not live data &nbsp; <span><i style="background:var(--amber)"></i>shipped</span><span><i style="background:var(--coral)"></i>sent back</span></p>
   </section>
 
-  <section class="block" id="method" aria-labelledby="method-title">
+  <!-- 01 METHOD -->
+  <section class="chapter" id="method" aria-labelledby="method-title">
     <div class="wrap">
-      <h2 id="method-title">Maker–checker, applied to agents</h2>
-      <p class="intro">In a bank, nobody approves their own work. I hold agents to the same standard. This is the path a change takes by default.</p>
-      <ol class="flow">
-        <li><strong>Specification</strong><span>I write what the change must do and how it will be judged.</span></li>
-        <li><strong>Maker</strong><span>A coding agent implements it, often in its own git worktree.</span></li>
-        <li class="check"><strong>Code checks</strong><span>Tests, validators and measurements decide everything that can be decided exactly.</span></li>
-        <li class="check"><strong>Checker</strong><span>A different model reviews the work and must end with an explicit verdict.</span></li>
-        <li><strong>Evidence</strong><span>What ran, what it found and why it passed is kept with the change.</span></li>
+      <header class="chapter-head reveal">
+        <p class="eyebrow">01 &middot; The method</p>
+        <h2 id="method-title">Maker&ndash;checker, for <em>agents.</em></h2>
+        <p class="lede">In a bank, nobody should approve their own work. I hold agents to the same standard. This is the path a change takes by default.</p>
+      </header>
+      <ol class="flow reveal">
+        <li class="panel step"><span class="n">01</span><h3>Specification</h3><p>I write what the change must do and how it will be judged.</p></li>
+        <li class="panel step"><span class="n">02</span><h3>Maker</h3><p>A coding agent implements it, often in its own git worktree.</p></li>
+        <li class="panel step check"><span class="n">03</span><h3>Code checks</h3><p>Tests, validators and measurements decide everything that can be decided exactly.</p></li>
+        <li class="panel step check"><span class="n">04</span><h3>Checker</h3><p>An independent reviewer, usually a different model, checks the work and must end with an explicit verdict.</p></li>
+        <li class="panel step"><span class="n">05</span><h3>Evidence</h3><p>What ran, what it found and why it passed stays with the change.</p></li>
       </ol>
-      <p class="flow-note">By default, a change goes back if any check fails or can't tell. Overriding a failed check takes an explicit human decision.</p>
+      <div class="flow-rail" aria-hidden="true">
+        <svg viewBox="0 0 1000 70" preserveAspectRatio="none"><path class="back" d="M700 4 C 690 60, 330 60, 300 4"/><path class="back" d="M500 4 C 492 40, 330 40, 310 4"/></svg>
+      </div>
+      <p class="sr-only">If a check fails or can't tell, the change goes back to the maker.</p>
       <div class="rules">
-        <div>
-          <h3>Code computes acceptance</h3>
-          <p>Where a check can be exact (a test, a schema, a loudness meter, a frame-rate probe), code decides. Model judgment covers only what code can't settle.</p>
-        </div>
-        <div>
-          <h3>A second model reviews</h3>
-          <p>The model that checks is never the one that made the change. Usually Claude implements and Codex reviews; on the game it was the other way round. A verdict that is missing, quoted or hedged counts as a failure.</p>
-        </div>
-        <div>
-          <h3>Failures become controls</h3>
-          <p>Investigated failures are filed by what the check saw, why it happened and the reusable lesson, then turned into a test, a guard or a rule. 121 records logged so far, 86 of them investigated and filed this way.</p>
-        </div>
+        <div class="panel rule reveal"><h3>Code computes acceptance</h3><p>Where a check can be exact (a test, a schema, a loudness meter, a frame-rate probe), code decides. Model judgment covers only what code can't settle.</p></div>
+        <div class="panel rule reveal"><h3>The checker never made the change</h3><p>Usually Claude implements and Codex reviews. On the game, Codex lanes also implemented, and both Claude reviewers and a separate Codex review checked their work. A verdict that is missing, quoted or hedged counts as a failure.</p></div>
+        <div class="panel rule reveal"><h3>Failures become controls</h3><p>Investigated failures are filed by what the check saw, why it happened and the reusable lesson, then turned into a test, a guard or a rule. Overriding a failed check takes an explicit human decision.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="block" id="work" aria-labelledby="work-title">
+  <!-- 02 NUMBERS -->
+  <section class="chapter" id="numbers" aria-labelledby="numbers-title">
     <div class="wrap">
-      <h2 id="work-title">Selected work</h2>
-      <p class="intro">Systems I designed and directed in 2026, with Claude Code leading and Codex reviewing. Agents wrote the code; the specifications, gates and acceptance decisions are mine.</p>
+      <header class="chapter-head reveal">
+        <p class="eyebrow">02 &middot; By the numbers</p>
+        <h2 id="numbers-title">What the checks <em>measured.</em></h2>
+      </header>
+      <div class="dash-legend"><span>Open any Source for where a number comes from</span><span class="tag">Measured</span><span class="tag reported">Reported</span><details class="src"><summary>Source</summary><div class="pop">Skills, eval cases and false triggers: the claude-skills README and <code>evals/RESULTS.md</code>. Tests: the pytest suite collected at v0.10.1, green in CI. Review calls and failure records: counted from my retained Claude Code history, July to October 2026 (private; a lower bound, since older sessions weren't kept).</div></details></div>
 
-      <div class="feature">
-        <div>
-          <h3>claude-skills: a Claude Code plugin with measured evals</h3>
-          <p>Six versioned skills that encode workflows I kept repeating across projects: delegating to Codex, running parallel agent lanes safely, gating media deliverables, daily retros.</p>
+      <div class="panel stats">
+        <div class="stat"><div class="v"><span data-count="6">6</span><small>skills</small></div><p class="d">versioned, in a public Claude Code plugin</p><span class="tag">Measured</span></div>
+        <div class="stat"><div class="v"><span data-count="37">37</span><small>eval cases</small></div><p class="d">25 should-trigger, 12 near-miss</p><span class="tag">Measured</span></div>
+        <div class="stat"><div class="v"><span data-count="0">0</span><small>/ 36</small></div><p class="d">false triggers in near-miss runs</p><span class="tag">Measured</span></div>
+        <div class="stat"><div class="v"><span data-count="127">127</span><small>tests</small></div><p class="d">passing at v0.10.1</p><span class="tag">Measured</span></div>
+        <div class="stat"><div class="v"><span data-count="229">229</span><small>reviews</small></div><p class="d"><code>codex review</code> calls logged, Jul&ndash;Oct 2026</p><span class="tag">Measured</span></div>
+        <div class="stat"><div class="v"><span data-count="121">121</span><small>failures</small></div><p class="d">logged; 86 investigated by cause</p><span class="tag">Measured</span></div>
+      </div>
+
+      <div class="cards">
+        <article class="panel card w5 grow">
+          <div class="card-head"><h3>With vs without the plugin</h3><span class="tag">Measured</span>
+            <details class="src"><summary>Source</summary><div class="pop"><code>evals/RESULTS.md</code>, run 2 (25 Oct 2026): 25 should-trigger cases, three runs each, with and without the plugin. Tasks ran with read-only tools and a model judge graded the plans, so this measures plans, not finished work. <a href="https://github.com/KiranMohan-92/claude-skills/blob/main/evals/RESULTS.md" target="_blank" rel="noopener">Read the results</a></div></details>
+          </div>
+          <div class="bars">
+            <div class="bar" style="--w:85%"><div class="top"><span>With the skills</span><b data-count="0.85" data-dec="2">0.85</b></div><div class="track"><div class="fill"></div></div></div>
+            <div class="bar base" style="--w:60%"><div class="top"><span>Without</span><b data-count="0.60" data-dec="2">0.60</b></div><div class="track"><div class="fill"></div></div></div>
+          </div>
+          <p class="delta"><b>+0.25</b> outcome score on the same tasks</p>
+        </article>
+
+        <article class="panel card w4 dots-wrap">
+          <div class="card-head"><h3>Did the right skill load?</h3><span class="tag">Measured</span>
+            <details class="src"><summary>Source</summary><div class="pop">Same run: a skill loaded in 28 of 75 runs. Where it loaded at least twice in three runs, the score rose by 0.56; where it never loaded, by 0.07. Making skills load reliably is the next piece of work. <a href="https://github.com/KiranMohan-92/claude-skills/blob/main/evals/RESULTS.md" target="_blank" rel="noopener">Results</a></div></details>
+          </div>
+          <div class="dots" role="img" aria-label="75 runs, 28 of them loaded the skill"><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="split"><div><b>+0.56</b>when it loaded</div><div><b>+0.07</b>when it didn't</div></div>
+          <p class="foot">28 of 75 runs. Skills changed the answer mainly when they loaded, so loading is the next thing to fix.</p>
+        </article>
+
+        <article class="panel card w3">
+          <div class="card-head"><h3>Releases</h3><span class="tag">Measured</span>
+            <details class="src"><summary>Source</summary><div class="pop">Git tags on the public repository. Installs can be pinned to a tag or a commit. <a href="https://github.com/KiranMohan-92/claude-skills/tags" target="_blank" rel="noopener">Tags</a></div></details>
+          </div>
+          <ol class="releases">
+            <li><b>v0.9.0</b><span>25 Oct 2026: four skills, CI, first evals</span></li>
+            <li><b>v0.10.0</b><span>25 Oct 2026: codex-delegate and parallel-lanes</span></li>
+            <li><b>v0.10.1</b><span>27 Oct 2026: a status race fixed, three guard tests</span></li>
+          </ol>
+        </article>
+
+        <article class="panel card w7">
+          <div class="card-head"><h3>First draft of two new skills, independently reviewed</h3><span class="tag">Measured</span>
+            <details class="src"><summary>Source</summary><div class="pop">The <code>codex-delegate</code> and <code>parallel-lanes</code> changelogs record 6 and 5 serious findings from a Codex review of their first drafts. By my reading of that review, ten were safety checks that failed open and one was an overstated compatibility claim in the docs. <a href="https://github.com/KiranMohan-92/claude-skills/blob/main/skills/codex-delegate/CHANGELOG.md" target="_blank" rel="noopener">Changelog</a></div></details>
+          </div>
+          <div class="verdicts" role="img" aria-label="11 serious findings: 10 fail-open safety checks and 1 docs claim">
+            <span class="fo">fail-open</span><span class="fo">fail-open</span><span class="fo">fail-open</span><span class="fo">fail-open</span><span class="fo">fail-open</span>
+            <span class="fo">fail-open</span><span class="fo">fail-open</span><span class="fo">fail-open</span><span class="fo">fail-open</span><span class="fo">fail-open</span>
+            <span class="doc">docs claim</span>
+          </div>
+          <div class="big-pair"><b class="c" data-count="11">11</b><span>serious findings</span><span class="arrow" aria-hidden="true">&rarr;</span><b class="m" data-count="11">11</b><span>fixed before release</span></div>
+          <p class="foot">Each code fix has a regression test. A later release added tests that fail when their guard is removed, checked by breaking each guard on purpose.</p>
+        </article>
+
+        <article class="panel card w5">
+          <div class="card-head"><h3>How I work with agents, Jul&ndash;Oct 2026</h3><span class="tag">Measured</span>
+            <details class="src"><summary>Source</summary><div class="pop">Counted from my retained Claude Code session history, July to October 2026, mined in October. The logs are private; I can show how they were counted.</div></details>
+          </div>
+          <div class="ring-row">
+            <svg class="ring" viewBox="0 0 132 132" data-pct="55" role="img" aria-label="About 55% of logged responses and tool calls came from subagents"><circle class="bgc" cx="66" cy="66" r="54"/><circle class="fg" cx="66" cy="66" r="54" style="stroke-dasharray:339.3;stroke-dashoffset:152.7"/><text x="66" y="76" text-anchor="middle">~55%</text></svg>
+            <div class="kv">
+              <div><span>of responses and tool calls came from subagents</span></div>
+              <div><span>tool calls per human prompt</span><b>~41</b></div>
+              <div><span>agents started by 26 workflow runs</span><b data-count="271">271</b></div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 WORK -->
+  <section class="chapter" id="work" aria-labelledby="work-title">
+    <div class="wrap">
+      <header class="chapter-head reveal">
+        <p class="eyebrow">03 &middot; Selected work</p>
+        <h2 id="work-title">Systems I designed and <em>directed.</em></h2>
+        <p class="lede">Agents wrote the code. The specifications, the gates and the decisions about what passes are mine.</p>
+      </header>
+
+      <article class="panel feature reveal">
+        <div class="thumb"><img src="assets/thumbs/claude-skills.webp" alt="The claude-skills plugin banner: six skills, CI and 37 eval cases" width="960" height="540"></div>
+        <div class="body">
+          <p class="kind">Public plugin &middot; v0.10.1</p>
+          <h3>claude-skills: Claude Code skills, versioned and measured</h3>
+          <p>Six skills that encode workflows I kept repeating across projects: delegating to Codex, running parallel agent lanes safely, gating media deliverables, reporting on long jobs, Windows/WSL shell rules, and daily retros.</p>
           <ul>
-            <li>Tagged releases, a changelog per skill, and installs pinned to a tag or commit.</li>
+            <li>Tagged releases, a changelog per skill, installs pinned to a tag or commit.</li>
             <li>CI runs Anthropic's skill validator, <code>claude plugin validate</code>, shellcheck and pytest.</li>
             <li>A 37-case <code>claude plugin eval</code> suite measured against a no-plugin baseline.</li>
-            <li><code>STANDARDS.md</code>: a skill rubric another engineer can apply, stating which criteria CI enforces and which a reviewer checks.</li>
+            <li><code>STANDARDS.md</code>: a rubric another engineer can apply.</li>
           </ul>
           <div class="links">
-            <a href="https://github.com/KiranMohan-92/claude-skills" target="_blank" rel="noopener">Repository</a>
-            <a href="https://github.com/KiranMohan-92/claude-skills/blob/main/evals/RESULTS.md" target="_blank" rel="noopener">Eval results</a>
-            <a href="https://github.com/KiranMohan-92/claude-skills/blob/main/STANDARDS.md" target="_blank" rel="noopener">Standards</a>
+            <a class="chip-btn" href="https://github.com/KiranMohan-92/claude-skills" target="_blank" rel="noopener">Repository</a>
+            <a class="chip-btn" href="https://github.com/KiranMohan-92/claude-skills/blob/main/evals/RESULTS.md" target="_blank" rel="noopener">Eval results</a>
+            <a class="chip-btn" href="https://github.com/KiranMohan-92/claude-skills/blob/main/STANDARDS.md" target="_blank" rel="noopener">Standards</a>
           </div>
         </div>
-        <figure class="chart" aria-labelledby="chart-title">
-          <h4 id="chart-title">Outcome score on 25 should-trigger cases</h4>
-          <p class="sub">Same tasks, run three times each, with and without the plugin installed.</p>
-          <div class="bar"><div class="label"><span>With the skills</span><b>0.85</b></div><div class="track"><div class="fill" style="width:85%"></div></div></div>
-          <div class="bar base"><div class="label"><span>Without</span><b>0.60</b></div><div class="track"><div class="fill" style="width:60%"></div></div></div>
-          <p class="caveat">No false triggers in 36 near-miss runs. Tasks ran with read-only tools and were graded by a model judge, so the scores measure plans, not finished work. The weak spot: skills loaded in only 28 of 75 runs, so making them fire reliably is the next job.</p>
-        </figure>
-      </div>
+      </article>
 
-      <div class="projects">
-        <article>
-          <h3>The City the Agents Built</h3>
-          <p>A multiplayer browser game delivered by a Claude Code lead and Codex implementation lanes in isolated git worktrees, behind a five-lens review gate that fails closed and is tested against crashing reviewers.</p>
-          <p class="facts">511 commits in the private repo, about 2,300 statically counted test cases, and 101 of 106 recorded CI runs passed (as of 20 Oct). The public source is a one-commit snapshot.</p>
-          <div class="links">
-            <a href="warsaw/">Talk page and film</a>
-            <a href="https://github.com/KiranMohan-92/warsaw-downtown-game" target="_blank" rel="noopener">Source</a>
+      <div class="works">
+        <article class="panel work reveal">
+          <div class="thumb"><img src="assets/thumbs/city.webp" alt="Film poster: The City the Agents Built, a night city with graph lines" width="960" height="540" loading="lazy"></div>
+          <div class="body">
+            <p class="kind">Talk, film and source</p>
+            <h3>The City the Agents Built</h3>
+            <p>A multiplayer browser game delivered by a Claude Code lead and Codex lanes in isolated git worktrees, behind a five-lens review gate that fails closed and is tested against crashing reviewers.</p>
+            <p class="facts">511 commits in the private repo &middot; ~2,300 statically counted tests &middot; 101 of 106 CI runs passed (as of 20 Oct) &middot; public source is a one-commit snapshot</p>
+            <div class="links"><a class="chip-btn" href="warsaw/">Talk page and film</a><a class="chip-btn" href="https://github.com/KiranMohan-92/warsaw-downtown-game" target="_blank" rel="noopener">Source</a></div>
           </div>
         </article>
-        <article>
-          <h3>Content Factory</h3>
-          <p>A pipeline from idea to publishable article: 15 agent definitions, 4 code validators, an editor floor of 9.3 and a cross-vendor critic. A human approves anything that gets published.</p>
-          <div class="links">
-            <a href="https://github.com/KiranMohan-92/content-factory" target="_blank" rel="noopener">Repository</a>
-            <a href="loop-engineering/">Loop engineering</a>
+        <article class="panel work reveal">
+          <div class="thumb"><img src="assets/thumbs/cf.webp" alt="Diagram: research, analyse, write and edit, then validators, a critic and human approval" width="960" height="540" loading="lazy"></div>
+          <div class="body">
+            <p class="kind">Pipeline &middot; public repo</p>
+            <h3>Content Factory</h3>
+            <p>Idea to publishable article: 15 agent definitions, 4 code validators, an editor floor of 9.3 and a cross-vendor critic. A human approves anything that gets published.</p>
+            <div class="links"><a class="chip-btn" href="https://github.com/KiranMohan-92/content-factory" target="_blank" rel="noopener">Repository</a></div>
+          </div>
+        </article>
+        <article class="panel work reveal">
+          <div class="thumb"><img src="assets/thumbs/graph.webp" alt="Screenshot of the Graph engineering explainer: Think in graphs, build a world" width="960" height="540" loading="lazy"></div>
+          <div class="body">
+            <p class="kind">Explainer</p>
+            <h3>Graph engineering, explained</h3>
+            <p>Agents, work units, shared state, verification, retries and human gates, drawn as a graph with typed contracts on every edge.</p>
+            <div class="links"><a class="chip-btn" href="warsaw/explainer/">Open the explainer</a></div>
+          </div>
+        </article>
+        <article class="panel work reveal">
+          <div class="thumb"><img src="assets/thumbs/loop.webp" alt="Screenshot of the Loop Engineering page: Prompt less. Loop more." width="960" height="540" loading="lazy"></div>
+          <div class="body">
+            <p class="kind">Essay</p>
+            <h3>Prompt less, loop more</h3>
+            <p>How I design loops whose fitness is measured by a runner the model can't edit, and an audit of where my own loops still fall short.</p>
+            <div class="links"><a class="chip-btn" href="loop-engineering/">Read it</a></div>
           </div>
         </article>
       </div>
 
-      <div class="more">
-        <h3>Research and earlier builds</h3>
-        <ul>
-          <li><a href="https://github.com/KiranMohan-92/orbital-inspect" target="_blank" rel="noopener">orbital-inspect</a>: multi-agent satellite condition assessment with human-in-the-loop decisions. Work in progress.</li>
-          <li><a href="https://github.com/KiranMohan-92/agent-economy-fraud" target="_blank" rel="noopener">agent-economy-fraud</a>: fraud patterns in agent-to-agent payments. I withdrew its first detector claim after my own integrity review; the README says what still stands.</li>
-          <li><a href="https://github.com/chetanbavdhankar/Aegis-AI-Emergency-Guidance-Intelligence-System" target="_blank" rel="noopener">AEGIS</a>: multilingual emergency response, built with Chetan Bavdhankar.</li>
-        </ul>
+      <div class="minor">
+        <article class="panel work reveal">
+          <div class="thumb"><img src="assets/thumbs/orbital.webp" alt="" width="960" height="540" loading="lazy"></div>
+          <div class="body"><p class="kind">Work in progress</p><h3>orbital-inspect</h3><p>Multi-agent satellite condition assessment, with human-in-the-loop decisions.</p>
+            <div class="links"><a class="chip-btn" href="https://github.com/KiranMohan-92/orbital-inspect" target="_blank" rel="noopener">Repository</a></div></div>
+        </article>
+        <article class="panel work reveal">
+          <div class="thumb"><img src="assets/thumbs/fraud.webp" alt="" width="960" height="540" loading="lazy"></div>
+          <div class="body"><p class="kind">Research &middot; claim withdrawn</p><h3>agent-economy-fraud</h3><p>Exploratory research on agentic payments: transaction features for agent-registry wallets, a threat model and a validation protocol. My own integrity review withdrew the first detector claim.</p>
+            <div class="links"><a class="chip-btn" href="https://github.com/KiranMohan-92/agent-economy-fraud" target="_blank" rel="noopener">Repository</a></div></div>
+        </article>
+        <article class="panel work reveal">
+          <div class="thumb"><img src="assets/thumbs/aegis.webp" alt="" width="960" height="540" loading="lazy"></div>
+          <div class="body"><p class="kind">Collaboration</p><h3>AEGIS</h3><p>Multilingual emergency response, built with Chetan Bavdhankar.</p>
+            <div class="links"><a class="chip-btn" href="https://github.com/chetanbavdhankar/Aegis-AI-Emergency-Guidance-Intelligence-System" target="_blank" rel="noopener">Repository</a></div></div>
+        </article>
       </div>
     </div>
   </section>
 
-  <section class="block" id="experience" aria-labelledby="exp-title">
+  <!-- 04 CAREER -->
+  <section class="chapter" id="career" aria-labelledby="career-title">
     <div class="wrap">
-      <h2 id="exp-title">Eight years of controls, before agents</h2>
-      <p class="intro">Transaction monitoring taught me to turn regulated processes into precise rules, test them against history and keep them audit-ready. It is the same discipline I now apply to agents.</p>
-      <ol class="timeline" reversed>
-        <li class="job">
-          <div class="when">Jul 2026 – now</div>
-          <div>
-            <h3>Business Translator / AI Maker, Agentic AI Productivity Taskforce</h3>
-            <p class="org">ING Hubs Poland, alongside the role below</p>
-            <p>I assess financial-crime AI use cases against data, governance and model-risk constraints, and recommend staged, falsifiable pilots before any agent is built.</p>
-          </div>
-        </li>
-        <li class="job">
-          <div class="when">Jan 2025 – now</div>
-          <div>
-            <h3>Senior Expert, Financial Crime Prevention: TM Backtesting &amp; Design</h3>
-            <p class="org">ING Hubs Poland</p>
-            <p>Designed the framework and data-collection method for a global transaction-monitoring effectiveness assessment covering 38 jurisdictions. I lead a team of three specialists.</p>
-          </div>
-        </li>
-        <li class="job">
-          <div class="when">2022 – 2024</div>
-          <div>
-            <h3>Business Analyst / AML Expert: TM Optimisation</h3>
-            <p class="org">ING Hubs Poland</p>
-            <p>Co-created the enterprise transaction-monitoring optimisation framework, coordinated threshold reviews across 20+ jurisdictions, and ran risk UAT and backtesting for audit readiness.</p>
-          </div>
-        </li>
-        <li class="job">
-          <div class="when">2020 – 2021</div>
-          <div>
-            <h3>Senior AML Investigator / Business Analyst</h3>
-            <p class="org">ING Hubs Poland</p>
-            <p>Automated MI packs and scorecards; report automation saved about 25 minutes per case.</p>
-          </div>
-        </li>
-        <li class="job">
-          <div class="when">2019 – 2020</div>
-          <div>
-            <h3>Compliance Analyst III/II: Transaction Monitoring</h3>
-            <p class="org">MoneyGram International</p>
-            <p>Deputy lead of a 10-person team; productivity up 15% at 98%+ quality, and shared-ID risk checks automated to free about 20 hours a week.</p>
-          </div>
-        </li>
-        <li class="job">
-          <div class="when">2016 – 2017</div>
-          <div>
-            <h3>Junior AML Analyst</h3>
-            <p class="org">Citibank Europe</p>
-          </div>
-        </li>
+      <header class="chapter-head reveal">
+        <p class="eyebrow">04 &middot; Career</p>
+        <h2 id="career-title">Eight years of <em>controls.</em></h2>
+        <p class="lede">Transaction monitoring taught me to turn regulated processes into precise rules, test them against history and keep them audit-ready. It is the same discipline I now apply to agents.</p>
+      </header>
+
+      <figure class="panel gantt" aria-label="Career timeline, 2016 to 2026">
+        <div class="gantt-axis" aria-hidden="true"><span style="left:0%">2016</span><span style="left:18.2%">2018</span><span style="left:36.4%">2020</span><span style="left:54.5%">2022</span><span style="left:72.7%">2024</span><span style="left:90.9%">2026</span></div>
+        <div class="gantt-row"><div class="who">Junior AML Analyst<small>Citibank Europe</small></div><div class="lane"><i class="span" style="--l:7.6%;--w:9.1%"></i></div></div>
+        <div class="gantt-row"><div class="who">Compliance Analyst III/II<small>MoneyGram</small></div><div class="lane"><i class="span" style="--l:29.5%;--w:14.4%"></i></div></div>
+        <div class="gantt-row"><div class="who">Senior AML Investigator / BA<small>ING Hubs Poland</small></div><div class="lane"><i class="span" style="--l:44.7%;--w:9.1%"></i></div></div>
+        <div class="gantt-row"><div class="who">BA / AML Expert, TM Optimisation<small>ING Hubs Poland</small></div><div class="lane"><i class="span" style="--l:54.5%;--w:27.3%"></i></div></div>
+        <div class="gantt-row"><div class="who">Senior Expert, TM Backtesting &amp; Design<small>ING Hubs Poland</small></div><div class="lane"><i class="span" style="--l:81.8%;--w:16.6%"></i></div></div>
+        <div class="gantt-row"><div class="who">Business Translator / AI Maker<small>ING Hubs Poland</small></div><div class="lane"><i class="span ai" style="--l:95.5%;--w:3.2%"></i></div></div>
+      </figure>
+
+      <ol class="roles" reversed>
+        <li class="panel role now reveal"><p class="when">Jul 2026 &ndash; now</p><h3>Business Translator / AI Maker, Agentic AI Productivity Taskforce</h3><p class="org">ING Hubs Poland, alongside the role below</p><p>I assess financial-crime AI use cases against data, governance and model-risk constraints, and recommend staged, falsifiable pilots before any agent is built.</p></li>
+        <li class="panel role now reveal"><p class="when">Jan 2025 &ndash; now</p><h3>Senior Expert, Financial Crime Prevention: TM Backtesting &amp; Design</h3><p class="org">ING Hubs Poland</p><p>Designed the framework and data-collection method for a global transaction-monitoring effectiveness assessment covering 38 jurisdictions. I lead a team of three specialists.</p></li>
+        <li class="panel role reveal"><p class="when">2022 &ndash; 2024</p><h3>Business Analyst / AML Expert: TM Optimisation</h3><p class="org">ING Hubs Poland</p><p>Co-created the enterprise transaction-monitoring optimisation framework, coordinated threshold reviews across 20+ jurisdictions, and ran risk UAT and backtesting for audit readiness.</p></li>
+        <li class="panel role reveal"><p class="when">2020 &ndash; 2021</p><h3>Senior AML Investigator / Business Analyst</h3><p class="org">ING Hubs Poland</p><p>Automated MI packs and scorecards; report automation saved about 25 minutes per case.</p></li>
+        <li class="panel role reveal"><p class="when">2019 &ndash; 2020</p><h3>Compliance Analyst III/II: Transaction Monitoring</h3><p class="org">MoneyGram International</p><p>Deputy lead of a 10-person team; productivity up 15% at 98%+ quality, and shared-ID risk checks automated to free about 20 hours a week.</p></li>
+        <li class="panel role reveal"><p class="when">2016 &ndash; 2017</p><h3>Junior AML Analyst</h3><p class="org">Citibank Europe</p></li>
       </ol>
       <div class="creds">
-        <div><h3>Education</h3><p>M.Sc. Aerospace Engineering, Warsaw University of Technology; B.Tech. Aerospace Engineering.</p></div>
-        <div><h3>Credentials</h3><p>CTMA (ACAMS); Agentic AI coursework (DeepLearning.AI).</p></div>
-        <div><h3>Languages</h3><p>English, full professional proficiency; Polish, basic.</p></div>
+        <div class="panel"><h3>Education</h3><p>M.Sc. Aerospace Engineering, Warsaw University of Technology; B.Tech. Aerospace Engineering.</p></div>
+        <div class="panel"><h3>Credentials</h3><p>CTMA (ACAMS); Agentic AI coursework (DeepLearning.AI).</p></div>
+        <div class="panel"><h3>Languages</h3><p>English, full professional proficiency; Polish, basic.</p></div>
       </div>
     </div>
   </section>
 
-  <section class="block" id="writing" aria-labelledby="writing-title">
+  <!-- 05 WRITING -->
+  <section class="chapter" id="writing" aria-labelledby="writing-title">
     <div class="wrap">
-      <h2 id="writing-title">Explaining things clearly, to people and to AI</h2>
-      <p class="intro">Knowledge Architect is my YouTube channel on explaining complex ideas, including how to write instructions a model can follow. 6,900 subscribers, about 77,000 views.</p>
+      <header class="chapter-head reveal">
+        <p class="eyebrow">05 &middot; Writing</p>
+        <h2 id="writing-title">Explaining things <em>clearly.</em></h2>
+        <p class="lede">Knowledge Architect is my YouTube channel on explaining complex ideas to people and to AI, including how to write instructions a model can follow.</p>
+      </header>
+      <div class="channel">
+        <article class="panel card">
+          <div class="card-head"><h3>Knowledge Architect</h3><span class="tag reported">Reported</span>
+            <details class="src"><summary>Source</summary><div class="pop">YouTube's public counts on the channel page, 27 Oct 2026. <a href="https://www.youtube.com/@KnowledgeArchitect-x2p" target="_blank" rel="noopener">Channel</a></div></details>
+          </div>
+          <div class="kv" style="margin-top:18px">
+            <div><span>subscribers</span><b>6.9K</b></div>
+            <div><span>views across long-form videos</span><b>~77k</b></div>
+            <div><span>long-form videos</span><b data-count="9">9</b></div>
+          </div>
+          <div class="links"><a class="chip-btn" href="https://www.youtube.com/@KnowledgeArchitect-x2p" target="_blank" rel="noopener">Watch the channel</a><a class="chip-btn" href="https://substack.com/@kiranmohan1" target="_blank" rel="noopener">Read the essays</a></div>
+        </article>
+        <article class="panel card grow">
+          <div class="card-head"><h3>Views per video, 27 Oct</h3><span class="tag reported">Reported</span></div>
+          <div class="views">
+            <div class="vrow"><span class="t" style="--w:100%">The Compression Revolution</span><b>31K</b></div>
+            <div class="vrow"><span class="t" style="--w:45%">Finding a Problem Worth Solving</span><b>14K</b></div>
+            <div class="vrow"><span class="t" style="--w:25.5%">The Articulation Engineering</span><b>7.9K</b></div>
+            <div class="vrow"><span class="t" style="--w:24.2%">How to Explain Complex Ideas (remastered)</span><b>7.5K</b></div>
+            <div class="vrow"><span class="t" style="--w:12.6%">Words Are Theories</span><b>3.9K</b></div>
+            <div class="vrow"><span class="t" style="--w:11.9%">The AI Anxiety Paradox</span><b>3.7K</b></div>
+            <div class="vrow"><span class="t" style="--w:11.3%">Stop Trying to be a "Polymath"</span><b>3.5K</b></div>
+            <div class="vrow"><span class="t" style="--w:8.7%">The Physics of Focus</span><b>2.7K</b></div>
+            <div class="vrow"><span class="t" style="--w:8.7%">Why "Follow Your Passion" is Terrible Advice</span><b>2.7K</b></div>
+          </div>
+        </article>
+      </div>
       <div class="videos">
-        <a href="https://www.youtube.com/watch?v=3VsTlJLqpuA" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/3VsTlJLqpuA/hqdefault.jpg" alt="" loading="lazy" width="480" height="270"><span>Words Are Theories: The Philosophy of Prompt Engineering</span></a>
-        <a href="https://www.youtube.com/watch?v=TAlUj9ZEFxg" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/TAlUj9ZEFxg/hqdefault.jpg" alt="" loading="lazy" width="480" height="270"><span>How to Explain Complex Ideas to People and AI</span></a>
-        <a href="https://www.youtube.com/watch?v=dsbLVs0ZUbw" target="_blank" rel="noopener"><img src="https://i.ytimg.com/vi/dsbLVs0ZUbw/hqdefault.jpg" alt="" loading="lazy" width="480" height="270"><span>The Compression Revolution: The Real Way AI Changes Your Brain</span></a>
+        <a class="panel video reveal" href="https://www.youtube.com/watch?v=3VsTlJLqpuA" target="_blank" rel="noopener"><div class="thumb"><img src="https://i.ytimg.com/vi/3VsTlJLqpuA/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div><div class="body">Words Are Theories: The Philosophy of Prompt Engineering</div></a>
+        <a class="panel video reveal" href="https://www.youtube.com/watch?v=TAlUj9ZEFxg" target="_blank" rel="noopener"><div class="thumb"><img src="https://i.ytimg.com/vi/TAlUj9ZEFxg/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div><div class="body">How to Explain Complex Ideas to People and AI</div></a>
+        <a class="panel video reveal" href="https://www.youtube.com/watch?v=dsbLVs0ZUbw" target="_blank" rel="noopener"><div class="thumb"><img src="https://i.ytimg.com/vi/dsbLVs0ZUbw/hqdefault.jpg" alt="" loading="lazy" width="480" height="360"></div><div class="body">The Compression Revolution: The Real Way AI Changes Your Brain</div></a>
       </div>
       <div class="pubs">
-        <div><h3><a href="warsaw/explainer/">Graph engineering, explained</a></h3><p>Agents, work units, shared state, verification, retries and human gates, drawn as a graph with typed contracts on every edge.</p></div>
-        <div><h3><a href="loop-engineering/">Prompt less, loop more</a></h3><p>How I design loops whose fitness is measured by a runner the model can't edit.</p></div>
-        <div><h3><a href="https://www.youtube.com/@KnowledgeArchitect-x2p" target="_blank" rel="noopener">The channel</a> and <a href="https://substack.com/@kiranmohan1" target="_blank" rel="noopener">the essays</a></h3><p>Long-form essays on Substack, alongside the videos.</p></div>
-        <div><h3><a href="https://www.sciencedirect.com/science/article/pii/S2215098621001750" target="_blank" rel="noopener">Peer-reviewed research, 2022</a></h3><p>Co-author of a study on the thermal decomposition of 98% hydrogen peroxide as a green rocket propellant, from my aerospace years.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <section class="block contact" id="contact" aria-labelledby="contact-title">
-    <div class="wrap">
-      <h2 id="contact-title" class="visually-hidden">Contact</h2>
-      <div>
-        <a class="email" href="mailto:kiranmohanengineer@gmail.com">kiranmohanengineer@gmail.com</a>
-        <div class="links" style="margin-top:12px">
-          <a href="https://www.linkedin.com/in/kiran-mohan-38238a164/" target="_blank" rel="noopener">LinkedIn</a>
-          <a href="https://github.com/KiranMohan-92" target="_blank" rel="noopener">GitHub</a>
-        </div>
+        <div class="panel pub reveal"><h3><a href="https://substack.com/@kiranmohan1" target="_blank" rel="noopener">Essays on Substack</a></h3><p>Long-form writing alongside the videos.</p></div>
+        <div class="panel pub reveal"><h3><a href="https://doi.org/10.1016/j.jestch.2021.08.011" target="_blank" rel="noopener">Peer-reviewed research, 2022</a></h3><p>Co-author of a study on the thermal decomposition of 98% hydrogen peroxide as a green rocket propellant, from my aerospace years.</p></div>
       </div>
     </div>
   </section>
 </main>
 
-<footer>
+<footer id="contact" aria-labelledby="contact-title">
   <div class="wrap">
-    <span>Kiran Mohan, Warsaw</span>
-    <span>Built with Claude Code to my specification, and reviewed before publishing.</span>
+    <p class="eyebrow" id="contact-title">Contact</p>
+    <a class="mail" href="mailto:kiranmohanengineer@gmail.com">kiranmohanengineer@gmail.com</a>
+    <div class="foot-links">
+      <a class="chip-btn" href="https://www.linkedin.com/in/kiran-mohan-38238a164/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="chip-btn" href="https://github.com/KiranMohan-92" target="_blank" rel="noopener">GitHub</a>
+      <a class="chip-btn" href="https://www.youtube.com/@KnowledgeArchitect-x2p" target="_blank" rel="noopener">YouTube</a>
+      <a class="chip-btn" href="https://substack.com/@kiranmohan1" target="_blank" rel="noopener">Substack</a>
+    </div>
+    <div class="colophon"><span>Kiran Mohan &middot; Warsaw</span><span>Built with Claude Code to my specification, and reviewed before publishing.</span></div>
   </div>
 </footer>
 </body>
