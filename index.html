@@ -168,8 +168,7 @@ h3 { font-size: 1.2rem; line-height: 1.3; margin: 0 0 8px; font-weight: 700; }
 .pubs p { margin: 0; color: var(--ink-soft); }
 
 /* contact */
-.contact .wrap { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 32px; align-items: end; }
-.contact p { margin: 0; color: var(--ink-soft); max-width: 52ch; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
 .email { font-size: clamp(1.15rem, 3vw, 1.75rem); font-weight: 700; font-variation-settings: "wdth" 112; word-break: break-word; }
 footer { border-top: 1px solid var(--rule); padding: 28px 0 40px; font-size: 0.9rem; color: var(--ink-soft); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
@@ -183,7 +182,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
   .flow-note { margin-top: -32px; }
   .rules, .projects, .videos, .creds { grid-template-columns: minmax(0, 1fr); }
   .more ul, .pubs { grid-template-columns: minmax(0, 1fr); }
-  .contact .wrap { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 560px) {
   .job { grid-template-columns: minmax(0, 1fr); }
@@ -398,10 +396,7 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 
   <section class="block contact" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
-      <div>
-        <h2 id="contact-title">Let's talk</h2>
-        <p>I'm happy to walk through any of this on a call: the eval suite and its baseline, a fail-closed review gate, or one failure traced to the control it produced.</p>
-      </div>
+      <h2 id="contact-title" class="visually-hidden">Contact</h2>
       <div>
         <a class="email" href="mailto:kiranmohanengineer@gmail.com">kiranmohanengineer@gmail.com</a>
         <div class="links" style="margin-top:12px">
